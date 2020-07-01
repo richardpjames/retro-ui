@@ -15,14 +15,14 @@ const BoardList = () => {
             'Authorization': 'Bearer ' + token
           }
         };
-        axios.get(`${process.env.API_URL}/api/boards`, config)
+        axios.get(`${process.env.REACT_APP_API_URL}/api/boards`, config)
           .then((response) => {
             updateBoards(response.data);
           })
           .catch((error) => console.log(error))
       })
       .catch((error) => console.log(error))
-  });
+  }, [getAccessTokenSilently]);
 
   return boards.map((board) => <BoardListDetails key={board.boardId} board={board} />);
 }
