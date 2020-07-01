@@ -11,7 +11,7 @@ ReactDOM.render(
       domain="richardpjames.eu.auth0.com"
       clientId="GZsJrMA1MuvKDi9lWx0XxmhdrSAh9YwW"
       redirectUri={window.location.origin}
-      audience="https://richardpjames.eu.auth0.com/api/v2/"
+      audience="https://api.retrospectacle.io"
       scope="read:current_user update:current_user_metadata"
     >
       <AppRouter/>
