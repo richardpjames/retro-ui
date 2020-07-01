@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Auth0Provider} from "@auth0/auth0-react";
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
-import Home from "./components/Home/Home";
-import Nav from "./components/Common/Nav";
-import About from "./components/About/About";
+import AppRouter from "./components/Router/AppRouter";
+import './css/app.css';
 
 ReactDOM.render(
     <React.StrictMode>
@@ -16,17 +14,7 @@ ReactDOM.render(
             audience="https://richardpjames.eu.auth0.com/api/v2/"
             scope="read:current_user update:current_user_metadata"
         >
-            <Router>
-                <Nav/>
-                <Switch>
-                    <Route path="/" exact>
-                        <Home/>
-                    </Route>
-                    <Route path="/about" >
-                        <About />
-                    </Route>
-                </Switch>
-            </Router>
+            <AppRouter/>
         </Auth0Provider>
     </React.StrictMode>,
     document.getElementById('root')

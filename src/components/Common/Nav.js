@@ -1,10 +1,10 @@
 import React from 'react';
-import AuthPanel from "../Auth/AuthPanel";
-import {Link} from "react-router-dom";
+import NavLinks from "./NavLinks";
+import AuthNavLinks from "./AuthNavLinks";
 
 const Nav = (props) => {
     return (
-        <nav className="navbar navbar-dark bg-dark navbar-expand-sm">
+        <nav className="navbar navbar-dark bg-dark navbar-expand-md">
             <span className="navbar-brand">RetroSpectacle</span>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -13,21 +13,10 @@ const Nav = (props) => {
             </button>
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <div>
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/"><i className="fas fa-home mr-1"></i> Home</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/about"><i className="fas fa-question mr-1"></i> About</Link>
-                        </li>
-                    </ul>
+                    <NavLinks/>
                 </div>
                 <div className="ml-auto">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item">
-                            <AuthPanel/>
-                        </li>
-                    </ul>
+                    <AuthNavLinks/>
                 </div>
             </div>
         </nav>
