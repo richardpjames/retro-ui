@@ -6,29 +6,29 @@ import About from "../About/About";
 import BoardList from "../BoardList/BoardList";
 import {useAuth0} from "@auth0/auth0-react";
 
-const AppRouter = (props) => {
+const AppRouter = () => {
 
-    const {isAuthenticated, loginWithRedirect} = useAuth0();
+  const {isAuthenticated, loginWithRedirect} = useAuth0();
 
-    return (<Router>
-        <Nav/>
-        <Switch>
-            <Route path="/" exact>
-                <Home/>
-            </Route>
-            <Route path="/about">
-                <About/>
-            </Route>
-            <Route path="/boards" render={(props) => {
-                if (isAuthenticated) {
-                    return <BoardList/>
-                } else {
-                    return loginWithRedirect();
-                }
-            }}>
-            </Route>
-        </Switch>
-    </Router>);
+  return (<Router>
+    <Nav/>
+    <Switch>
+      <Route path="/" exact>
+        <Home/>
+      </Route>
+      <Route path="/about">
+        <About/>
+      </Route>
+      <Route path="/boards" render={() => {
+        if (isAuthenticated) {
+          return <BoardList/>
+        } else {
+          return loginWithRedirect();
+        }
+      }}>
+      </Route>
+    </Switch>
+  </Router>);
 
 };
 
