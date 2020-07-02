@@ -11,6 +11,7 @@ const BoardListDetails = (props) => {
           </div>
           <div className="col-4 align-middle text-right">
             <button className="btn btn-primary align-middle">View</button>
+            <button className="btn btn-danger">Delete</button>
           </div>
         </div>
       </div>
