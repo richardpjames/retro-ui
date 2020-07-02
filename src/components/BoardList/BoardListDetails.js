@@ -1,6 +1,11 @@
 import React from 'react';
 
 const BoardListDetails = (props) => {
+
+  const handleDelete = () => {
+    props.removeBoard(props.board.boardId);
+  }
+
   return (
     <div className="card my-3 p-2 shadow-sm">
       <div className="card-body">
@@ -11,7 +16,7 @@ const BoardListDetails = (props) => {
           </div>
           <div className="col-4 align-middle text-right">
             <button className="btn btn-primary align-middle">View</button>
-            <button className="btn btn-danger">Delete</button>
+            <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
           </div>
         </div>
       </div>

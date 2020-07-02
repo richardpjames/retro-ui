@@ -28,7 +28,7 @@ const NewBoard = (props) => {
                        required/>
               </div>
               <div className="form-group">
-                <label htmlFor="boardDescription">Board Name</label>
+                <label htmlFor="boardDescription">Board Description</label>
                 <input type="text" className="form-control" id="boardDescription"
                        placeholder="Board Description" value={boardDescription}
                        onChange={(event) => updateBoardDescription(event.target.value)}

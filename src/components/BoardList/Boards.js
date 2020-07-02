@@ -54,17 +54,41 @@ const Boards = () => {
       })
       // Log any errors to the console TODO: Improve error handling
       .catch((error) => console.log(error))
-    // TODO: Add API call to add the board
   };
+
+  const removeBoard = (boardId) => {
+    getAccessTokenSilently()
+      .then((token) => {
+        // Add that token to the authorization header as a bearer token
+        const config = {
+          headers: {
+            'Authorization': 'Bearer ' + token
+          }
+        };
+        // This environment variable holds the beginning of the API url, config adds the header
+        axios.delete(`${process.env.REACT_APP_API_URL}/api/boards/${boardId}`, config)
+          // Overwrite the boards object with the results
+          .then((response) => {
+            let updatedBoards = boards.filter(( board ) => {
+              return board.boardId !== boardId;
+            });
+            updateBoards(updatedBoards);
+          })
+          // Log any errors to the console TODO: Improve error handling
+          .catch((error) => console.log(error))
+      })
+      // Log any errors to the console TODO: Improve error handling
+      .catch((error) => console.log(error))
+  }
 
   return (<div className="container my-3">
     <h1>Your Boards</h1>
     <p>View an existing board, or create a new one. Your most recent boards are shown
       at the top of the page.</p>
     <h3>Create New</h3>
-    <NewBoard addBoard={addBoard}/>
+    <NewBoard addBoard={addBoard} />
     <h3>Existing Boards</h3>
-    <BoardList boards={boards}/>
+    <BoardList boards={boards} removeBoard={removeBoard}/>
   </div>);
 }
 
