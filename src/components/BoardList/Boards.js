@@ -47,8 +47,7 @@ const Boards = () => {
         axios.post(`${process.env.REACT_APP_API_URL}/api/boards`, board, config)
           // Overwrite the boards object with the results
           .then((response) => {
-            console.log(response.data);
-            updateBoards([...boards, response.data]);
+            updateBoards([response.data, ...boards]);
           })
           // Log any errors to the console TODO: Improve error handling
           .catch((error) => console.log(error))
