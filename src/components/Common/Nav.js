@@ -15,7 +15,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className="navbar is-dark" role="navigation">
+    <nav className="navbar is-radiusless" role="navigation">
       <div className="container">
         <div className="navbar-brand">
           <span className="navbar-item">RetroSpectacle</span>
