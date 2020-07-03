@@ -5,8 +5,8 @@ import {Link} from "react-router-dom";
 const LoginButton = () => {
   const {loginWithRedirect} = useAuth0();
 
-  return (<Link to="" className="nav-link" onClick={() => loginWithRedirect()}>
-    <i className="fas fa-sign-in-alt mr-1"></i> Log In
+  return (<Link to="" className="navbar-item" onClick={() => loginWithRedirect()}>
+    <i className="fas fa-sign-in-alt mr-3"></i> Log In
   </Link>);
 
 };

@@ -7,11 +7,10 @@ const ProtectedNavLinks = (props) => {
   const {isAuthenticated} = useAuth0();
 
   if (isAuthenticated) {
-    return (<div>
-      <li className="nav-item">
-        <Link className="nav-link" to="/boards"><i className="fas fa-chalkboard-teacher"></i> Boards</Link>
-      </li>
-    </div>);
+    return (
+      <div className="navbar-start">
+        <Link className="navbar-item" to="/boards"><i className="fas fa-chalkboard-teacher mr-3"></i> Boards</Link>
+      </div>);
   }
   return null;
 }

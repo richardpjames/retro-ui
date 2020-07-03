@@ -4,7 +4,7 @@ import Nav from "../Common/Nav";
 import Home from "../Home/Home";
 import About from "../About/About";
 import {useAuth0} from "@auth0/auth0-react";
-import Boards from "../BoardList/Boards";
+import Dashboard from "../Dashboard/Dashboard";
 
 const AppRouter = () => {
 
@@ -21,7 +21,7 @@ const AppRouter = () => {
       </Route>
       <Route path="/boards" render={() => {
         if (isAuthenticated) {
-          return <Boards />
+          return <Dashboard />
         } else {
           return loginWithRedirect();
         }

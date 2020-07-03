@@ -6,12 +6,14 @@ import React from 'react';
 
 const About = (props) => {
     return (
-        <div className="jumbotron my-auto">
-            <div className="text-center align-middle d-block">
-                <h1 className="display-4">About</h1>
-                <p>Free boards for running fun and insightful sprint retrospectives</p>
-            </div>
+      <div className="hero is-medium is-primary is-bold">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">About</h1>
+            <h2 className="subtitle">Free boards for running fun and insightful sprint retrospectives</h2>
+          </div>
         </div>
+      </div>
     );
 }
 
