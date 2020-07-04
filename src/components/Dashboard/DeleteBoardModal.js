@@ -6,20 +6,31 @@ const DeleteBoardModal = (props) => {
   const [buttonDisabled, updateButtonDisabled] = useState(true);
 
   const closeModal = () => {
-    const modal = document.getElementById(`deleteBoardModal-${props.board.boardId}`);
-    modal.classList.toggle("is-active");
+    props.updateModalVisible(false);
   }
 
   const checkInput = (event) => {
     updateConfirm(event.target.value);
-    if (event.target.value === 'delete') {
+    if (event.target.value.toLowerCase() === 'delete') {
       updateButtonDisabled(false);
     } else {
       updateButtonDisabled(true);
     }
   }
 
-  return (<div className="modal" id={`deleteBoardModal-${props.board.boardId}`}>
+  const checkVisible = () => {
+    if (props.visible) {
+      return "modal is-active"
+    } else {
+      return "modal"
+    }
+  }
+
+  const handleForm = (event) => {
+    event.preventDefault();
+  }
+
+  return (<div className={checkVisible()} id="deleteBoardModal">
     <div className="modal-background"></div>
     <div className="modal-card">
       <header className="modal-card-head">
@@ -30,7 +41,7 @@ const DeleteBoardModal = (props) => {
         <p className="my-3">If you are sure you want to delete this board, please
           enter the word "delete" into the text box and press the delete button.</p>
         <p className="has-text-danger mb-3">There is no way to undo this later.</p>
-        <form>
+        <form onSubmit={handleForm}>
           <div className="field">
             <input type="text" className="input is-danger"
                    placeholder="delete" value={confirm}
@@ -41,7 +52,12 @@ const DeleteBoardModal = (props) => {
       </section>
       <footer className="modal-card-foot">
         <button disabled={buttonDisabled} className="button is-danger"
-                onClick={() => props.removeBoard(props.board.boardId)}>Delete
+                onClick={() => {
+                  props.removeBoard(props.board.boardId);
+                  props.updateModalVisible(false);
+                  updateConfirm('');
+                }}>
+          Delete
         </button>
         <button className="button" onClick={closeModal}>Cancel</button>
       </footer>

@@ -4,9 +4,8 @@ import moment from "moment";
 const BoardCard = (props) => {
 
   const toggleModal = () => {
-    const target = document.getElementById(`deleteBoardModal-${props.board.boardId}`);
-    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-    target.classList.toggle('is-active');
+    props.updateBoardToDelete(props.board);
+    props.updateModalVisible(true);
   }
 
   return (<div className="card">
