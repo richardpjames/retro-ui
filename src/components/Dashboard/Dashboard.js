@@ -85,6 +85,11 @@ const Dashboard = () => {
         })()}
         <BoardList boards={boards} removeBoard={removeBoard}/>
       </div>
+      <div className="column">
+        <h3 className="title is-3">Our Templates</h3>
+        <p>Learn how to run a fun and effective retrospective with each of our built in
+          templates.</p>
+      </div>
     </div>
   </div>);
 }

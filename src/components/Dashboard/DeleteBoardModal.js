@@ -7,6 +7,7 @@ const DeleteBoardModal = (props) => {
 
   const closeModal = () => {
     props.updateModalVisible(false);
+    updateConfirm("");
   }
 
   const checkInput = (event) => {
