@@ -30,23 +30,23 @@ const Nav = () => {
 
   return (
     <nav className="navbar is-radiusless" role="navigation">
-      <div className="container">
-        <div className="navbar-brand">
-          <span className="navbar-item">RetroSpectacle</span>
-          <a role="button" id="navbarToggle" className={getNavbarToggleClass()} aria-label="menu" aria-expanded="false"
-             onClick={() => updateNavLinksOpen(!navLinksOpen)}>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
+      <div className="navbar-brand">
+        <a className="navbar-item" href="/">
+          <img src="/logo.svg" width="175" height="28" alt="Site Logo"/>
+        </a>
+        <a role="button" id="navbarToggle" className={getNavbarToggleClass()} aria-label="menu" aria-expanded="false"
+           onClick={() => updateNavLinksOpen(!navLinksOpen)}>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      <div id="navbarLinks" className={getNavbarLinksClass()}>
+        <div className="navbar-start">
+          <NavLinks closeNavLinks={closeNavLinks}/>
         </div>
-        <div id="navbarLinks" className={getNavbarLinksClass()}>
-          <div className="navbar-start">
-            <NavLinks closeNavLinks={closeNavLinks}/>
-          </div>
-          <div className="navbar-end">
-            <AuthNavLinks closeNavLinks={closeNavLinks}/>
-          </div>
+        <div className="navbar-end">
+          <AuthNavLinks closeNavLinks={closeNavLinks}/>
         </div>
       </div>
     </nav>
