@@ -9,7 +9,7 @@ const ProtectedNavLinks = (props) => {
   if (isAuthenticated) {
     return (
       <div className="navbar-start">
-        <Link className="navbar-item" to="/boards"><i className="fas fa-chalkboard-teacher mr-3"></i> Boards</Link>
+        <Link className="navbar-item" to="/boards" onClick={props.closeNavLinks}><i className="fas fa-chalkboard-teacher mr-3"></i> Boards</Link>
       </div>);
   }
   return null;
