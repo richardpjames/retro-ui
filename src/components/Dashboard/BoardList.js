@@ -13,8 +13,8 @@ const BoardList = (props) => {
                         updateModalVisible={updateModalVisible}/>
       {
         props.boards.map((board) =>
-          <div className="my-3">
-            <BoardCard key={board.boardId} board={board} updateModalVisible={updateModalVisible}
+          <div className="my-3" key={board.boardId}>
+            <BoardCard board={board} updateModalVisible={updateModalVisible}
                        updateBoardToDelete={updateBoardToDelete}/>
           </div>
         )

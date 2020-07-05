@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from "moment";
+import {Link} from "react-router-dom";
 
 const BoardCard = (props) => {
 
@@ -7,6 +8,8 @@ const BoardCard = (props) => {
     props.updateBoardToDelete(props.board);
     props.updateModalVisible(true);
   }
+
+  const boardLink = `/board/${props.board.boardId}`;
 
   return (<div className="card">
     <div className="card-content">
@@ -16,7 +19,7 @@ const BoardCard = (props) => {
       <p className="my-2">{props.board.description}</p>
 
       <div className="buttons">
-        <button className="button is-primary">View</button>
+        <Link to={boardLink} className="button is-primary">View</Link>
         <button className="button is-danger" onClick={toggleModal}>Delete
         </button>
       </div>

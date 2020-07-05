@@ -64,7 +64,7 @@ const Dashboard = () => {
     }
   }
 
-  return (<div class="content mx-5 my-5">
+  return (<div className="content mx-5 my-5">
     <h1 className="title is-1 mt-3">Your Boards</h1>
     <p>View an existing board, or create a new one. Your most recent boards are shown
       at the top of the page.</p>

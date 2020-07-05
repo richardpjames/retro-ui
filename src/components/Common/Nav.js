@@ -1,8 +1,9 @@
-/* eslint jsx-a11y/anchor-is-valid: 0 */
+/* eslint jsx-a11y/anchor-is-valid:0 */
 
 import React, {useState} from 'react';
 import NavLinks from "./NavLinks";
 import AuthNavLinks from "./AuthNavLinks";
+import {Link} from "react-router-dom";
 
 const Nav = () => {
 
@@ -31,9 +32,9 @@ const Nav = () => {
   return (
     <nav className="navbar is-radiusless" role="navigation">
       <div className="navbar-brand">
-        <a className="navbar-item" href="/">
+        <Link className="navbar-item" to="/">
           <img src="/logo.svg" width="175" height="28" alt="Site Logo"/>
-        </a>
+        </Link>
         <a role="button" id="navbarToggle" className={getNavbarToggleClass()} aria-label="menu" aria-expanded="false"
            onClick={() => updateNavLinksOpen(!navLinksOpen)}>
           <span aria-hidden="true"></span>

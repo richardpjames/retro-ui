@@ -3,30 +3,18 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Nav from "../Common/Nav";
 import Home from "../Home/Home";
 import About from "../About/About";
-import {useAuth0} from "@auth0/auth0-react";
 import Dashboard from "../Dashboard/Dashboard";
+import BoardPage from "../Board/BoardPage";
 
 const AppRouter = () => {
-
-  const {isAuthenticated, loginWithRedirect} = useAuth0();
 
   return (<Router>
     <Nav/>
     <Switch>
-      <Route path="/" exact>
-        <Home/>
-      </Route>
-      <Route path="/about">
-        <About/>
-      </Route>
-      <Route path="/boards" render={() => {
-        if (isAuthenticated) {
-          return <Dashboard />
-        } else {
-          return loginWithRedirect();
-        }
-      }}>
-      </Route>
+      <Route path="/" component={Home} exact />
+      <Route path="/about" component={About} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/board/:boardId" component={BoardPage} />
     </Switch>
   </Router>);
 

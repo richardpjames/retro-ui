@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {useAuth0} from "@auth0/auth0-react";
 
 const ProtectedNavLinks = (props) => {
@@ -9,7 +9,8 @@ const ProtectedNavLinks = (props) => {
   if (isAuthenticated) {
     return (
       <div className="navbar-start">
-        <Link className="navbar-item" to="/boards" onClick={props.closeNavLinks}><i className="fas fa-chalkboard-teacher mr-3"></i> Boards</Link>
+        <NavLink className="navbar-item" activeClassName="is-active" to="/dashboard" onClick={props.closeNavLinks}><i
+          className="fas fa-chalkboard-teacher mr-3"></i> Boards</NavLink>
       </div>);
   }
   return null;

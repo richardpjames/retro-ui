@@ -13,6 +13,17 @@ const boardsService = () => {
     }
   }
 
+  const getById = async (boardId, token) => {
+    try {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/boards/${boardId}`, {
+        headers: {'Authorization': 'Bearer ' + token}
+      });
+      return response.data
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const create = async (board, token) => {
     try {
       const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/boards`, board, {
@@ -34,7 +45,7 @@ const boardsService = () => {
     }
   }
 
-  return {getAll, create, remove}
+  return {getAll, getById, create, remove}
 }
 
 export default boardsService();
