@@ -113,7 +113,7 @@ const BoardPage = (props) => {
             card.order -= 1;
           }
           // Otherwise if this card is for the column we moved to, and appeared above the card then move up
-          else if (card.columnId === destination.droppableId && card.order > destination.index) {
+          else if (card.columnId === destination.droppableId && card.order >= destination.index) {
             card.order += 1;
           }
         }
