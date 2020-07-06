@@ -69,7 +69,7 @@ const NewBoard = (props) => {
           </div>
 
           <div className="buttons">
-            <button className="button is-primary">Create</button>
+            <button className="button is-primary"><i className="fas fa-plus mr-3"></i> Create</button>
           </div>
 
         </div>

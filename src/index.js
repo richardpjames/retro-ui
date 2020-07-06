@@ -4,6 +4,8 @@ import {Auth0Provider} from "@auth0/auth0-react";
 import * as serviceWorker from './serviceWorker';
 import AppRouter from "./components/Router/AppRouter";
 import 'bulma/css/bulma.min.css';
+import 'react-toastify/dist/ReactToastify.css';
+import 'animate.css/animate.min.css';
 import './css/app.css';
 
 ReactDOM.render(

@@ -1,5 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import {Slide, ToastContainer} from 'react-toastify';
 import Nav from "../Common/Nav";
 import Home from "../Home/Home";
 import About from "../About/About";
@@ -10,6 +11,7 @@ const AppRouter = () => {
 
   return (<Router>
     <Nav/>
+    <ToastContainer autoClose={5000} newestOnTop hideProgressBar transition={Slide}/>
     <Switch>
       <Route path="/" component={Home} exact />
       <Route path="/about" component={About} />

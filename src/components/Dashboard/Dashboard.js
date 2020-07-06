@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import BoardList from "./BoardList";
 import NewBoard from "./NewBoard";
 import {useAuth0} from "@auth0/auth0-react";
+import { toast } from 'react-toastify';
 import boardsService from "../../services/boardsService";
 
 const Dashboard = () => {
@@ -40,9 +41,11 @@ const Dashboard = () => {
       // Add the new board returned to the existing list
       updateBoards([newBoard, ...boards]);
       updateLoading(false);
+      // Show confirmation to the user
+      toast.success("Your new board has been created.");
     } catch (error) {
-      // For now just log any errors - TODO: Improve error handling
-      console.log(error);
+      // For now just output any errors
+      toast.error(error);
     }
   };
 
@@ -58,9 +61,11 @@ const Dashboard = () => {
       });
       updateBoards(updatedBoards);
       updateLoading(false);
+      toast.success("Your board has been deleted.");
+
     } catch (error) {
-      // For now just log any errors - TODO: Improve error handling
-      console.log(error);
+      // For now just output any errors
+      toast.error(error);
     }
   }
 

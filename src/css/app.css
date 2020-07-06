@@ -10524,3 +10524,20 @@ h6 {
 .column-card {
   min-height: 100% !important;
 }
+
+.card-white-bg {
+  background-color: white !important;
+}
+
+.Toastify__toast--success {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #2ecc71;
+  color: #fff
+}
+.Toastify__toast--error {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #e74c3c;
+  color: #fff
+}

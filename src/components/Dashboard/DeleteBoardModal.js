@@ -58,9 +58,9 @@ const DeleteBoardModal = (props) => {
                   props.updateModalVisible(false);
                   updateConfirm('');
                 }}>
-          Delete
+          <i className="fas fa-trash-alt mr-3"></i> Delete
         </button>
-        <button className="button" onClick={closeModal}>Cancel</button>
+        <button className="button" onClick={closeModal}><i className="fas fa-ban mr-3"></i> Cancel</button>
       </footer>
     </div>
   </div>);

@@ -7,6 +7,7 @@ const BoardColumn = (props) => {
     <div className="card column-card">
       <div className="card-content">
         <h5 className="subtitle is-5">{props.column.title}</h5>
+        <button className="button is-primary is-fullwidth"><i className="fas fa-plus mr-3"></i> Add Card</button>
         {
           props.column.cards.map((card, index) => (
             <Draggable key={card.cardId} draggableId={card.cardId} index={index}>
