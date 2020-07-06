@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import templateService from "../../services/templatesService";
 import {useAuth0} from "@auth0/auth0-react";
+import {toast} from "react-toastify";
 
 const NewBoard = (props) => {
   // Create three new state objects to hold the name, description and starter template for the board
@@ -24,11 +25,22 @@ const NewBoard = (props) => {
     const fetchData = async () => {
       const token = await getAccessTokenSilently();
       const templateData = await templateService.getAll(token);
-      updateTemplates(templateData);
+      if (templateData) updateTemplates(templateData);
     };
-    fetchData();
+    try {
+      fetchData();
+    } catch (error) {
+      toast.error(error);
+    }
   }, [getAccessTokenSilently]);
 
+  if (props.boards.length === 10) {
+    return (<div className="card my-3">
+      <div className="card-content">
+        <p>You already have the maximum number of allowed boards, please delete some before creating more.</p>
+      </div>
+    </div>);
+  }
   // This returns the markup
   return (
     <form onSubmit={handleSubmit}>

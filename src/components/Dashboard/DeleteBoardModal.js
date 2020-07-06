@@ -8,6 +8,7 @@ const DeleteBoardModal = (props) => {
   const closeModal = () => {
     props.updateModalVisible(false);
     updateConfirm("");
+    updateButtonDisabled(true);
   }
 
   const checkInput = (event) => {
@@ -56,7 +57,8 @@ const DeleteBoardModal = (props) => {
                 onClick={() => {
                   props.removeBoard(props.board.boardId);
                   props.updateModalVisible(false);
-                  updateConfirm('');
+                  updateButtonDisabled(true);
+                  updateConfirm("");
                 }}>
           <i className="fas fa-trash-alt mr-3"></i> Delete
         </button>

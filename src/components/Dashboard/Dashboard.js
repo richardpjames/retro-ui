@@ -20,12 +20,12 @@ const Dashboard = () => {
           // Call the API
           const boards = await boardsService.getAll(token)
           // Update the boards
-          updateBoards(boards);
+          if(boards) updateBoards(boards);
           // Stop loading bar
           updateLoading(false);
         } catch (error) {
           // For now just log any errors - TODO: Improve error handling
-          console.log(error);
+          toast.error(error);
         }
       }
       fetchData();
@@ -79,7 +79,7 @@ const Dashboard = () => {
         <p>Creating a new board is as simple as picking a name, giving a description and then
           choosing one of the starter templates to get going. Once the board is created you can
           add/change the columns and descriptions.</p>
-        <NewBoard addBoard={addBoard}/>
+        <NewBoard boards={boards} addBoard={addBoard}/>
       </div>
       <div className="column">
         <h3 className="title is-3">Existing Boards</h3>

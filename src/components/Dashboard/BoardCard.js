@@ -12,7 +12,7 @@ const BoardCard = (props) => {
   const boardLink = `/board/${props.board.boardId}`;
 
   return (<div className="card">
-    <div className="card-content card-white-bg">
+    <div className="card-content">
 
       <h5 className="title is-5 mb-0">{props.board.name}</h5>
       <p className="is-size-7">Created {moment(props.board.created).format('DD/MM/YYYY HH:mm')}</p>
