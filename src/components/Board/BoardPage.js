@@ -1,3 +1,4 @@
+/* eslint array-callback-return: 0 */
 import React, {useEffect, useState} from 'react';
 import boardsService from "../../services/boardsService";
 import {useAuth0} from "@auth0/auth0-react";
@@ -98,6 +99,9 @@ const BoardPage = (props) => {
   }
 
   return (<div className="content mx-5 my-5">
+    {(() => {
+      if (loading) return <progress className="progress is-small is-primary my-5" max="100"></progress>
+    })()}
     <h1 className="title is-1">{board.name}</h1>
     <p>{board.description}</p>
     <div className="columns">

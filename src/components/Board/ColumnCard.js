@@ -1,5 +1,4 @@
 import React from "react";
-import {Draggable} from "react-beautiful-dnd";
 
 const ColumnCard = (props) => {
   return <div className="card">
