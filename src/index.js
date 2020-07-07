@@ -10,7 +10,7 @@ import './css/app.css';
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
-      domain="richardpjames.eu.auth0.com"
+      domain="login.retrospectacle.io"
       clientId="GZsJrMA1MuvKDi9lWx0XxmhdrSAh9YwW"
       redirectUri={window.location.origin}
       audience="https://api.retrospectacle.io"

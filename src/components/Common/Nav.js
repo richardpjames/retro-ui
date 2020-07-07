@@ -4,8 +4,11 @@ import React, {useState} from 'react';
 import NavLinks from "./NavLinks";
 import AuthNavLinks from "./AuthNavLinks";
 import {Link} from "react-router-dom";
+import {useAuth0} from "@auth0/auth0-react";
 
 const Nav = () => {
+
+  const {isAuthenticated} = useAuth0();
 
   const [navLinksOpen, updateNavLinksOpen] = useState(false);
 
@@ -44,7 +47,7 @@ const Nav = () => {
       </div>
       <div id="navbarLinks" className={getNavbarLinksClass()}>
         <div className="navbar-start">
-          <NavLinks closeNavLinks={closeNavLinks}/>
+          <NavLinks isAuthenticated={isAuthenticated} closeNavLinks={closeNavLinks}/>
         </div>
         <div className="navbar-end">
           <AuthNavLinks closeNavLinks={closeNavLinks}/>

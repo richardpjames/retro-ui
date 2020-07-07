@@ -12,10 +12,21 @@ const ColumnCard = (props) => {
     <div className="card-content">
       <div className="columns">
         <div className="column">
-          <p>{props.card.text}</p>
-        </div>
-        <div className="column is-narrow">
-          <a onClick={handleClick}><i className="fas fa-trash-alt"></i></a>
+          <div class="media">
+            <div class="media-left">
+              <img src="https://via.placeholder.com/50"/>
+            </div>
+            <div class="media-content">
+              <p>{props.card.text}</p>
+              <div>
+                <a className="mr-2"><i className="fas fa-pencil-alt"></i></a>
+                <a><i className="fas fa-thumbs-up"></i></a>
+              </div>
+            </div>
+            <div className="media-right">
+              <button onClick={handleClick} className="delete"></button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

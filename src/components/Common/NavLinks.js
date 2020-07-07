@@ -8,7 +8,7 @@ const NavLinks = (props) => {
     <div className="navbar-start">
       <NavLink className="navbar-item" activeClassName="is-active" exact to="/" onClick={props.closeNavLinks}><i
         className="fas fa-home mr-3"></i> Home</NavLink>
-      <ProtectedNavLinks closeNavLinks={props.closeNavLinks}/>
+      <ProtectedNavLinks isAuthenticated={props.isAuthenticated} closeNavLinks={props.closeNavLinks}/>
       <NavLink className="navbar-item" activeClassName="is-active" to="/about" onClick={props.closeNavLinks}><i
         className="fas fa-question mr-3"></i> About</NavLink>
     </div>
