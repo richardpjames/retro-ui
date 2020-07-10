@@ -12,12 +12,17 @@ const ColumnCard = (props) => {
     <div className="card-content">
       <div className="columns">
         <div className="column">
-          <div class="media">
-            <div class="media-left">
-              <img src="https://via.placeholder.com/50"/>
+          <div className="media">
+            <div className="media-left">
+              <p className="image is-64x64">
+                <img className="is-rounded" src={props.card.picture} alt={props.card.nickName} />
+              </p>
             </div>
-            <div class="media-content">
-              <p>{props.card.text}</p>
+            <div className="media-content">
+              <p>
+                <strong className="nickname">{props.card.nickName}</strong><br/>
+                {props.card.text}
+              </p>
               <div>
                 <a className="mr-2"><i className="fas fa-pencil-alt"></i></a>
                 <a><i className="fas fa-thumbs-up"></i></a>

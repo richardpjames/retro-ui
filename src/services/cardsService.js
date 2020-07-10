@@ -34,7 +34,17 @@ const cardsService = () => {
     }
   }
 
-  return {getAll, create, remove};
+  const update = async (boardId, card, token) => {
+    try {
+      await axios.put(`${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${card.cardId}`, card, {
+        headers: {'Authorization': 'Bearer ' + token}
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return {getAll, create, remove, update};
 
 }
 

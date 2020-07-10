@@ -7,6 +7,7 @@ import {Link} from "react-router-dom";
 import BoardColumn from "./BoardColumn";
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 import NewCardForm from "./NewCardForm";
+import {toast} from "react-toastify";
 
 const BoardPage = (props) => {
 
@@ -15,40 +16,42 @@ const BoardPage = (props) => {
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const fetchData = async (showLoadingBar = false) => {
+    try {
+      setLoading(showLoadingBar);
+      // Get the access token required to call the API
+      const token = await getAccessTokenSilently();
+      // Call the API
+      let _board = await boardsService.getById(props.match.params.boardId, token)
+      // Sort the columns
+      _board.columns = _board.columns.sort((a, b) => {
+        if (a.order > b.order) return 1;
+        return -1;
+      });
+      // Get the required cards
+      let _cards = await cardsService.getAll(props.match.params.boardId, token);
+      // Sort them into order
+      _cards = _cards.sort((a, b) => {
+        if (a.order > b.order) return 1;
+        return -1;
+      });
+      // Update the boards
+      setBoard(_board);
+      // Update the cards
+      setCards(_cards);
+      // Stop loading bar
+      setLoading(false);
+    } catch (error) {
+      // For now just log any errors - TODO: Improve error handling
+      toast.error(error);
+    }
+  }
+
   // This is the initial load of existing boards for the user
   useEffect(() => {
-      const fetchData = async () => {
-        try {
-          setLoading(true);
-          // Get the access token required to call the API
-          const token = await getAccessTokenSilently();
-          // Call the API
-          let _board = await boardsService.getById(props.match.params.boardId, token)
-          // Sort the columns
-          _board.columns = _board.columns.sort((a, b) => {
-            if (a.order > b.order) return 1;
-            return -1;
-          });
-          // Get the required cards
-          let _cards = await cardsService.getAll(props.match.params.boardId, token);
-          // Sort them into order
-          _cards = _cards.sort((a, b) => {
-            if (a.order > b.order) return 1;
-            return -1;
-          });
-          // Update the boards
-          setBoard(_board);
-          // Update the cards
-          setCards(_cards);
-          // Stop loading bar
-          setLoading(false);
-        } catch (error) {
-          // For now just log any errors - TODO: Improve error handling
-          console.log(error);
-        }
-      }
-      fetchData();
-    }, [getAccessTokenSilently, props.match.params.boardId]
+      fetchData(true);
+    // eslint-disable-next-line
+    }, []
   );
 
   const addCard = async (card) => {
@@ -57,7 +60,6 @@ const BoardPage = (props) => {
     // Call the API
     const _newCard = await cardsService.create(board.boardId, card, token);
     // Add the new card to the list
-    console.log([...cards, _newCard]);
     setCards([...cards, _newCard]);
   }
 
@@ -74,7 +76,6 @@ const BoardPage = (props) => {
         c.order -= 1;
     });
     // Save changes to state
-    console.log(_cards);
     setCards(_cards);
   }
 
@@ -82,50 +83,56 @@ const BoardPage = (props) => {
     // Take the source and destination details from the result
     const {source, destination} = result;
     // If there is no destination then exit
-    if (!destination) return;
+    if (!destination) {
+      return;
+    }
     // Take a copy of the cards state
     let _cards = cards;
-    // Iterate through the columns and cards to find the card moved, updating its position and column
-    _cards.map((card) => {
-      // If this is the card we moved then update the column and index
-      if (card.cardId === result.draggableId) {
+
+    // Update the card that was dragged
+    _cards.filter(c => c.cardId === result.draggableId)
+      .map(async card => {
         card.order = destination.index;
         card.columnId = destination.droppableId;
-      }
-      // Otherwise if this is not the card that was moved we may need to adjust
-      else {
-        // If the card has moved within it's existing column, then we only need to adjust if the card is between the
-        // from and two position (and only if the card is in this column)
-        if (source.droppableId === destination.droppableId && card.columnId === source.droppableId) {
-          // If the card has moved down the list
-          if (destination.index > source.index && card.order <= destination.index && card.order > source.index) {
-            card.order -= 1;
-          }
-          // If the card has moved up the list
-          else if (destination.index < source.index && card.order < source.index && card.order >= destination.index) {
-            card.order += 1;
-          }
-        }
-        // If the card has moved to a different column, then we need to re-order both columns
-        else {
-          // If this card is on the source column, then we need to move the card down (if it appeared above the original)
-          if (card.columnId === source.droppableId && card.order > source.index) {
-            card.order -= 1;
-          }
-          // Otherwise if this card is for the column we moved to, and appeared above the card then move up
-          else if (card.columnId === destination.droppableId && card.order >= destination.index) {
-            card.order += 1;
-          }
-        }
-      }
-    });
+        const token = await getAccessTokenSilently();
+        await cardsService.update(board.boardId, card, token)
+      });
+
+    // If moved within the existing column then we only need to adjust between the from and to index
+    if (source.droppableId === destination.droppableId) {
+      // These are cards will be moved down the list
+      _cards
+        .filter(c => c.cardId !== result.draggableId
+          && c.columnId === source.droppableId
+          && c.order > source.index)
+        .map(card => card.order -= 1);
+      // These cards will be moved up the list
+      _cards
+        .filter(c => c.cardId !== result.draggableId
+          && c.columnId === source.droppableId
+          && c.order >= destination.index)
+        .map(card => card.order += 1);
+    }
+    // Otherwise if the card moved between columns
+    else {
+      // These are cards that have moved down the list
+      _cards.filter(c => c.cardId !== result.draggableId
+        && c.columnId === source.droppableId
+        && c.order > source.index)
+        .map(card => card.order -= 1);
+      // These are cards that have moved up the list
+      _cards.filter(c => c.cardId !== result.draggableId
+        && c.columnId === destination.droppableId
+        && c.order >= destination.index)
+        .map(card => card.order += 1);
+    }
+
     // Sort the cards into order
     _cards = _cards.sort((a, b) => {
       if (a.order > b.order) return 1;
       return -1;
     });
     // Update state with the re-ordered cards
-    console.log(_cards);
     setCards(_cards);
   }
 
@@ -159,7 +166,10 @@ const BoardPage = (props) => {
         }
       </DragDropContext>
     </div>
-    <Link to="/dashboard" className="button">Back</Link>
+    <div className="buttons">
+      <Link to="/dashboard" className="button">Back</Link>
+      <button className="button is-light" onClick={() => fetchData(false)}>Refresh</button>
+    </div>
   </div>);
 }
 

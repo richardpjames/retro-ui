@@ -10542,3 +10542,7 @@ h6 {
   background-color: #e74c3c;
   color: #fff
 }
+
+.nickname {
+  text-transform:capitalize;
+}
