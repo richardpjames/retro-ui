@@ -43,11 +43,20 @@ const cardsService = () => {
     }
   };
 
-  const update = async (boardId, card, token) => {
+  const update = async (boardId, columnId, card, token) => {
+    const updatedCard = {
+      _id: card._id,
+      text: card.text,
+      rank: card.rank,
+      created: card.created,
+      userId: card.userId,
+      columnId: card.columnId,
+      boardId: card.boardId,
+    };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${card.cardId}`,
-        card,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${card._id}`,
+        updatedCard,
         {
           headers: { Authorization: 'Bearer ' + token },
         },

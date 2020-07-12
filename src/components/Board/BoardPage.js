@@ -9,6 +9,7 @@ import BoardColumn from './BoardColumn';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NewCardForm from './NewCardForm';
 import { toast } from 'react-toastify';
+import { LexoRank } from 'lexorank';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -40,7 +41,7 @@ const BoardPage = (props) => {
       let _cards = await cardsService.getAll(props.match.params.boardId, token);
       // Sort them into order
       _cards = _cards.sort((a, b) => {
-        if (a.order > b.order) return 1;
+        if (a.rank > b.rank) return 1;
         return -1;
       });
       // Update the boards
@@ -68,11 +69,19 @@ const BoardPage = (props) => {
     const token = await getAccessTokenSilently();
     // Get the column from the card and then remove
     const columnId = card.columnId;
-    delete card.columnId;
+    // Set the rank based on the highest in the column
+    const columnCards = cards.filter((c) => c.columnId === columnId);
+    if (columnCards.length > 0) {
+      const highestRank = columnCards[columnCards.length - 1].rank;
+      const highestLexoRank = LexoRank.parse(highestRank);
+      card.rank = highestLexoRank.genNext().toString();
+    } else {
+      card.rank = LexoRank.middle().toString();
+    }
     // Call the API
     const _newCard = await cardsService.create(
       board._id,
-      columnId,
+      card.columnId,
       card,
       token,
     );
@@ -84,13 +93,9 @@ const BoardPage = (props) => {
     // Get the access token required to call the API
     const token = await getAccessTokenSilently();
     // Call the API
-    await cardsService.remove(board._id, card.columnId, card.cardId, token);
+    await cardsService.remove(board._id, card.columnId, card._id, token);
     // Remove the card from the list
-    const _cards = cards.filter((c) => c.cardId !== card.cardId);
-    // Re-order anything after that card on the list
-    _cards.map((c) => {
-      if (c.columnId === card.columnId && c.order > card.order) c.order -= 1;
-    });
+    const _cards = cards.filter((c) => c._id !== card._id);
     // Save changes to state
     setCards(_cards);
   };
@@ -104,63 +109,52 @@ const BoardPage = (props) => {
     }
     // Take a copy of the cards state
     let _cards = cards;
+    // A variable for the new rank
+    let newRank = LexoRank.middle().toString();
+
+    // Find the cards in the column that was dragged to
+    const columnCards = _cards.filter(
+      (c) => c.columnId === destination.droppableId,
+    );
+    // If there is nothing in the column already then no action required
+    // Otherwise set the new rank based on the existing card it replaces
+    if (columnCards.length > 0) {
+      let lowerRank = LexoRank.min();
+      let higherRank = LexoRank.max();
+      // If moving down the same list then the logic is slightly different
+      if (
+        source.droppableId === destination.droppableId &&
+        source.index < destination.index
+      ) {
+        // If this isn't bottom top of the list then we can adjust the lower
+        lowerRank = LexoRank.parse(columnCards[destination.index].rank);
+        // The higher will replace the existing card that we slip above
+        if (destination.index < columnCards.length - 1)
+          higherRank = LexoRank.parse(columnCards[destination.index + 1].rank);
+      } else {
+        // If this isn't the top of the list then we can adjust the lower
+        if (destination.index > 0)
+          lowerRank = LexoRank.parse(columnCards[destination.index - 1].rank);
+        // The higher will replace the existing card that we slip above
+        if (destination.index <= columnCards.length - 1)
+          higherRank = LexoRank.parse(columnCards[destination.index].rank);
+      }
+      newRank = lowerRank.between(higherRank).toString();
+    }
 
     // Update the card that was dragged
     _cards
-      .filter((c) => c.cardId === result.draggableId)
+      .filter((c) => c._id === result.draggableId)
       .map(async (card) => {
-        card.order = destination.index;
+        card.rank = newRank;
         card.columnId = destination.droppableId;
         const token = await getAccessTokenSilently();
-        await cardsService.update(board._id, card, token);
+        await cardsService.update(board._id, source.droppableId, card, token);
       });
-
-    // If moved within the existing column then we only need to adjust between the from and to index
-    if (source.droppableId === destination.droppableId) {
-      // These are cards will be moved down the list
-      _cards
-        .filter(
-          (c) =>
-            c.cardId !== result.draggableId &&
-            c.columnId === source.droppableId &&
-            c.order > source.index,
-        )
-        .map((card) => (card.order -= 1));
-      // These cards will be moved up the list
-      _cards
-        .filter(
-          (c) =>
-            c.cardId !== result.draggableId &&
-            c.columnId === source.droppableId &&
-            c.order >= destination.index,
-        )
-        .map((card) => (card.order += 1));
-    }
-    // Otherwise if the card moved between columns
-    else {
-      // These are cards that have moved down the list
-      _cards
-        .filter(
-          (c) =>
-            c.cardId !== result.draggableId &&
-            c.columnId === source.droppableId &&
-            c.order > source.index,
-        )
-        .map((card) => (card.order -= 1));
-      // These are cards that have moved up the list
-      _cards
-        .filter(
-          (c) =>
-            c.cardId !== result.draggableId &&
-            c.columnId === destination.droppableId &&
-            c.order >= destination.index,
-        )
-        .map((card) => (card.order += 1));
-    }
 
     // Sort the cards into order
     _cards = _cards.sort((a, b) => {
-      if (a.order > b.order) return 1;
+      if (a.rank > b.rank) return 1;
       return -1;
     });
     // Update state with the re-ordered cards
