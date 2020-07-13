@@ -72,20 +72,23 @@ const BoardPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  io.removeAllListeners('card created');
+  // On any new cards then update
+  io.on('card created', (card) => {
+    const check = cards.find((c) => c._id === card._id);
+    // If not then add it to the list
+    if (!check) {
+      setCards([...cards, card]);
+    }
+  });
+
   useEffect(() => {
-    // On any new cards then update
-    io.off('card created').on('card created', (card) => {
-      const check = cards.find((c) => c._id === card._id);
-      // If not then add it to the list
-      if (!check) {
-        setCards([...cards, card]);
-      }
-    });
+    io.removeAllListeners('card updated');
     // For any updated cards
-    io.off('card updated').on('card updated', (updatedCard) => {
-      console.log('card update from websocket');
+    io.on('card updated', (updatedCard) => {
+      console.log(updatedCard);
       // Take a copy of the cards state
-      let _cards = cards;
+      let _cards = [...cards];
       // Update the card that was dragged
       _cards
         .filter((c) => c._id === updatedCard._id)
@@ -100,12 +103,14 @@ const BoardPage = (props) => {
         if (a.rank > b.rank) return 1;
         return -1;
       });
+      console.log(_cards);
       // Update state with the re-ordered cards
       setCards(_cards);
     });
 
+    io.removeAllListeners('card deleted');
     // For any deleted cards
-    io.off('card deleted').on('card deleted', (cardId) => {
+    io.on('card deleted', (cardId) => {
       // Filter out the cards not deleted and update
       const _cards = cards.filter((c) => c._id !== cardId);
       setCards(_cards);
@@ -156,7 +161,7 @@ const BoardPage = (props) => {
       return;
     }
     // Take a copy of the cards state
-    let _cards = cards;
+    let _cards = [...cards];
     // A variable for the new rank
     let newRank = LexoRank.middle().toString();
 
