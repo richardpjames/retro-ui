@@ -74,7 +74,7 @@ const BoardPage = (props) => {
 
   useEffect(() => {
     // On any new cards then update
-    io.on('card created', (card) => {
+    io.off('card created').on('card created', (card) => {
       const check = cards.find((c) => c._id === card._id);
       // If not then add it to the list
       if (!check) {
@@ -82,7 +82,8 @@ const BoardPage = (props) => {
       }
     });
     // For any updated cards
-    io.on('card updated', (updatedCard) => {
+    io.off('card updated').on('card updated', (updatedCard) => {
+      console.log('card update from websocket');
       // Take a copy of the cards state
       let _cards = cards;
       // Update the card that was dragged
@@ -104,7 +105,7 @@ const BoardPage = (props) => {
     });
 
     // For any deleted cards
-    io.on('card deleted', (cardId) => {
+    io.off('card deleted').on('card deleted', (cardId) => {
       // Filter out the cards not deleted and update
       const _cards = cards.filter((c) => c._id !== cardId);
       setCards(_cards);
