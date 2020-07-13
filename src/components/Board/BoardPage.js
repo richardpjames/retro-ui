@@ -10,6 +10,7 @@ import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import NewCardForm from './NewCardForm';
 import { toast } from 'react-toastify';
 import { LexoRank } from 'lexorank';
+import io from '../../services/socket';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -60,9 +61,55 @@ const BoardPage = (props) => {
 
   // This is the initial load of existing boards for the user
   useEffect(() => {
+    // Fetch initial data
     fetchData(true);
-    // eslint-disable-next-line
+    // Set up socket connections - first join the room (and reconnect if needed)
+    io.emit('join', props.match.params.boardId);
+    io.on('connect', () => {
+      console.log('Joining room');
+      io.emit('join', props.match.params.boardId);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    // On any new cards then update
+    io.on('card created', (card) => {
+      const check = cards.find((c) => c._id === card._id);
+      // If not then add it to the list
+      if (!check) {
+        setCards([...cards, card]);
+      }
+    });
+    // For any updated cards
+    io.on('card updated', (updatedCard) => {
+      // Take a copy of the cards state
+      let _cards = cards;
+      // Update the card that was dragged
+      _cards
+        .filter((c) => c._id === updatedCard._id)
+        .map(async (card) => {
+          card.text = updatedCard.text;
+          card.rank = updatedCard.rank;
+          card.columnId = updatedCard.columnId;
+        });
+
+      // Sort the cards into order
+      _cards = _cards.sort((a, b) => {
+        if (a.rank > b.rank) return 1;
+        return -1;
+      });
+      // Update state with the re-ordered cards
+      setCards(_cards);
+    });
+
+    // For any deleted cards
+    io.on('card deleted', (cardId) => {
+      // Filter out the cards not deleted and update
+      const _cards = cards.filter((c) => c._id !== cardId);
+      setCards(_cards);
+    });
+  }, [cards]);
 
   const addCard = async (card) => {
     // Get the access token required to call the API
