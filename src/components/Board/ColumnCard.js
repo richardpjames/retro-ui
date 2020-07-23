@@ -1,11 +1,13 @@
 /* eslint jsx-a11y/anchor-is-valid:0 */
 
 import React from 'react';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const ColumnCard = (props) => {
   const handleClick = (event) => {
     props.deleteCard(props.card);
   };
+  const { user } = useAuth0();
 
   return (
     <div className="card card-white-bg">
@@ -38,7 +40,12 @@ const ColumnCard = (props) => {
                 </div>
               </div>
               <div className="media-right">
-                <button onClick={handleClick} className="delete"></button>
+                {(() => {
+                  if (user.sub === props.card.userId)
+                    return (
+                      <button onClick={handleClick} className="delete"></button>
+                    );
+                })()}
               </div>
             </div>
           </div>

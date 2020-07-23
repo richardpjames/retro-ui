@@ -1,25 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Auth0Provider} from "@auth0/auth0-react";
+import { Auth0Provider } from '@auth0/auth0-react';
 import * as serviceWorker from './serviceWorker';
-import AppRouter from "./components/Router/AppRouter";
-import 'bulma/css/bulma.min.css';
-import 'react-toastify/dist/ReactToastify.css';
+import AppRouter from './components/Router/AppRouter';
+import 'bulma';
 import './css/app.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
-      domain="login.retrospectacle.io"
-      clientId="GZsJrMA1MuvKDi9lWx0XxmhdrSAh9YwW"
-      redirectUri={window.location.origin}
-      audience="https://api.retrospectacle.io"
+      domain={process.env.REACT_APP_AUTH0_DOMAIN}
+      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+      redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
+      audience={process.env.REACT_APP_AUTH0_AUDIENCE}
       scope="read:current_user update:current_user_metadata"
     >
-      <AppRouter/>
+      <AppRouter />
     </Auth0Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want your app to work offline and load faster, you can change

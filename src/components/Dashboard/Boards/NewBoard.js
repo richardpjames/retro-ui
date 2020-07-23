@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import templateService from '../../services/templatesService';
+import templateService from '../../../services/templatesService';
 import { useAuth0 } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
 

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import boardsService from '../../services/boardsService';
 import cardsService from '../../services/cardsService';
 import columnsService from '../../services/columnsService';
-import { useAuth0 } from '@auth0/auth0-react';
+import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import BoardColumn from './BoardColumn';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
@@ -66,7 +66,6 @@ const BoardPage = (props) => {
     // Set up socket connections - first join the room (and reconnect if needed)
     io.emit('join', props.match.params.boardId);
     io.on('connect', () => {
-      console.log('Joining room');
       io.emit('join', props.match.params.boardId);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +85,6 @@ const BoardPage = (props) => {
     io.removeAllListeners('card updated');
     // For any updated cards
     io.on('card updated', (updatedCard) => {
-      console.log(updatedCard);
       // Take a copy of the cards state
       let _cards = [...cards];
       // Update the card that was dragged
@@ -103,7 +101,6 @@ const BoardPage = (props) => {
         if (a.rank > b.rank) return 1;
         return -1;
       });
-      console.log(_cards);
       // Update state with the re-ordered cards
       setCards(_cards);
     });
@@ -264,4 +261,4 @@ const BoardPage = (props) => {
   );
 };
 
-export default BoardPage;
+export default withAuthenticationRequired(BoardPage);
