@@ -7,7 +7,7 @@ import Boards from './Boards/Boards';
 const Dashboard = () => {
   return (
     <div className="columns">
-      <div className="column is-narrow">
+      <div className="column is-one-fifth">
         <Sidebar />
       </div>
       <div className="column">

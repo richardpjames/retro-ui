@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BoardList from './BoardList';
-import NewBoard from './NewBoard';
+import NewBoardModal from './NewBoardModal';
 import { useAuth0 } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
 import boardsService from '../../../services/boardsService';
@@ -9,6 +9,7 @@ const Boards = () => {
   const { getAccessTokenSilently } = useAuth0();
   const [boards, updateBoards] = useState([]);
   const [loading, updateLoading] = useState(false);
+  const [createModalVisible, setCreateModalVisible] = useState(false);
 
   // This is the initial load of existing boards for the user
   useEffect(() => {
@@ -76,27 +77,32 @@ const Boards = () => {
 
   return (
     <div className="content mx-5 my-5">
-      <h1 className="title is-1 mt-3">Your Boards</h1>
+      <div class="columns is-vcentered">
+        <div class="column py-0">
+          <h1 className="title is-1 mt-3">Retrospective Boards</h1>
+        </div>
+        <div class="column py-0 is-narrow">
+          <button
+            className="button is-primary"
+            onClick={() => {
+              setCreateModalVisible(true);
+            }}
+          >
+            <i className="fas fa-plus mr-3"></i> Create New
+          </button>
+        </div>
+      </div>
       <p>
         View an existing board, or create a new one. Your most recent boards are
         shown at the top of the page.
       </p>
+      <NewBoardModal
+        boards={boards}
+        addBoard={addBoard}
+        visible={createModalVisible}
+        setVisible={setCreateModalVisible}
+      />
       <div className="content">
-        <h3 className="title is-3">Create New</h3>
-        <p>
-          Creating a new board is as simple as picking a name, giving a
-          description and then choosing one of the starter templates to get
-          going. Once the board is created you can add/change the columns and
-          descriptions.
-        </p>
-        <NewBoard boards={boards} addBoard={addBoard} />
-      </div>
-      <div className="content">
-        <h3 className="title is-3">Existing Boards</h3>
-        <p>
-          These are the boards from your previous retrospectives, which are kept
-          here until you choose to delete them.
-        </p>
         {(() => {
           if (loading)
             return (

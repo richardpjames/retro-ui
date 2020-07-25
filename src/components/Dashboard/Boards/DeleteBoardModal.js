@@ -36,7 +36,7 @@ const DeleteBoardModal = (props) => {
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title">{props.board.name}</p>
+          <p className="modal-card-title my-0">{props.board.name}</p>
           <button
             className="delete"
             aria-label="close"

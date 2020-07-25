@@ -13,7 +13,7 @@ const ColumnCard = (props) => {
     <div className="card card-white-bg">
       <div className="card-content">
         <div className="columns">
-          <div className="column">
+          <div className="column py-1 px-1 my-1 mx-1">
             <div className="media">
               <div className="media-left">
                 <p className="image is-64x64">

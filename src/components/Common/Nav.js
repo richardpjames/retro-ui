@@ -107,17 +107,6 @@ const Nav = () => {
                 );
               }
             })()}
-            {/* 
-            About
-            */}
-            <NavLink
-              className="navbar-item"
-              activeClassName="is-active"
-              to="/about"
-              onClick={closeNavLinks}
-            >
-              <i className="fas fa-question mr-3"></i> About
-            </NavLink>
           </div>
         </div>
         {/* 
@@ -145,7 +134,7 @@ const Nav = () => {
                   className="navbar-item"
                   onClick={() => loginWithRedirect()}
                 >
-                  <i className="fas fa-sign-in-alt mr-3"></i> Log In
+                  <i className="fas fa-sign-in-alt mr-3"></i> Log In / Sign Up
                 </NavLink>
               </>
             );

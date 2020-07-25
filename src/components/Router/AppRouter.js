@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import Nav from '../Common/Nav';
 import Home from '../Pages/Home';
-import About from '../Pages/About';
 import Dashboard from '../Dashboard/Dashboard';
 import BoardPage from '../Board/BoardPage';
 import Purchase from '../Pages/Purchase';
@@ -32,7 +31,6 @@ const AppRouter = () => {
         />
         <Switch>
           <Route path="/" component={Home} exact />
-          <Route path="/about" component={About} />
           <Route path="/purchase" component={Purchase} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/board/:boardId" component={BoardPage} />

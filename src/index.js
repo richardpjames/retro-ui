@@ -3,9 +3,8 @@ import ReactDOM from 'react-dom';
 import { Auth0Provider } from '@auth0/auth0-react';
 import * as serviceWorker from './serviceWorker';
 import AppRouter from './components/Router/AppRouter';
-import 'bulma';
-import './css/app.css';
 import 'react-toastify/dist/ReactToastify.css';
+import './sass/app.sass';
 
 ReactDOM.render(
   <React.StrictMode>
