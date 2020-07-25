@@ -33,7 +33,7 @@ const Nav = () => {
 
   // This returns the nav bar at the top of the screen
   return (
-    <nav className="navbar is-radiusless is-primary" role="navigation">
+    <nav className="navbar is-radiusless is-dark" role="navigation">
       {/* 
       This first part of the nav is for the logo and also includes the burger menu 
       */}

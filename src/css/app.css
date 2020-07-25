@@ -19,3 +19,8 @@
 .nickname {
   text-transform:capitalize;
 }
+
+.hero-gradient {
+  background-image: url('/herobackground.png') !important;
+  background-size: cover;
+}
