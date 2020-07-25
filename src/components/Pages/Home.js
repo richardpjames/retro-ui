@@ -9,6 +9,9 @@ const Home = () => {
         <div className="hero-body">
           <div className="container">
             <div className="columns is-vcentered">
+              <div className="column is-hidden-tablet">
+                <img src="/retroboard.png" alt="Retrospective Board" />
+              </div>
               <div className="column">
                 <h1 className="title is-1">
                   Looking for a Better Way to Run Sprint Retrospectives?
@@ -23,7 +26,7 @@ const Home = () => {
                   </button>
                 </Link>
               </div>
-              <div className="column">
+              <div className="column is-hidden-mobile">
                 <img src="/retroboard.png" alt="Retrospective Board" />
               </div>
             </div>
@@ -35,6 +38,9 @@ const Home = () => {
         <div className="hero-body">
           <div className="container">
             <div className="columns is-vcentered">
+              <div className="column is-one-third">
+                <img src="/coworking.png" alt="Working Together" />
+              </div>
               <div className="column">
                 <div className="content">
                   <h1 className="title is-1">
@@ -78,12 +84,40 @@ const Home = () => {
         <div className="hero-body">
           <div className="container">
             <div className="columns is-vcentered">
+              <div className="column is-one-third is-hidden-tablet">
+                <img src="/kanban.png" alt="Retrospective Board" />
+              </div>
               <div className="column">
-                <h1 className="title is-1">How Can RetroSpectacle Help?</h1>
-                <h2 className="subtitle">
-                  RetroSpectacle provides free boards for running fun and
-                  insightful sprint retrospectives online
-                </h2>
+                <div className="content">
+                  <h1 className="title is-1">How Can RetroSpectacle Help?</h1>
+                  <p>
+                    RetroSpectacle provides a number of benefits over a
+                    traditional retrospective run using sticky notes and a
+                    whiteboard
+                  </p>
+                  <ul>
+                    <li>
+                      Keep an online record of all of your past retrospectives
+                      which are available for the team to view at any time.
+                    </li>
+                    <li>
+                      Track actions arising from retrospectives to ensure that
+                      ideas are taken forwards and implemented.
+                    </li>
+                    <li>
+                      Easier collaboration for teams working remotely (or with
+                      some team members working from home).
+                    </li>
+                    <li>
+                      Ideas for new retrospective formats are provided through
+                      templates, which means keeping sessions new, fun and
+                      engaging is made much easier.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div className="column is-one-third is-hidden-mobile">
+                <img src="/kanban.png" alt="Retrospective Board" />
               </div>
             </div>
           </div>
@@ -97,15 +131,12 @@ const Home = () => {
               <div className="column">
                 <div className="content">
                   <h1 className="title is-1">Features</h1>
-                  <p>
-                    RetroSpectacle provides free boards for running fun and
-                    insightful sprint retrospectives online
-                  </p>
+                  <p>RetroSpectacle provides a range of features:</p>
                   <div className="tile is-ancestor">
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i class="fas fa-chalkboard mr-3"></i> Boards
+                          <i className="fas fa-chalkboard mr-3"></i> Boards
                         </h2>
                         <p>
                           Create boards for your retrospectives which allow team
@@ -116,7 +147,7 @@ const Home = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i class="fas fa-user-friends mr-3"></i> Teams
+                          <i className="fas fa-user-friends mr-3"></i> Teams
                         </h2>
                         <p>
                           Create teams and give them access to all of their past
@@ -128,7 +159,7 @@ const Home = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i class="fab fa-github mr-3"></i> Social Login
+                          <i className="fab fa-github mr-3"></i> Social Login
                         </h2>
                         <p>
                           Sign up with an email address and password, or use
@@ -137,10 +168,25 @@ const Home = () => {
                         </p>
                       </div>
                     </div>
+                  </div>
+                  <div className="tile is-ancestor">
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i class="fas fa-pencil-alt mr-3"></i> Track Actions
+                          <i className="fas fa-arrows-alt mr-3"></i> Drag and
+                          Drop
+                        </h2>
+                        <p>
+                          A simple drag and drop interface makes it easy for all
+                          team members to participate.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="tile card mx-5 my-5">
+                      <div className="card-content">
+                        <h2>
+                          <i className="fas fa-pencil-alt mr-3"></i> Track
+                          Actions
                         </h2>
                         <p>
                           Make a note of actions from each retro and track their
@@ -152,7 +198,7 @@ const Home = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i class="far fa-clock mr-3"></i> Real Time
+                          <i className="far fa-clock mr-3"></i> Real Time
                           Collaboration
                         </h2>
                         <p>

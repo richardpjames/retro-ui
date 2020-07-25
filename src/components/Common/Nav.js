@@ -93,7 +93,7 @@ const Nav = () => {
                     </NavLink>
                     {/* 
                       Upgrade to paid account
-                    */}
+                    
                     <NavLink
                       className="navbar-item"
                       activeClassName="is-active"
@@ -102,6 +102,7 @@ const Nav = () => {
                     >
                       <i className="fas fa-shopping-cart mr-3"></i> Upgrade
                     </NavLink>
+                    */}
                   </>
                 );
               }
