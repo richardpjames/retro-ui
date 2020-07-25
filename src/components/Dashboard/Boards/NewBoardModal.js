@@ -54,7 +54,22 @@ const NewBoardModal = (props) => {
     }
   }, [getAccessTokenSilently]);
 
-  if (props.boards.length === 5) {
+  // Check whether the user is allowed more than 5 boards
+  const checkBoardRestriction = () => {
+    if (
+      props.profile.subscription &&
+      props.profile.subscription.state &&
+      props.profile.subscription.state !== 'deleted'
+    ) {
+      return false;
+    }
+    if (props.boards.length >= 5) {
+      return true;
+    }
+    return false;
+  };
+
+  if (checkBoardRestriction()) {
     return (
       <div className={checkVisible()} id="createBoardModal">
         <div className="modal-background"></div>

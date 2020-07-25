@@ -23,7 +23,7 @@ const Sidebar = () => {
       <p className="menu-label">Settings</p>
       <ul className="menu-list">
         <li>
-          <NavLink activeClassName="is-active" to="/dashboard/user">
+          <NavLink activeClassName="is-active" to="/dashboard/profile">
             User Profile
           </NavLink>
         </li>

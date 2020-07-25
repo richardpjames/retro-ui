@@ -4,10 +4,12 @@ import NewBoardModal from './NewBoardModal';
 import { useAuth0 } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
 import boardsService from '../../../services/boardsService';
+import usersService from '../../../services/usersService';
 
 const Boards = () => {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const [boards, updateBoards] = useState([]);
+  const [profile, setProfile] = useState({});
   const [loading, updateLoading] = useState(false);
   const [createModalVisible, setCreateModalVisible] = useState(false);
 
@@ -29,15 +31,18 @@ const Boards = () => {
           });
           updateBoards(_boards);
         }
+        const profile = await usersService.getById(user.sub, token);
+        setProfile(profile);
         // Stop loading bar
         updateLoading(false);
       } catch (error) {
         // For now just log any errors - TODO: Improve error handling
+        console.log(error);
         toast.error(error);
       }
     };
     fetchData();
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, user]);
 
   const addBoard = async (board) => {
     try {
@@ -77,11 +82,11 @@ const Boards = () => {
 
   return (
     <div className="content mx-5 my-5">
-      <div class="columns is-vcentered">
-        <div class="column py-0">
+      <div className="columns is-vcentered">
+        <div className="column py-0">
           <h1 className="title is-1 mt-3">Retrospective Boards</h1>
         </div>
-        <div class="column py-0 is-narrow">
+        <div className="column py-0 is-narrow">
           <button
             className="button is-primary"
             onClick={() => {
@@ -98,6 +103,7 @@ const Boards = () => {
       </p>
       <NewBoardModal
         boards={boards}
+        profile={profile}
         addBoard={addBoard}
         visible={createModalVisible}
         setVisible={setCreateModalVisible}

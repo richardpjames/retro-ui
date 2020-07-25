@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Sidebar from './Sidebar';
 import Boards from './Boards/Boards';
+import ProfilePage from './Profile/ProfilePage';
 
 const Dashboard = () => {
   return (
@@ -12,6 +13,7 @@ const Dashboard = () => {
       </div>
       <div className="column">
         <Switch>
+          <Route path="/dashboard/profile" component={ProfilePage} />
           <Route path="/dashboard/boards" component={Boards} />
           <Boards />
         </Switch>
