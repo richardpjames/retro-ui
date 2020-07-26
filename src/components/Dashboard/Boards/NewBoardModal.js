@@ -57,6 +57,7 @@ const NewBoardModal = (props) => {
   // Check whether the user is allowed more than 5 boards
   const checkBoardRestriction = () => {
     if (
+      props.profile &&
       props.profile.subscription &&
       props.profile.subscription.state &&
       props.profile.subscription.state !== 'deleted'

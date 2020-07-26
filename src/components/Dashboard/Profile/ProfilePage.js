@@ -8,6 +8,7 @@ const ProfilePage = () => {
   // State for holding the user information
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(true);
+  const Paddle = window.Paddle;
 
   // Get the access token for the user
   const { getAccessTokenSilently, user } = useAuth0();
@@ -84,6 +85,10 @@ const ProfilePage = () => {
               <td>Times Logged In</td>
               <td>{profile.logins_count}</td>
             </tr>
+            <tr>
+              <td>Current Subscription Plan</td>
+              <td className="is-capitalized">{profile.plan}</td>
+            </tr>
           </tbody>
         </table>
         <h2 className="title is-2">Your Subscription Details</h2>
@@ -141,24 +146,30 @@ const ProfilePage = () => {
                   </tbody>
                 </table>
                 <div className="buttons">
-                  <a
-                    href={profile.subscription.update_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button
+                    onClick={() => {
+                      Paddle.Checkout.open({
+                        override: profile.subscription.update_url,
+                        success: '/dashboard/profile',
+                        displayModeTheme: 'dark',
+                      });
+                    }}
+                    className="button is-primary mr-2"
                   >
-                    <button className="button is-primary mr-2">
-                      Update Payment Information
-                    </button>
-                  </a>
-                  <a
-                    href={profile.subscription.cancel_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    Update Payment Information
+                  </button>
+                  <button
+                    onClick={() => {
+                      Paddle.Checkout.open({
+                        override: profile.subscription.cancel_url,
+                        success: '/dashboard/profile',
+                        displayModeTheme: 'dark',
+                      });
+                    }}
+                    className="button is-danger"
                   >
-                    <button className="button is-danger">
-                      Cancel Subscription
-                    </button>
-                  </a>
+                    Cancel Subscription
+                  </button>
                 </div>
               </>
             );
