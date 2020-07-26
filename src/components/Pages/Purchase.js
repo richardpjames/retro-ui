@@ -45,7 +45,7 @@ const Purchase = () => {
         <div className="hero-body">
           <div className="container">
             <div className="columns is-vcentered">
-              <div className="column">
+              <div className="column is-one-third">
                 <div className="content">
                   <h1 className="title is-1 mt-3">Pricing Plans</h1>
                   <p>
@@ -65,126 +65,117 @@ const Purchase = () => {
                   </p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="hero is-bold ">
-        <div className="hero-body">
-          <div className="container">
-            <div className="pricing-table is-comparative">
-              <div className="pricing-plan is-features">
-                <div className="plan-header">Features</div>
-                <div className="plan-price">
-                  <span className="plan-price-amount">&nbsp;</span>
-                </div>
-                <div className="plan-items">
-                  <div className="plan-item">Built In Templates</div>
-                  <div className="plan-item">Boards</div>
-                  <div className="plan-item">Teams</div>
-                  <div className="plan-item">Team Members</div>
-                  <div className="plan-item">Free Trial</div>
-                </div>
-                <div className="plan-footer"></div>
-              </div>
-              <div className="pricing-plan">
-                <div className="plan-header">Starter</div>
-                <div className="plan-price">
-                  <span className="plan-price-amount">
-                    <span className="plan-price-currency">$</span>Free
-                  </span>
-                </div>
-                <div className="plan-items">
-                  <div className="plan-item" data-feature="Templates">
-                    10
+              <div className="column">
+                <div className="pricing-table is-comparative">
+                  <div className="pricing-plan is-features">
+                    <div className="plan-header">Features</div>
+                    <div className="plan-price">
+                      <span className="plan-price-amount">&nbsp;</span>
+                    </div>
+                    <div className="plan-items">
+                      <div className="plan-item">Built In Templates</div>
+                      <div className="plan-item">Boards</div>
+                      <div className="plan-item">Teams</div>
+                      <div className="plan-item">Team Members</div>
+                      <div className="plan-item">Free Trial</div>
+                    </div>
+                    <div className="plan-footer"></div>
                   </div>
-                  <div className="plan-item" data-feature="Boards">
-                    5
+                  <div className="pricing-plan">
+                    <div className="plan-header">Starter</div>
+                    <div className="plan-price">
+                      <span className="plan-price-amount">
+                        <span className="plan-price-currency">$</span>Free
+                      </span>
+                    </div>
+                    <div className="plan-items">
+                      <div className="plan-item" data-feature="Templates">
+                        10
+                      </div>
+                      <div className="plan-item" data-feature="Boards">
+                        5
+                      </div>
+                      <div className="plan-item" data-feature="Teams">
+                        1
+                      </div>
+                      <div className="plan-item" data-feature="Team Members">
+                        5
+                      </div>
+                      <div className="plan-item" data-feature="Free Trial">
+                        -
+                      </div>
+                    </div>
                   </div>
-                  <div className="plan-item" data-feature="Teams">
-                    1
-                  </div>
-                  <div className="plan-item" data-feature="Team Members">
-                    5
-                  </div>
-                  <div className="plan-item" data-feature="Free Trial">
-                    -
-                  </div>
-                </div>
-                <div className="plan-footer">
-                  <button className="button is-fullwidth" disabled="disabled">
-                    Features Included for Free
-                  </button>
-                </div>
-              </div>
 
-              <div className="pricing-plan is-success">
-                <div className="plan-header">Professional</div>
-                <div className="plan-price">
-                  <span className="plan-price-amount">
-                    <span className="plan-price-currency">$</span>10
-                  </span>
-                  /month
-                </div>
-                <div className="plan-items">
-                  <div className="plan-item" data-feature="Templates">
-                    10
+                  <div className="pricing-plan is-success">
+                    <div className="plan-header">Professional</div>
+                    <div className="plan-price">
+                      <span className="plan-price-amount">
+                        <span className="plan-price-currency">$</span>10
+                      </span>
+                      /month
+                    </div>
+                    <div className="plan-items">
+                      <div className="plan-item" data-feature="Templates">
+                        10
+                      </div>
+                      <div className="plan-item" data-feature="Boards">
+                        Unlimited
+                      </div>
+                      <div className="plan-item" data-feature="Teams">
+                        Unlimited
+                      </div>
+                      <div className="plan-item" data-feature="Team Members">
+                        Unlimited
+                      </div>
+                      <div className="plan-item" data-feature="Free Trial">
+                        30 Days
+                      </div>
+                    </div>
+                    <div className="plan-footer">
+                      {(() => {
+                        // If the user already has a professional plan then no need to upgrade
+                        if (
+                          profile &&
+                          profile.plan &&
+                          profile.plan === 'professional'
+                        ) {
+                          return (
+                            <button
+                              className="button is-fullwidth"
+                              disabled="disabled"
+                            >
+                              Your Current Plan
+                            </button>
+                          );
+                        }
+                        // If the user is logged in then we can open the checkout
+                        if (isAuthenticated && profile.plan) {
+                          return (
+                            <button
+                              className="button is-fullwidth"
+                              onClick={openCheckout}
+                            >
+                              Upgrade
+                            </button>
+                          );
+                        }
+                        // If the user is not logged in then prompt them to sign up
+                        if (!isAuthenticated) {
+                          return (
+                            <>
+                              <button
+                                className="button is-fullwidth"
+                                onClick={loginWithRedirect}
+                              >
+                                Log In or Sign Up
+                              </button>
+                            </>
+                          );
+                        }
+                      })()}
+                    </div>
                   </div>
-                  <div className="plan-item" data-feature="Boards">
-                    Unlimited
-                  </div>
-                  <div className="plan-item" data-feature="Teams">
-                    Unlimited
-                  </div>
-                  <div className="plan-item" data-feature="Team Members">
-                    Unlimited
-                  </div>
-                  <div className="plan-item" data-feature="Free Trial">
-                    30 Days
-                  </div>
-                </div>
-                <div className="plan-footer">
-                  {(() => {
-                    // If the user already has a professional plan then no need to upgrade
-                    if (
-                      profile &&
-                      profile.plan &&
-                      profile.plan === 'professional'
-                    ) {
-                      return (
-                        <button
-                          className="button is-fullwidth"
-                          disabled="disabled"
-                        >
-                          Your Current Plan
-                        </button>
-                      );
-                    }
-                    // If the user is logged in then we can open the checkout
-                    if (isAuthenticated && profile.plan) {
-                      return (
-                        <button
-                          className="button is-fullwidth"
-                          onClick={openCheckout}
-                        >
-                          Upgrade
-                        </button>
-                      );
-                    }
-                    // If the user is not logged in then prompt them to sign up
-                    if (!isAuthenticated) {
-                      return (
-                        <>
-                          <button
-                            className="button is-fullwidth"
-                            onClick={loginWithRedirect}
-                          >
-                            Log In or Sign Up
-                          </button>
-                        </>
-                      );
-                    }
-                  })()}
                 </div>
               </div>
             </div>
