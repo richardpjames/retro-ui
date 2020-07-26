@@ -31,7 +31,7 @@ const AppRouter = () => {
         />
         <Switch>
           <Route path="/" component={Home} exact />
-          <Route path="/purchase" component={Purchase} />
+          <Route path="/pricing" component={Purchase} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/board/:boardId" component={BoardPage} />
         </Switch>

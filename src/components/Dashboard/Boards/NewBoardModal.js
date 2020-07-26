@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import templateService from '../../../services/templatesService';
 import { useAuth0 } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const NewBoardModal = (props) => {
   // Create three new state objects to hold the name, description and starter template for the board
@@ -56,12 +57,7 @@ const NewBoardModal = (props) => {
 
   // Check whether the user is allowed more than 5 boards
   const checkBoardRestriction = () => {
-    if (
-      props.profile &&
-      props.profile.subscription &&
-      props.profile.subscription.state &&
-      props.profile.subscription.state !== 'deleted'
-    ) {
+    if (props.profile && props.profile.plan && props.profile.plan !== 'free') {
       return false;
     }
     if (props.boards.length >= 5) {
@@ -92,6 +88,11 @@ const NewBoardModal = (props) => {
           </section>
           <footer className="modal-card-foot">
             <div className="buttons">
+              <Link to="/pricing">
+                <button className="button is-primary mr-2">
+                  <i className="fas fa-shopping-cart mr-3"></i>Upgrade
+                </button>
+              </Link>
               <button className="button" onClick={closeModal}>
                 <i className="fas fa-ban mr-3"></i> Close
               </button>

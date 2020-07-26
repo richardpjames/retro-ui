@@ -18,6 +18,7 @@ const BoardPage = (props) => {
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [dragDisabled, setDragDisabled] = useState(false);
 
   const fetchData = async (showLoadingBar = false) => {
     try {
@@ -68,6 +69,9 @@ const BoardPage = (props) => {
     io.on('connect', () => {
       io.emit('join', props.match.params.boardId);
     });
+    return function cleanup() {
+      io.emit('leave', props.match.params.boardId);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -143,10 +147,34 @@ const BoardPage = (props) => {
     // Get the access token required to call the API
     const token = await getAccessTokenSilently();
     // Call the API
-    await cardsService.remove(board._id, card.columnId, card._id, token);
+    cardsService.remove(board._id, card.columnId, card._id, token);
     // Remove the card from the list
     const _cards = cards.filter((c) => c._id !== card._id);
     // Save changes to state
+    setCards(_cards);
+  };
+
+  const updateCard = async (card) => {
+    // Get the access token required to call the API
+    const token = await getAccessTokenSilently();
+    // Call the api
+    cardsService.update(board._id, card.columnId, card, token);
+    // Take a copy of the cards state
+    let _cards = [...cards];
+    // Update the card that was updated
+    _cards
+      .filter((c) => c._id === card._id)
+      .map(async (c2) => {
+        c2.text = card.text;
+        c2.rank = card.rank;
+        c2.columnId = card.columnId;
+      });
+    // Sort the cards into order
+    _cards = _cards.sort((a, b) => {
+      if (a.rank > b.rank) return 1;
+      return -1;
+    });
+    // Update state with the re-ordered cards
     setCards(_cards);
   };
 
@@ -199,7 +227,7 @@ const BoardPage = (props) => {
         card.rank = newRank;
         card.columnId = destination.droppableId;
         const token = await getAccessTokenSilently();
-        await cardsService.update(board._id, source.droppableId, card, token);
+        cardsService.update(board._id, source.droppableId, card, token);
       });
 
     // Sort the cards into order
@@ -239,6 +267,9 @@ const BoardPage = (props) => {
                   >
                     <BoardColumn
                       deleteCard={deleteCard}
+                      updateCard={updateCard}
+                      dragDisabled={dragDisabled}
+                      setDragDisabled={setDragDisabled}
                       cards={cards.filter((c) => c.columnId === column._id)}
                     />
                     {provided.placeholder}

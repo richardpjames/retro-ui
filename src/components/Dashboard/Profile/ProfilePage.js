@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
 import usersService from '../../../services/usersService';
@@ -94,7 +95,19 @@ const ProfilePage = () => {
         <h2 className="title is-2">Your Subscription Details</h2>
         {(() => {
           if (!profile.subscription) {
-            return <p>No subscription details are held.</p>;
+            return (
+              <>
+                <p>No subscription details are held.</p>
+                <div className="buttons">
+                  <Link to="/pricing">
+                    <button className="button is-primary">
+                      <i className="fas fa-shopping-cart mr-3"></i>Upgrade Your
+                      Account
+                    </button>
+                  </Link>
+                </div>
+              </>
+            );
           } else {
             return (
               <>
@@ -145,32 +158,60 @@ const ProfilePage = () => {
                     </tr>
                   </tbody>
                 </table>
-                <div className="buttons">
-                  <button
-                    onClick={() => {
-                      Paddle.Checkout.open({
-                        override: profile.subscription.update_url,
-                        success: '/dashboard/profile',
-                        displayModeTheme: 'dark',
-                      });
-                    }}
-                    className="button is-primary mr-2"
-                  >
-                    Update Payment Information
-                  </button>
-                  <button
-                    onClick={() => {
-                      Paddle.Checkout.open({
-                        override: profile.subscription.cancel_url,
-                        success: '/dashboard/profile',
-                        displayModeTheme: 'dark',
-                      });
-                    }}
-                    className="button is-danger"
-                  >
-                    Cancel Subscription
-                  </button>
-                </div>
+                {(() => {
+                  if (profile.subscription.state !== 'deleted') {
+                    return (
+                      <>
+                        <div className="buttons">
+                          <button
+                            onClick={() => {
+                              Paddle.Checkout.open({
+                                override: profile.subscription.update_url,
+                                passthrough: user.sub,
+                                success: '/dashboard/profile',
+                              });
+                            }}
+                            className="button is-primary"
+                          >
+                            <i className="fas fa-shopping-cart mr-3"></i>Update
+                            Payment Information
+                          </button>
+                          <button
+                            onClick={() => {
+                              Paddle.Checkout.open({
+                                override: profile.subscription.cancel_url,
+                                passthrough: user.sub,
+                                success: '/dashboard/profile',
+                              });
+                            }}
+                            className="button is-danger"
+                          >
+                            <i className="fas fa-ban mr-3"></i>Cancel
+                            Subscription
+                          </button>
+                        </div>
+                        <p>
+                          Note: if you cancel your subscription now, you will
+                          still retain access to your current subscription plan
+                          until your next billing date.
+                        </p>
+                      </>
+                    );
+                  } else {
+                    return (
+                      <>
+                        <div className="buttons">
+                          <Link to="/pricing">
+                            <button className="button is-primary">
+                              <i className="fas fa-shopping-cart mr-3"></i>Start
+                              New Subscription
+                            </button>
+                          </Link>
+                        </div>
+                      </>
+                    );
+                  }
+                })()}
               </>
             );
           }

@@ -8,7 +8,8 @@ const Sidebar = () => {
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/dashboard" exact>
-            Retrospective Boards
+            <i className="fas fa-chalkboard-teacher mr-3"></i>Retrospective
+            Boards
           </NavLink>
         </li>
       </ul>
@@ -16,7 +17,7 @@ const Sidebar = () => {
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/dashboard/teams">
-            Teams
+            <i className="fas fa-user-friends mr-3"></i>Teams
           </NavLink>
         </li>
       </ul>
@@ -24,7 +25,7 @@ const Sidebar = () => {
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/dashboard/profile">
-            User Profile
+            <i className="fas fa-id-badge mr-3"></i>User Profile
           </NavLink>
         </li>
       </ul>

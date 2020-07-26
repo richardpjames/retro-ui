@@ -73,6 +73,18 @@ const Nav = () => {
               <i className="fas fa-home mr-3"></i> Home
             </NavLink>
             {/* 
+                      Upgrade to paid account */}
+
+            <NavLink
+              className="navbar-item"
+              activeClassName="is-active"
+              to="/pricing"
+              onClick={closeNavLinks}
+            >
+              <i className="fas fa-shopping-cart mr-3"></i> Pricing
+            </NavLink>
+
+            {/* 
             This section is only shown if the user is logged in
             */}
             {(() => {
@@ -88,7 +100,7 @@ const Nav = () => {
                       to="/dashboard"
                       onClick={closeNavLinks}
                     >
-                      <i className="fas fa-chalkboard-teacher mr-3"></i>{' '}
+                      <i className="fas fa-chalkboard-teacher mr-3"></i>
                       Dashboard
                     </NavLink>
                     {/* 
