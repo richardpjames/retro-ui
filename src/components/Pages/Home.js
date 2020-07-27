@@ -114,101 +114,18 @@ const Home = () => {
                       engaging is made much easier.
                     </li>
                   </ul>
+                  <Link to="/pricing">
+                    <button
+                      className="button is-success"
+                      onClick={() => window.scrollTo(0, 0)}
+                    >
+                      See Pricing and Features
+                    </button>
+                  </Link>
                 </div>
               </div>
               <div className="column is-one-third is-hidden-mobile">
                 <img src="/kanban.png" alt="Retrospective Board" />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Features */}
-      <div className="hero is-medium is-bold">
-        <div className="hero-body">
-          <div className="container">
-            <div className="columns is-vcentered">
-              <div className="column">
-                <div className="content">
-                  <h1 className="title is-1">Features</h1>
-                  <p>RetroSpectacle provides a range of features:</p>
-                  <div className="tile is-ancestor">
-                    <div className="tile card mx-5 my-5">
-                      <div className="card-content">
-                        <h2>
-                          <i className="fas fa-chalkboard mr-3"></i> Boards
-                        </h2>
-                        <p>
-                          Create boards for your retrospectives which allow team
-                          members to add cards and comments.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="tile card mx-5 my-5">
-                      <div className="card-content">
-                        <h2>
-                          <i className="fas fa-user-friends mr-3"></i> Teams
-                        </h2>
-                        <p>
-                          Create teams and give them access to all of their past
-                          and future retrospectives through the online
-                          dashboard.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="tile card mx-5 my-5">
-                      <div className="card-content">
-                        <h2>
-                          <i className="fab fa-github mr-3"></i> Social Login
-                        </h2>
-                        <p>
-                          Sign up with an email address and password, or use
-                          social login providers from Google, GitHub and
-                          Microsoft.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="tile is-ancestor">
-                    <div className="tile card mx-5 my-5">
-                      <div className="card-content">
-                        <h2>
-                          <i className="fas fa-arrows-alt mr-3"></i> Drag and
-                          Drop
-                        </h2>
-                        <p>
-                          A simple drag and drop interface makes it easy for all
-                          team members to participate.
-                        </p>
-                      </div>
-                    </div>
-                    <div className="tile card mx-5 my-5">
-                      <div className="card-content">
-                        <h2>
-                          <i className="fas fa-pencil-alt mr-3"></i> Track
-                          Actions
-                        </h2>
-                        <p>
-                          Make a note of actions from each retro and track their
-                          progress to ensure that issues are resolved and
-                          improvements are implemented
-                        </p>
-                      </div>
-                    </div>
-                    <div className="tile card mx-5 my-5">
-                      <div className="card-content">
-                        <h2>
-                          <i className="far fa-clock mr-3"></i> Real Time
-                          Collaboration
-                        </h2>
-                        <p>
-                          Boards update in real time as other team members add
-                          and remove cards, comments and votes.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>

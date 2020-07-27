@@ -81,7 +81,7 @@ const Nav = () => {
               to="/pricing"
               onClick={closeNavLinks}
             >
-              <i className="fas fa-shopping-cart mr-3"></i> Pricing
+              <i className="fas fa-shopping-cart mr-3"></i> Pricing & Features
             </NavLink>
 
             {/* 
