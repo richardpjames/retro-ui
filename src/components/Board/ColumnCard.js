@@ -33,54 +33,35 @@ const ColumnCard = (props) => {
     return (
       <div className="card card-white-bg is-size-6-7">
         <div className="card-content py-4 px-4">
-          <div className="columns">
-            <div className="column py-1 px-1 my-1 mx-1">
-              <div className="columns is-vcentered mb-0">
-                <div className="column is-narrow pr-0 is-hidden-mobile">
-                  <p className="image is-32x32">
-                    <img
-                      className="is-rounded"
-                      src={props.card.picture}
-                      alt={props.card.nickName}
-                    />
-                  </p>
-                </div>
-                <div className="column is-narrow">
-                  <p>
-                    <strong className="is-capitalized">
-                      {props.card.nickName}
-                    </strong>
-                  </p>
-                </div>
-              </div>
-              <p>{props.card.text}</p>
-              <div>
-                {user.sub === props.card.userId ? (
-                  <>
-                    <a
-                      className="mr-2 has-tooltip-primary"
-                      onClick={() => {
-                        setEditable(true);
-                        props.setDragDisabled(true);
-                      }}
-                      data-tooltip="Edit Card"
-                    >
-                      <i className="fas fa-pencil-alt"></i>
-                    </a>
-                    <a
-                      className="mr-2 has-tooltip-danger"
-                      onClick={handleDelete}
-                      data-tooltip="Delete Card"
-                    >
-                      <i className="fas fa-trash-alt"></i>
-                    </a>
-                  </>
-                ) : null}
-                <a className="has-tooltip-primary" data-tooltip="Vote for Card">
-                  <i className="fas fa-thumbs-up"></i>
+          <p>
+            <strong className="is-capitalized">{props.card.nickName}</strong> -{' '}
+            {props.card.text}
+          </p>
+          <div>
+            {user.sub === props.card.userId ? (
+              <>
+                <a
+                  className="mr-2 has-tooltip-primary"
+                  onClick={() => {
+                    setEditable(true);
+                    props.setDragDisabled(true);
+                  }}
+                  data-tooltip="Edit Card"
+                >
+                  <i className="fas fa-pencil-alt"></i>
                 </a>
-              </div>
-            </div>
+                <a
+                  className="mr-2 has-tooltip-danger"
+                  onClick={handleDelete}
+                  data-tooltip="Delete Card"
+                >
+                  <i className="fas fa-trash-alt"></i>
+                </a>
+              </>
+            ) : null}
+            <a className="has-tooltip-primary" data-tooltip="Vote for Card">
+              <i className="fas fa-thumbs-up"></i>
+            </a>
           </div>
         </div>
       </div>
