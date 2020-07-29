@@ -269,12 +269,12 @@ const BoardPage = (props) => {
           </div>
         </div>
       </div>
-      <div className="columns board-columns is-scrollable-x">
+      <div className="columns board-columns">
         <DragDropContext onDragEnd={handleDragEnd}>
           {columns.map((column, index) => (
             <div
               key={column._id}
-              className="card column board-column mx-3 my-3"
+              className="card column board-column mx-1 my-1"
             >
               <h4 className="subtitle is-4 mx-3 my-3">{column.title}</h4>
               <NewCardForm addCard={addCard} column={column} />
