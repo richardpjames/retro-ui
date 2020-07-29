@@ -58,20 +58,25 @@ const ColumnCard = (props) => {
                 {user.sub === props.card.userId ? (
                   <>
                     <a
-                      className="mr-2"
+                      className="mr-2 has-tooltip-primary"
                       onClick={() => {
                         setEditable(true);
                         props.setDragDisabled(true);
                       }}
+                      data-tooltip="Edit Card"
                     >
                       <i className="fas fa-pencil-alt"></i>
                     </a>
-                    <a className="mr-2" onClick={handleDelete}>
+                    <a
+                      className="mr-2 has-tooltip-danger"
+                      onClick={handleDelete}
+                      data-tooltip="Delete Card"
+                    >
                       <i className="fas fa-trash-alt"></i>
                     </a>
                   </>
                 ) : null}
-                <a>
+                <a className="has-tooltip-primary" data-tooltip="Vote for Card">
                   <i className="fas fa-thumbs-up"></i>
                 </a>
               </div>

@@ -5,8 +5,11 @@ $success: hsl(141, 53%, 53%);
 $danger: hsl(348, 100%, 61%);
 $link: $primary;
 
+$tooltip-background-opacity: 1;
+
 @import "../../node_modules/bulma/bulma.sass";
 @import "../../node_modules/bulma-pricingtable/src/sass/index.sass"
+@import "../../node_modules/bulma-tooltip/src/sass/index.sass"
 
 .is-fullheight
   height: calc(100% - 150px) !important;
@@ -39,3 +42,6 @@ $link: $primary;
 
 td 
   width: 50%
+
+#root
+  overflow-x: hidden;

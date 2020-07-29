@@ -252,13 +252,17 @@ const BoardPage = (props) => {
         <div className="column is-narrow">
           <div className="buttons">
             <button
-              className="button is-rounded"
+              className="button is-rounded has-tooltip-primary"
               onClick={() => fetchData(false)}
+              data-tooltip="Refresh Data"
             >
               <i className="fas fa-sync-alt"></i>
             </button>
             <Link to="/dashboard">
-              <button className="button is-rounded">
+              <button
+                className="button is-rounded has-tooltip-primary"
+                data-tooltip="Back to Dashboard"
+              >
                 <i className="fas fa-arrow-left"></i>
               </button>
             </Link>
