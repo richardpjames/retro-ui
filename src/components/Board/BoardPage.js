@@ -276,7 +276,7 @@ const BoardPage = (props) => {
               key={column._id}
               className="card column board-column mx-1 my-1"
             >
-              <h4 className="subtitle is-4 mx-3 my-3">{column.title}</h4>
+              <h4 className="subtitle is-4 mx-3 mb-3 mt-0">{column.title}</h4>
               <NewCardForm addCard={addCard} column={column} />
               <Droppable droppableId={column._id}>
                 {(provided) => (
