@@ -31,13 +31,13 @@ const ColumnCard = (props) => {
 
   if (!editable) {
     return (
-      <div className="card card-white-bg">
-        <div className="card-content">
+      <div className="card card-white-bg is-size-6-7">
+        <div className="card-content py-4 px-4">
           <div className="columns">
             <div className="column py-1 px-1 my-1 mx-1">
-              <div className="media">
-                <div className="media-left">
-                  <p className="image is-64x64">
+              <div className="columns is-vcentered mb-0">
+                <div className="column is-narrow pr-0 is-hidden-mobile">
+                  <p className="image is-32x32">
                     <img
                       className="is-rounded"
                       src={props.card.picture}
@@ -45,40 +45,35 @@ const ColumnCard = (props) => {
                     />
                   </p>
                 </div>
-                <div className="media-content">
+                <div className="column is-narrow">
                   <p>
-                    <strong className="nickname">{props.card.nickName}</strong>
-                    <br />
-                    {props.card.text}
+                    <strong className="is-capitalized">
+                      {props.card.nickName}
+                    </strong>
                   </p>
-                  <div>
-                    {user.sub === props.card.userId ? (
-                      <a
-                        className="mr-2"
-                        onClick={() => {
-                          setEditable(true);
-                          props.setDragDisabled(true);
-                        }}
-                      >
-                        <i className="fas fa-pencil-alt"></i>
-                      </a>
-                    ) : null}
-                    <a>
-                      <i className="fas fa-thumbs-up"></i>
+                </div>
+              </div>
+              <p>{props.card.text}</p>
+              <div>
+                {user.sub === props.card.userId ? (
+                  <>
+                    <a
+                      className="mr-2"
+                      onClick={() => {
+                        setEditable(true);
+                        props.setDragDisabled(true);
+                      }}
+                    >
+                      <i className="fas fa-pencil-alt"></i>
                     </a>
-                  </div>
-                </div>
-                <div className="media-right">
-                  {(() => {
-                    if (user.sub === props.card.userId)
-                      return (
-                        <button
-                          onClick={handleDelete}
-                          className="delete"
-                        ></button>
-                      );
-                  })()}
-                </div>
+                    <a className="mr-2" onClick={handleDelete}>
+                      <i className="fas fa-trash-alt"></i>
+                    </a>
+                  </>
+                ) : null}
+                <a>
+                  <i className="fas fa-thumbs-up"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -91,7 +86,7 @@ const ColumnCard = (props) => {
         <div className="card-content px-2 py-2">
           <form onSubmit={handleSave}>
             <textarea
-              className="is-fullwidth has-fixed-size textarea mx-0 my-0"
+              className="is-fullwidth has-fixed-size textarea mx-0 my-0 is-size-6-7"
               rows="2"
               name="text"
               value={updatedCard.text}

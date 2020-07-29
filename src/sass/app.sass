@@ -8,8 +8,12 @@ $link: $primary;
 @import "../../node_modules/bulma/bulma.sass";
 @import "../../node_modules/bulma-pricingtable/src/sass/index.sass"
 
-.column-card
-  min-height: 100% !important
+.is-fullheight
+  height: calc(100% - 150px) !important;
+
+.is-scrollable-x
+  height: auto;
+  overflow-x: scroll
 
 .Toastify__toast--success
   border-radius: 5px
@@ -23,12 +27,15 @@ $link: $primary;
   background-color: $danger
   color: #fff 
 
-.nickname
-  text-transform: capitalize
-
 .hero-gradient
   background-image: url('/herobackground.png') !important
   background-size: cover
+
+.board-column
+  min-width: 300px;
+
+.is-size-6-7
+  font-size: 0.85rem;
 
 td 
   width: 50%

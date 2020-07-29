@@ -11,6 +11,7 @@ import NewCardForm from './NewCardForm';
 import { toast } from 'react-toastify';
 import { LexoRank } from 'lexorank';
 import io from '../../services/socket';
+import LoadingSpinner from '../Common/LoadingSpinner';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently } = useAuth0();
@@ -242,26 +243,41 @@ const BoardPage = (props) => {
   return (
     <div className="content mx-5 my-5">
       {(() => {
-        if (loading)
-          return (
-            <progress
-              className="progress is-small is-primary my-5"
-              max="100"
-            ></progress>
-          );
+        if (loading) return <LoadingSpinner />;
       })()}
-      <h1 className="title is-1">{board.name}</h1>
-      <p>{board.description}</p>
-      <div className="columns">
+      <div className="columns is-vcentered">
+        <div className="column">
+          <h1 className="title is-4">{board.name}</h1>
+        </div>
+        <div className="column is-narrow">
+          <div className="buttons">
+            <button
+              className="button is-rounded"
+              onClick={() => fetchData(false)}
+            >
+              <i className="fas fa-sync-alt"></i>
+            </button>
+            <Link to="/dashboard">
+              <button className="button is-rounded">
+                <i className="fas fa-arrow-left"></i>
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+      <div className="columns board-columns is-scrollable-x">
         <DragDropContext onDragEnd={handleDragEnd}>
           {columns.map((column, index) => (
-            <div key={column._id} className="card column mx-3 my-3">
+            <div
+              key={column._id}
+              className="card column board-column mx-3 my-3"
+            >
               <h4 className="subtitle is-4 mx-3 my-3">{column.title}</h4>
               <NewCardForm addCard={addCard} column={column} />
               <Droppable droppableId={column._id}>
-                {(provided, snapshot) => (
+                {(provided) => (
                   <div
-                    className="column-card"
+                    className="is-fullheight"
                     ref={provided.innerRef}
                     {...provided.droppableProps}
                   >
@@ -279,14 +295,6 @@ const BoardPage = (props) => {
             </div>
           ))}
         </DragDropContext>
-      </div>
-      <div className="buttons">
-        <Link to="/dashboard" className="button">
-          Back
-        </Link>
-        <button className="button is-light" onClick={() => fetchData(false)}>
-          Refresh
-        </button>
       </div>
     </div>
   );

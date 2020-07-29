@@ -188,12 +188,14 @@ const Purchase = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i className="fab fa-github mr-3"></i> Social Login
+                          <i className="fas fa-puzzle-piece mr-3"></i> Templates
                         </h2>
                         <p>
-                          Sign up with an email address and password, or use
-                          social login providers from Google, GitHub and
-                          Microsoft.
+                          With our built in templates you can quickly and easily
+                          try out new retrospective ideas with the team. Each
+                          template comes with a preconfigured board and
+                          instructions to help you get the most from the
+                          session.
                         </p>
                       </div>
                     </div>

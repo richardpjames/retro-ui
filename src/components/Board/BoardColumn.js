@@ -12,12 +12,12 @@ const BoardColumn = (props) => {
           index={index}
           isDragDisabled={props.dragDisabled}
         >
-          {(provided, snapshot) => (
+          {(provided) => (
             <div
               ref={provided.innerRef}
               {...provided.draggableProps}
               {...provided.dragHandleProps}
-              className="my-3"
+              className="my-2"
             >
               <ColumnCard
                 deleteCard={props.deleteCard}

@@ -16,7 +16,7 @@ const NewCardForm = (props) => {
   return (
     <form onSubmit={handleSubmit}>
       <textarea
-        className="is-fullwidth has-fixed-size textarea"
+        className="is-fullwidth has-fixed-size textarea is-size-6-7"
         rows="2"
         placeholder="Card text..."
         name="text"
@@ -24,7 +24,7 @@ const NewCardForm = (props) => {
         onChange={onChange}
         required
       ></textarea>
-      <button className="button is-primary is-fullwidth my-1">
+      <button className="button is-primary is-fullwidth my-1 is-size-6-7">
         <i className="fas fa-plus mr-3"></i>
         Add Card
       </button>
