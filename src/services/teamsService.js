@@ -47,7 +47,7 @@ const teamsService = () => {
   const remove = async (teamId, token) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/team/${teamId}`,
+        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
         {
           headers: { Authorization: 'Bearer ' + token },
         },
