@@ -4,6 +4,7 @@ import { withAuthenticationRequired } from '@auth0/auth0-react';
 import Sidebar from './Sidebar';
 import Boards from './Boards/Boards';
 import ProfilePage from './Profile/ProfilePage';
+import Teams from './Teams/Teams';
 
 const Dashboard = () => {
   return (
@@ -15,6 +16,7 @@ const Dashboard = () => {
         <Switch>
           <Route path="/dashboard/profile" component={ProfilePage} />
           <Route path="/dashboard/boards" component={Boards} />
+          <Route path="/dashboard/teams" component={Teams} />
           <Boards />
         </Switch>
       </div>
