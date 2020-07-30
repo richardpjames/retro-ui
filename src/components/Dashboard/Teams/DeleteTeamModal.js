@@ -5,7 +5,7 @@ const DeleteTeamModal = (props) => {
   const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const closeModal = () => {
-    props.updateModalVisible(false);
+    props.setModalVisible(false);
     setConfirm('');
     setButtonDisabled(true);
   };
