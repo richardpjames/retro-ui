@@ -60,6 +60,8 @@ const Dashboard = () => {
         setTotalBoards(
           boards.filter((board) => board.userId === profile.id).length,
         );
+        // Set the number of teams with pending invitation
+        setPendingTeams(0);
         // Stop loading bar
         setLoading(false);
       } catch (error) {
@@ -238,7 +240,7 @@ const Dashboard = () => {
     <div className="columns">
       {loading ? <LoadingSpinner /> : null}
       <div className="column is-one-fifth">
-        <Sidebar teams={teams} profile={profile} />
+        <Sidebar teams={teams} profile={profile} pendingTeams={pendingTeams} />
       </div>
       <div className="column">
         <Switch>

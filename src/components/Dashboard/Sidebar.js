@@ -46,7 +46,10 @@ const Sidebar = (props) => {
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/dashboard/teams">
-            <i className="fas fa-user-friends mr-3"></i>Your Teams
+            <i className="fas fa-user-friends mr-3"></i>Your Teams{' '}
+            <span className="tag is-primary is-rounded">
+              {props.pendingTeams}
+            </span>
           </NavLink>
         </li>
       </ul>
