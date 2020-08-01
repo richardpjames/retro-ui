@@ -112,7 +112,8 @@ const TeamCard = (props) => {
                       </div>
                     </div>
                     <div className="column">
-                      {member.email} ({member.status})
+                      {member.email} (
+                      <span className="is-capitalized">{member.status}</span>)
                     </div>
                   </div>
                 </div>

@@ -9,6 +9,8 @@ const MembershipList = (props) => {
           <MembershipCard
             team={team}
             removeMembership={props.removeMembership}
+            acceptMembership={props.acceptMembership}
+            profile={props.profile}
           />
         </div>
       ))}

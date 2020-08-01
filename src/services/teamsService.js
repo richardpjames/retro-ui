@@ -75,6 +75,21 @@ const teamsService = () => {
     }
   };
 
+  const acceptMembership = async (teamId, token) => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}/memberships`,
+        { status: 'accepted' },
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
   const update = async (teamId, team, token) => {
     try {
       await axios.put(
@@ -90,7 +105,15 @@ const teamsService = () => {
     }
   };
 
-  return { getAll, getById, create, remove, removeMembership, update };
+  return {
+    getAll,
+    getById,
+    create,
+    remove,
+    removeMembership,
+    acceptMembership,
+    update,
+  };
 };
 
 export default teamsService();

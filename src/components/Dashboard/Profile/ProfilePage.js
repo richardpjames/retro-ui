@@ -1,49 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
-import { toast } from 'react-toastify';
-import usersService from '../../../services/usersService';
+
 import moment from 'moment';
 
-const ProfilePage = () => {
-  // State for holding the user information
-  const [profile, setProfile] = useState({});
-  const [loading, setLoading] = useState(true);
-  const Paddle = window.Paddle;
-
-  // Get the access token for the user
-  const { getAccessTokenSilently, user } = useAuth0();
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        // Get the access token required to call the API
-        const token = await getAccessTokenSilently();
-        // Call the API
-        const profile = await usersService.getById(user.sub, token);
-        // Update the boards
-        if (profile) {
-          setProfile(profile);
-        }
-        // Stop loading bar
-        setLoading(false);
-      } catch (error) {
-        // For now just log any errors - TODO: Improve error handling
-        toast.error(error);
-      }
-    };
-    fetchData();
-  }, [getAccessTokenSilently, user]);
-
+const ProfilePage = (props) => {
   return (
     <div className="content mx-5 my-5">
       <div className="columns">
         <div className="column is-narrow">
           <p className="image is-128x128">
             <img
-              src={profile.picture}
-              alt={profile.nickname}
+              src={props.profile.picture}
+              alt={props.profile.nickname}
               className="is-rounded"
             />
           </p>
@@ -57,44 +25,34 @@ const ProfilePage = () => {
         </div>
       </div>
       <div className="content">
-        {(() => {
-          if (loading)
-            return (
-              <progress
-                className="progress is-small is-primary my-5"
-                max="100"
-              ></progress>
-            );
-        })()}
-
         <h2 className="title is-2">Personal Details</h2>
         <table className="table">
           <tbody>
             <tr>
               <td>Nickname</td>
-              <td className="is-capitalized">{profile.nickname}</td>
+              <td className="is-capitalized">{props.profile.nickname}</td>
             </tr>
             <tr>
               <td>Email</td>
-              <td>{profile.email}</td>
+              <td>{props.profile.email}</td>
             </tr>
             <tr>
               <td>Member Since</td>
-              <td>{moment(profile.created_at).format('DD/MM/YYYY')}</td>
+              <td>{moment(props.profile.created_at).format('DD/MM/YYYY')}</td>
             </tr>
             <tr>
               <td>Times Logged In</td>
-              <td>{profile.logins_count}</td>
+              <td>{props.profile.logins_count}</td>
             </tr>
             <tr>
               <td>Current Subscription Plan</td>
-              <td className="is-capitalized">{profile.plan}</td>
+              <td className="is-capitalized">{props.profile.plan}</td>
             </tr>
           </tbody>
         </table>
         <h2 className="title is-2">Your Subscription Details</h2>
         {(() => {
-          if (!profile.subscription) {
+          if (!props.profile.subscription) {
             return (
               <>
                 <p>No subscription details are held.</p>
@@ -116,29 +74,29 @@ const ProfilePage = () => {
                     <tr>
                       <td>Current Status</td>
                       <td className="is-capitalized">
-                        {profile.subscription.state}
+                        {props.profile.subscription.state}
                       </td>
                     </tr>
                     <tr>
                       <td>Next Payment Amount</td>
                       <td>
-                        {profile.subscription.next_payment &&
-                        profile.subscription.next_payment.amount
-                          ? profile.subscription.next_payment.amount
+                        {props.profile.subscription.next_payment &&
+                        props.profile.subscription.next_payment.amount
+                          ? props.profile.subscription.next_payment.amount
                           : ``}
-                        {profile.subscription.next_payment &&
-                        profile.subscription.next_payment.currency
-                          ? profile.subscription.next_payment.currency
+                        {props.profile.subscription.next_payment &&
+                        props.profile.subscription.next_payment.currency
+                          ? props.profile.subscription.next_payment.currency
                           : ``}
                       </td>
                     </tr>
                     <tr>
                       <td>Next Payment Date</td>
                       <td>
-                        {profile.subscription.next_payment &&
-                        profile.subscription.next_payment.date
+                        {props.profile.subscription.next_payment &&
+                        props.profile.subscription.next_payment.date
                           ? moment(
-                              profile.subscription.next_payment.date,
+                              props.profile.subscription.next_payment.date,
                             ).format('DD/MM/YYYY')
                           : ``}
                       </td>
@@ -147,27 +105,27 @@ const ProfilePage = () => {
                       <td>Payment Method</td>
                       <td className="is-capitalized">
                         {
-                          profile.subscription.payment_information
+                          props.profile.subscription.payment_information
                             .payment_method
                         }
-                        {profile.subscription.payment_information
+                        {props.profile.subscription.payment_information
                           .last_four_digits
-                          ? ` ending in ${profile.subscription.payment_information.last_four_digits}`
+                          ? ` ending in ${props.profile.subscription.payment_information.last_four_digits}`
                           : ``}
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 {(() => {
-                  if (profile.subscription.state !== 'deleted') {
+                  if (props.profile.subscription.state !== 'deleted') {
                     return (
                       <>
                         <div className="buttons">
                           <button
                             onClick={() => {
-                              Paddle.Checkout.open({
-                                override: profile.subscription.update_url,
-                                passthrough: user.sub,
+                              props.paddle.Checkout.open({
+                                override: props.profile.subscription.update_url,
+                                passthrough: props.profile.id,
                                 success: '/dashboard/profile',
                               });
                             }}
@@ -178,9 +136,9 @@ const ProfilePage = () => {
                           </button>
                           <button
                             onClick={() => {
-                              Paddle.Checkout.open({
-                                override: profile.subscription.cancel_url,
-                                passthrough: user.sub,
+                              props.paddle.Checkout.open({
+                                override: props.profile.subscription.cancel_url,
+                                passthrough: props.profile.id,
                                 success: '/dashboard/profile',
                               });
                             }}

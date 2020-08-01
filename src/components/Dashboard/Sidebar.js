@@ -1,23 +1,47 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar = (props) => {
   return (
     <aside className="menu mx-5 my-5">
-      <p className="menu-label">Boards</p>
+      <p className="menu-label">Your Boards</p>
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/dashboard" exact>
-            <i className="fas fa-chalkboard-teacher mr-3"></i>Retrospective
-            Boards
+            <i className="fas fa-chalkboard-teacher mr-3"></i>Your Boards
           </NavLink>
         </li>
       </ul>
-      <p className="menu-label">Teams</p>
+      <p className="menu-label">Team Boards</p>
+      <ul className="menu-list">
+        {props.teams.map((team) => {
+          const link = `/dashboard/${team._id}`;
+          let membership;
+          if (team.members) {
+            membership = team.members.find(
+              (member) =>
+                member.email === props.profile.email &&
+                member.status === 'accepted',
+            );
+          }
+          if (team.userId === props.profile.id || membership) {
+            return (
+              <li>
+                <NavLink activeClassName="is-active" to={link} exact>
+                  <i className="fas fa-chalkboard-teacher mr-3"></i>
+                  {team.name}
+                </NavLink>
+              </li>
+            );
+          }
+          return null;
+        })}
+      </ul>
+      <p className="menu-label">Manage Teams</p>
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/dashboard/teams">
-            <i className="fas fa-user-friends mr-3"></i>Teams
+            <i className="fas fa-user-friends mr-3"></i>Your Teams
           </NavLink>
         </li>
       </ul>
