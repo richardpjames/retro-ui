@@ -2,7 +2,6 @@ import React from 'react';
 import NewTeamModal from './NewTeamModal';
 import TeamList from './TeamList';
 import MembershipList from './MembershipList';
-import LoadingSpinner from '../../Common/LoadingSpinner';
 
 const Teams = (props) => {
   return (
