@@ -10,7 +10,7 @@ const Boards = (props) => {
       "
       >
         <div className="column py-0">
-          <h1 className="title is-1 mt-3">Your Boards</h1>
+          <h1 className="title is-1 mt-3">{props.title}</h1>
         </div>
         <div className="column py-0 is-narrow">
           <button
@@ -29,13 +29,19 @@ const Boards = (props) => {
       </p>
       <NewBoardModal
         boards={props.boards}
+        totalBoards={props.totalBoards}
         profile={props.profile}
+        teams={props.teams}
         addBoard={props.addBoard}
         visible={props.createBoardModalVisible}
         setVisible={props.setCreateBoardModalVisible}
       />
       <div className="content">
-        <BoardList boards={props.boards} removeBoard={props.removeBoard} />
+        <BoardList
+          boards={props.boards}
+          profile={props.profile}
+          removeBoard={props.removeBoard}
+        />
       </div>
     </div>
   );

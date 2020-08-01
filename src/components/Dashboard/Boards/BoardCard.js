@@ -25,9 +25,11 @@ const BoardCard = (props) => {
             <Link to={boardLink} className="button is-primary">
               <i className="fas fa-eye mr-3"></i> View
             </Link>
-            <button className="button is-danger" onClick={toggleModal}>
-              <i className="fas fa-trash-alt mr-3"></i> Delete
-            </button>
+            {props.board.userId === props.profile.id ? (
+              <button className="button is-danger" onClick={toggleModal}>
+                <i className="fas fa-trash-alt mr-3"></i> Delete
+              </button>
+            ) : null}
           </div>
         </div>
       </div>

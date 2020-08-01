@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom';
 
 const NewBoardModal = (props) => {
   // Create three new state objects to hold the name, description and starter template for the board
-  const [boardName, updateBoardName] = useState('');
-  const [boardDescription, updateBoardDescription] = useState('');
-  const [boardTemplate, updateBoardTemplate] = useState('');
-  const [templates, updateTemplates] = useState([]);
+  const [boardName, setBoardName] = useState('');
+  const [boardDescription, setBoardDescription] = useState('');
+  const [boardTemplate, setBoardTemplate] = useState('');
+  const [boardPrivate, setBoardPrivate] = useState(false);
+  const [boardTeam, setBoardTeam] = useState('');
+  const [templates, setTemplates] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
 
   // When the form is submitted
@@ -19,17 +21,23 @@ const NewBoardModal = (props) => {
       name: boardName,
       description: boardDescription,
       templateId: boardTemplate,
+      teamId: boardTeam,
+      private: boardPrivate,
     });
-    updateBoardName('');
-    updateBoardDescription('');
-    updateBoardTemplate('');
+    setBoardName('');
+    setBoardDescription('');
+    setBoardTemplate('');
+    setBoardTeam('');
+    setBoardPrivate(false);
     props.setVisible(false);
   };
 
   const closeModal = () => {
-    updateBoardName('');
-    updateBoardDescription('');
-    updateBoardTemplate('');
+    setBoardName('');
+    setBoardDescription('');
+    setBoardTemplate('');
+    setBoardTeam('');
+    setBoardPrivate(false);
     props.setVisible(false);
   };
 
@@ -46,7 +54,7 @@ const NewBoardModal = (props) => {
     const fetchData = async () => {
       const token = await getAccessTokenSilently();
       const templateData = await templateService.getAll(token);
-      if (templateData) updateTemplates(templateData);
+      if (templateData) setTemplates(templateData);
     };
     try {
       fetchData();
@@ -60,7 +68,7 @@ const NewBoardModal = (props) => {
     if (props.profile && props.profile.plan && props.profile.plan !== 'free') {
       return false;
     }
-    if (props.boards.length >= 5) {
+    if (props.totalBoards >= 5) {
       return true;
     }
     return false;
@@ -125,7 +133,7 @@ const NewBoardModal = (props) => {
                 id="boardName"
                 placeholder="e.g. Sprint 20.01: A New Hope"
                 value={boardName}
-                onChange={(event) => updateBoardName(event.target.value)}
+                onChange={(event) => setBoardName(event.target.value)}
                 required
               />
             </div>
@@ -138,20 +146,20 @@ const NewBoardModal = (props) => {
                 id="boardDescription"
                 placeholder="e.g. Our first retrospective as a new team"
                 value={boardDescription}
-                onChange={(event) => updateBoardDescription(event.target.value)}
+                onChange={(event) => setBoardDescription(event.target.value)}
                 required
               />
             </div>
 
             <div className="field">
               <label htmlFor="boardTemplate">Starting Template</label>
-              <div className="ontrol">
+              <div className="control">
                 <div className="select is-fullwidth">
                   <select
                     id="boardTemplate"
                     required
                     onChange={(event) => {
-                      updateBoardTemplate(event.target.value);
+                      setBoardTemplate(event.target.value);
                     }}
                     value={boardTemplate}
                   >
@@ -162,6 +170,44 @@ const NewBoardModal = (props) => {
                       </option>
                     ))}
                   </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="field">
+              <label htmlFor="boardTeam">Team</label>
+              <div className="control">
+                <div className="select is-fullwidth">
+                  <select
+                    id="boardTeam"
+                    onChange={(event) => {
+                      setBoardTeam(event.target.value);
+                    }}
+                    value={boardTeam}
+                  >
+                    <option></option>
+                    {props.teams.map((team) => (
+                      <option key={team._id} value={team._id}>
+                        {team.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div className="field">
+              <div className="control">
+                <div className="b-checkbox is-primary">
+                  <input
+                    id="checkbox"
+                    className="styled mr-3"
+                    type="checkbox"
+                    value={boardPrivate}
+                    onChange={(event) => setBoardPrivate(event.target.value)}
+                  />
+                  <label htmlFor="checkbox">
+                    Private (Only members of the team can access this board)
+                  </label>
                 </div>
               </div>
             </div>

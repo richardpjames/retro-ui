@@ -263,7 +263,7 @@ const BoardPage = (props) => {
                 className="button is-rounded has-tooltip-primary"
                 data-tooltip="Back to Dashboard"
               >
-                <i className="fas fa-arrow-left"></i>
+                <i className="fas fa-home"></i>
               </button>
             </Link>
           </div>

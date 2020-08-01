@@ -21,6 +21,7 @@ const BoardList = (props) => {
         <div className="my-3" key={board._id}>
           <BoardCard
             board={board}
+            profile={props.profile}
             updateModalVisible={updateModalVisible}
             updateBoardToDelete={updateBoardToDelete}
           />

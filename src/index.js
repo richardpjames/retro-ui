@@ -4,6 +4,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import * as serviceWorker from './serviceWorker';
 import AppRouter from './components/Router/AppRouter';
 import 'react-toastify/dist/ReactToastify.css';
+import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css';
 import './sass/app.sass';
 
 ReactDOM.render(

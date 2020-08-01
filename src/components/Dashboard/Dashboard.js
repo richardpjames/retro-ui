@@ -15,11 +15,13 @@ const Dashboard = () => {
   // Dashboard state variables
   const { getAccessTokenSilently, user } = useAuth0();
   const [boards, setBoards] = useState([]);
+  const [totalBoards, setTotalBoards] = useState(5);
   const [teams, setTeams] = useState([]);
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [createBoardModalVisible, setCreateBoardModalVisible] = useState(false);
   const [createTeamModalVisible, setCreateTeamModalVisible] = useState(false);
+  const [pendingTeams, setPendingTeams] = useState(0);
   const Paddle = window.Paddle;
 
   // Loading of all initial data
@@ -54,6 +56,10 @@ const Dashboard = () => {
         // Get the user profile
         const profile = await usersService.getById(user.sub, token);
         setProfile(profile);
+        // Set the total number of boards for the user
+        setTotalBoards(
+          boards.filter((board) => board.userId === profile.id).length,
+        );
         // Stop loading bar
         setLoading(false);
       } catch (error) {
@@ -73,6 +79,8 @@ const Dashboard = () => {
       const newBoard = await boardsService.create(board, token);
       // Add the new board returned to the existing list
       setBoards([newBoard, ...boards]);
+      // Set the total number of boards for the user
+      setTotalBoards(totalBoards + 1);
       // Show confirmation to the user
       toast.success('Your new board has been created.');
     } catch (error) {
@@ -91,6 +99,8 @@ const Dashboard = () => {
         return board._id !== boardId;
       });
       setBoards(updatedBoards);
+      // Set the total number of boards for the user
+      setTotalBoards(totalBoards - 1);
       toast.success('Your board has been deleted.');
     } catch (error) {
       // For now just output any errors
@@ -240,10 +250,59 @@ const Dashboard = () => {
           />
           <Route
             path="/dashboard/boards"
+            exact
             render={(props) => (
               <Boards
+                title="Your Boards"
+                {...props}
+                boards={boards.filter((board) => board.userId === profile.id)}
+                totalBoards={totalBoards}
+                teams={teams}
+                profile={profile}
+                addBoard={addBoard}
+                removeBoard={removeBoard}
+                createBoardModalVisible={createBoardModalVisible}
+                setCreateBoardModalVisible={setCreateBoardModalVisible}
+              />
+            )}
+          />
+          <Route
+            path="/dashboard/boards/all"
+            exact
+            render={(props) => (
+              <Boards
+                title="All Boards"
                 {...props}
                 boards={boards}
+                totalBoards={totalBoards}
+                teams={teams}
+                profile={profile}
+                addBoard={addBoard}
+                removeBoard={removeBoard}
+                createBoardModalVisible={createBoardModalVisible}
+                setCreateBoardModalVisible={setCreateBoardModalVisible}
+              />
+            )}
+          />
+          <Route
+            path="/dashboard/boards/:teamId"
+            render={(props) => (
+              <Boards
+                title={
+                  teams.find((team) => team._id === props.match.params.teamId)
+                    ? `${
+                        teams.find(
+                          (team) => team._id === props.match.params.teamId,
+                        ).name
+                      } Boards`
+                    : null
+                }
+                {...props}
+                boards={boards.filter(
+                  (board) => board.teamId === props.match.params.teamId,
+                )}
+                totalBoards={totalBoards}
+                teams={teams}
                 profile={profile}
                 addBoard={addBoard}
                 removeBoard={removeBoard}
@@ -270,8 +329,11 @@ const Dashboard = () => {
             )}
           />
           <Boards
-            boards={boards}
+            title="Your Boards"
+            boards={boards.filter((board) => board.userId === profile.id)}
+            totalBoards={totalBoards}
             profile={profile}
+            teams={teams}
             addBoard={addBoard}
             removeBoard={removeBoard}
             createBoardModalVisible={createBoardModalVisible}
