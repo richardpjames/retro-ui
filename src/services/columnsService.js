@@ -12,6 +12,7 @@ const columnsService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 

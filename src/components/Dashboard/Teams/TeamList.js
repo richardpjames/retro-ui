@@ -21,8 +21,11 @@ const TeamList = (props) => {
         <div className="my-3" key={team._id}>
           <TeamCard
             team={team}
+            profile={props.profile}
             setModalVisible={setModalVisible}
             setTeamToDelete={setTeamToDelete}
+            addTeamMember={props.addTeamMember}
+            removeTeamMember={props.removeTeamMember}
           />
         </div>
       ))}

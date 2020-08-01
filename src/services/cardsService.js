@@ -12,6 +12,7 @@ const cardsService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
@@ -27,6 +28,7 @@ const cardsService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
@@ -40,6 +42,7 @@ const cardsService = () => {
       );
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
@@ -63,6 +66,7 @@ const cardsService = () => {
       );
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 

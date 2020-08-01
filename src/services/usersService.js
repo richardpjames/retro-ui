@@ -12,6 +12,7 @@ const usersService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
@@ -26,6 +27,7 @@ const usersService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 

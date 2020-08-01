@@ -12,6 +12,7 @@ const teamsService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
@@ -26,6 +27,7 @@ const teamsService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
@@ -41,6 +43,7 @@ const teamsService = () => {
       return response.data;
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
@@ -54,10 +57,40 @@ const teamsService = () => {
       );
     } catch (error) {
       console.log(error);
+      throw error;
     }
   };
 
-  return { getAll, getById, create, remove };
+  const removeMembership = async (teamId, token) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}/memberships`,
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const update = async (teamId, team, token) => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
+        team,
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  return { getAll, getById, create, remove, removeMembership, update };
 };
 
 export default teamsService();

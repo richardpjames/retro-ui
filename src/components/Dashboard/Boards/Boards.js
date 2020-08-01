@@ -97,7 +97,7 @@ const Boards = () => {
           </button>
         </div>
       </div>
-      <p>
+      <p className="mt-0">
         View an existing board, or create a new one. Your most recent boards are
         shown at the top of the page.
       </p>

@@ -5,6 +5,7 @@ import teamsService from '../../../services/teamsService';
 import usersService from '../../../services/usersService';
 import NewTeamModal from './NewTeamModal';
 import TeamList from './TeamList';
+import MembershipList from './MembershipList';
 
 const Teams = () => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -61,6 +62,70 @@ const Teams = () => {
     }
   };
 
+  const addTeamMember = async (teamId, emailAddress) => {
+    // Find the team to update
+    const _teams = [...teams];
+    const _team = _teams.find((team) => team._id === teamId);
+    if (!_team.members) {
+      _team.members = [];
+    }
+    // Check that the email address is not already in the list
+    const check = _team.members.find((member) => member.email === emailAddress);
+    if (check) {
+      toast.error('This person is already a member of the team');
+      // If not, then add them
+    } else {
+      _team.members.push({ email: emailAddress, status: 'invited' });
+      try {
+        // Get the token required for the API call
+        const token = await getAccessTokenSilently();
+        // Update the team
+        await teamsService.update(teamId, _team, token);
+        // Post a sucucess message
+        toast.success('Your new team member has been added');
+        setTeams(_teams);
+      } catch (error) {
+        toast.error(error);
+      }
+    }
+  };
+
+  const removeTeamMember = async (teamId, emailAddress) => {
+    //Find the team to update
+    const _teams = [...teams];
+    const _team = _teams.find((team) => team._id === teamId);
+    _team.members = _team.members.filter(
+      (member) => member.email !== emailAddress,
+    );
+    try {
+      // Get the token required for the API call
+      const token = await getAccessTokenSilently();
+      // Update the team
+      await teamsService.update(teamId, _team, token);
+      // Post a sucucess message
+      toast.success('Your team member has been removed');
+      setTeams(_teams);
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
+  const removeMembership = async (teamId) => {
+    try {
+      // Remove using the API
+      const token = await getAccessTokenSilently();
+      await teamsService.removeMembership(teamId, token);
+      // Now remove the team from local list
+      let _teams = [...teams];
+      _teams = _teams.filter((team) => team._id !== teamId);
+      // Update the state
+      setTeams(_teams);
+      toast.success('You have left the team');
+    } catch (error) {
+      toast.error(error);
+    }
+  };
+
   const removeTeam = async (teamId) => {
     try {
       setLoading(true);
@@ -97,12 +162,12 @@ const Teams = () => {
           </button>
         </div>
       </div>
-      <p>
+      <p className="mt-0">
         View an existing team, or create a new one. Teams are shown
         alphabetically.
       </p>
       <NewTeamModal
-        teams={teams}
+        teams={teams.filter((team) => team.userId === user.sub)}
         profile={profile}
         addTeam={addTeam}
         visible={createModalVisible}
@@ -118,7 +183,24 @@ const Teams = () => {
               ></progress>
             );
         })()}
-        <TeamList teams={teams} removeTeam={removeTeam} />
+        <TeamList
+          teams={teams.filter((team) => team.userId === user.sub)}
+          profile={profile}
+          removeTeam={removeTeam}
+          addTeamMember={addTeamMember}
+          removeTeamMember={removeTeamMember}
+        />
+        <div>
+          <h1 className="title is-2 mt-5">Memberships</h1>
+          <p className="mt-0">
+            You are also the member of the following teams created by other
+            users .
+          </p>
+        </div>
+        <MembershipList
+          teams={teams.filter((team) => team.userId !== user.sub)}
+          removeMembership={removeMembership}
+        />
       </div>
     </div>
   );
