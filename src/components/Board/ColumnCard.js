@@ -37,35 +37,35 @@ const ColumnCard = (props) => {
             <strong className="is-capitalized">{props.card.nickName}</strong> -{' '}
             {props.card.text}
           </p>
-          <div className="columns">
-            <div className="column">
-              {user.sub === props.card.userId ? (
-                <>
-                  <a
-                    className="mr-2 has-tooltip-primary"
-                    onClick={() => {
-                      setEditable(true);
-                      props.setDragDisabled(true);
-                    }}
-                    data-tooltip="Edit Card"
-                  >
-                    <i className="fas fa-pencil-alt"></i>
-                  </a>
-                  <a
-                    className="mr-2 has-tooltip-danger"
-                    onClick={handleDelete}
-                    data-tooltip="Delete Card"
-                  >
-                    <i className="fas fa-trash-alt"></i>
-                  </a>
-                </>
-              ) : null}
-            </div>
-            <div className="column is-narrow">
-              <a className="has-tooltip-primary" data-tooltip="Vote for Card">
-                <i className="fas fa-thumbs-up"></i> (0)
-              </a>
-            </div>
+          <div className="buttons">
+            {user.sub === props.card.userId ? (
+              <>
+                <a
+                  className="button is-rounded is-small is-outlined is-primary has-tooltip-primary"
+                  onClick={() => {
+                    setEditable(true);
+                    props.setDragDisabled(true);
+                  }}
+                  data-tooltip="Edit Card"
+                >
+                  <i className="fas fa-pencil-alt"></i>
+                </a>
+                <a
+                  className="button is-rounded is-small is-outlined is-danger has-tooltip-danger"
+                  onClick={handleDelete}
+                  data-tooltip="Delete Card"
+                >
+                  <i className="fas fa-trash-alt"></i>
+                </a>
+              </>
+            ) : null}
+
+            <a
+              className="button is-rounded is-small is-outlined is-primary has-tooltip-primary"
+              data-tooltip="Vote for Card"
+            >
+              <i className="fas fa-thumbs-up"></i> (0)
+            </a>
           </div>
         </div>
       </div>

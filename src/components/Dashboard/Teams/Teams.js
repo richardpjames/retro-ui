@@ -8,6 +8,7 @@ const Teams = (props) => {
     <div className="content mx-5 my-5">
       {props.pendingTeams > 0 ? (
         <div className="notification is-primary">
+          <i className="fas fa-exclamation-triangle mr-3"></i>
           You have outstanding invitations to new teams, please accept or
           decline these invitations from the Membership section of this screen.
         </div>
