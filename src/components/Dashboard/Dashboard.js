@@ -61,7 +61,7 @@ const Dashboard = () => {
           boards.filter((board) => board.userId === profile.id).length,
         );
         // Set the number of teams with pending invitation
-        setPendingTeams(0);
+        calculatePendingTeams(teams, profile);
         // Stop loading bar
         setLoading(false);
       } catch (error) {
@@ -111,6 +111,19 @@ const Dashboard = () => {
   };
 
   // Data functions for teams
+  const calculatePendingTeams = (_teams, _profile) => {
+    let _counter = 0;
+    _teams.map((team) =>
+      team.members.map((member) => {
+        if (member.email === _profile.email && member.status === 'invited') {
+          _counter += 1;
+        }
+        return true;
+      }),
+    );
+    setPendingTeams(_counter);
+  };
+
   const addTeam = async (team) => {
     try {
       // Get the access token required to call the API
@@ -190,6 +203,7 @@ const Dashboard = () => {
       _teams = _teams.filter((team) => team._id !== teamId);
       // Update the state
       setTeams(_teams);
+      calculatePendingTeams(_teams, profile);
       toast.success('You have left the team');
     } catch (error) {
       toast.error(error);
@@ -211,6 +225,7 @@ const Dashboard = () => {
       _membership.status = 'accepted';
       // Update the state
       setTeams(_teams);
+      calculatePendingTeams(_teams, profile);
       toast.success('You have accepted the invitation');
     } catch (error) {
       toast.error(error);
@@ -327,6 +342,7 @@ const Dashboard = () => {
                 removeMembership={removeMembership}
                 createTeamModalVisible={createTeamModalVisible}
                 setCreateTeamModalVisible={setCreateTeamModalVisible}
+                pendingTeams={pendingTeams}
               />
             )}
           />

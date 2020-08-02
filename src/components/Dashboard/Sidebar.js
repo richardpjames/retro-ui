@@ -47,9 +47,11 @@ const Sidebar = (props) => {
         <li>
           <NavLink activeClassName="is-active" to="/dashboard/teams">
             <i className="fas fa-user-friends mr-3"></i>Your Teams{' '}
-            <span className="tag is-primary is-rounded">
-              {props.pendingTeams}
-            </span>
+            {props.pendingTeams > 0 ? (
+              <span className="tag is-danger is-rounded">
+                {props.pendingTeams}
+              </span>
+            ) : null}
           </NavLink>
         </li>
       </ul>

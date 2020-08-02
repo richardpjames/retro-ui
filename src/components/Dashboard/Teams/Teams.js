@@ -6,6 +6,12 @@ import MembershipList from './MembershipList';
 const Teams = (props) => {
   return (
     <div className="content mx-5 my-5">
+      {props.pendingTeams > 0 ? (
+        <div className="notification is-primary">
+          You have outstanding invitations to new teams, please accept or
+          decline these invitations from the Membership section of this screen.
+        </div>
+      ) : null}
       <div className="columns is-vcentered mb-0">
         <div className="column py-0">
           <h1 className="title is-1 mt-3">Teams</h1>
