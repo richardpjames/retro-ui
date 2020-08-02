@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const Nav = () => {
+const Nav = (props) => {
   // Used to determine whether the user is logged in (and so which links to show)
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
   // This is toggled by pressing the burger menu on a mobile screen size
@@ -97,7 +97,7 @@ const Nav = () => {
                     <NavLink
                       className="navbar-item"
                       activeClassName="is-active"
-                      to="/dashboard"
+                      to={props.dashboardPath}
                       onClick={closeNavLinks}
                     >
                       <i className="fas fa-chalkboard-teacher mr-3"></i>

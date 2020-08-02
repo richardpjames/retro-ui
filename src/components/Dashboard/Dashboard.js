@@ -11,7 +11,7 @@ import teamsService from '../../services/teamsService';
 import usersService from '../../services/usersService';
 import LoadingSpinner from '../Common/LoadingSpinner';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
   // Dashboard state variables
   const { getAccessTokenSilently, user } = useAuth0();
   const [boards, setBoards] = useState([]);
@@ -23,6 +23,10 @@ const Dashboard = () => {
   const [createTeamModalVisible, setCreateTeamModalVisible] = useState(false);
   const [pendingTeams, setPendingTeams] = useState(0);
   const Paddle = window.Paddle;
+
+  // Store the current location so that other pages can return here
+  localStorage.setItem('dashboard_path', props.location.pathname);
+  props.setDashboardPath(props.location.pathname);
 
   // Loading of all initial data
   useEffect(() => {

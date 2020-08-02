@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
 import Nav from '../Common/Nav';
@@ -13,6 +13,9 @@ const AppRouter = () => {
   // Only display the page if Auth0 has completed loading as this is required
   // to determine some UI elements to draw.
   const { isLoading } = useAuth0();
+  const [dashboardPath, setDashboardPath] = useState(
+    localStorage.getItem('dashboard_path') || '/dashboard',
+  );
 
   // If loading then show the loading spinner
   if (isLoading) {
@@ -22,7 +25,7 @@ const AppRouter = () => {
   if (!isLoading) {
     return (
       <Router>
-        <Nav />
+        <Nav dashboardPath={dashboardPath} />
         <ToastContainer
           autoClose={5000}
           newestOnTop
@@ -32,8 +35,22 @@ const AppRouter = () => {
         <Switch>
           <Route path="/" component={Home} exact />
           <Route path="/pricing" component={Purchase} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/board/:boardId" component={BoardPage} />
+          <Route
+            path="/dashboard"
+            render={(props) => (
+              <Dashboard
+                {...props}
+                dashboardPath={dashboardPath}
+                setDashboardPath={setDashboardPath}
+              />
+            )}
+          />
+          <Route
+            path="/board/:boardId"
+            render={(props) => (
+              <BoardPage {...props} dashboardPath={dashboardPath} />
+            )}
+          />
         </Switch>
       </Router>
     );

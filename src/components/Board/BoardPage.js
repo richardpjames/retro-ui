@@ -258,7 +258,7 @@ const BoardPage = (props) => {
             >
               <i className="fas fa-sync-alt"></i>
             </button>
-            <Link to="/dashboard">
+            <Link to={props.dashboardPath}>
               <button
                 className="button is-rounded has-tooltip-primary"
                 data-tooltip="Back to Dashboard"
