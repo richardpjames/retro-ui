@@ -27,37 +27,39 @@ const AppRouter = () => {
   if (!isLoading) {
     return (
       <Router>
-        <Nav dashboardPath={dashboardPath} />
-        <ToastContainer
-          autoClose={5000}
-          newestOnTop
-          hideProgressBar
-          transition={Slide}
-        />
-        <Switch>
-          <Route path="/" component={Home} exact />
-          <Route path="/pricing" component={Purchase} />
-          <Route
-            path="/dashboard"
-            render={(props) => (
-              <Dashboard
-                {...props}
-                dashboardPath={dashboardPath}
-                setDashboardPath={setDashboardPath}
-              />
-            )}
+        <div className="above-footer">
+          <Nav dashboardPath={dashboardPath} />
+          <ToastContainer
+            autoClose={5000}
+            newestOnTop
+            hideProgressBar
+            transition={Slide}
           />
-          <Route
-            path="/board/:boardId"
-            render={(props) => (
-              <BoardPage {...props} dashboardPath={dashboardPath} />
-            )}
-          />
-          <Route
-            path="/privacy"
-            render={(props) => <Page {...props} url="/static/privacy.html" />}
-          />
-        </Switch>
+          <Switch>
+            <Route path="/" component={Home} exact />
+            <Route path="/pricing" component={Purchase} />
+            <Route
+              path="/dashboard"
+              render={(props) => (
+                <Dashboard
+                  {...props}
+                  dashboardPath={dashboardPath}
+                  setDashboardPath={setDashboardPath}
+                />
+              )}
+            />
+            <Route
+              path="/board/:boardId"
+              render={(props) => (
+                <BoardPage {...props} dashboardPath={dashboardPath} />
+              )}
+            />
+            <Route
+              path="/privacy"
+              render={(props) => <Page {...props} url="/static/privacy.html" />}
+            />
+          </Switch>
+        </div>
         <Footer />
       </Router>
     );
