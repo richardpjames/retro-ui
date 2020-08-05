@@ -21,6 +21,20 @@ const ColumnCard = (props) => {
     props.updateCard(updatedCard);
   };
 
+  const handleVote = (event) => {
+    // If the user has voted already then remove
+    if (userVote) {
+      return props.deleteVote(userVote._id, props.card._id);
+    }
+    // Otherwise create a new vote
+    const _vote = {
+      cardId: props.card._id,
+      boardId: props.card.boardId,
+      userId: props.profile.id,
+    };
+    return props.addVote(_vote);
+  };
+
   const onChange = (event) => {
     setUpdatedCard({ ...updatedCard, [event.target.name]: event.target.value });
   };
@@ -28,6 +42,7 @@ const ColumnCard = (props) => {
   const [editable, setEditable] = useState(false);
   const [updatedCard, setUpdatedCard] = useState(props.card);
   const { user } = useAuth0();
+  const userVote = props.votes.find((v) => v.userId === props.profile.id);
 
   if (!editable) {
     return (
@@ -60,12 +75,25 @@ const ColumnCard = (props) => {
               </>
             ) : null}
 
-            <a
-              className="button is-rounded is-small is-outlined is-primary has-tooltip-primary"
-              data-tooltip="Vote for Card"
-            >
-              <i className="fas fa-thumbs-up"></i> (0)
-            </a>
+            {!userVote && (
+              <a
+                className="button is-rounded is-small is-outlined is-primary has-tooltip-primary"
+                disabled={props.votesRemaining <= 0}
+                data-tooltip="Vote for Card"
+                onClick={handleVote}
+              >
+                <i className="fas fa-thumbs-up"></i> ({props.votes.length})
+              </a>
+            )}
+            {userVote && (
+              <a
+                className="button is-rounded is-small is-primary has-tooltip-primary"
+                data-tooltip="Cancel vote"
+                onClick={handleVote}
+              >
+                <i className="fas fa-thumbs-up"></i> ({props.votes.length})
+              </a>
+            )}
           </div>
         </div>
       </div>

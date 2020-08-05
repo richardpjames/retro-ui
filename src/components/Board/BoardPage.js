@@ -12,12 +12,17 @@ import { toast } from 'react-toastify';
 import { LexoRank } from 'lexorank';
 import io from '../../services/socket';
 import LoadingSpinner from '../Common/LoadingSpinner';
+import votesService from '../../services/votesService';
+import usersService from '../../services/usersService';
 
 const BoardPage = (props) => {
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently, user } = useAuth0();
   const [board, setBoard] = useState({});
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
+  const [votes, setVotes] = useState([]);
+  const [votesRemaining, setVotesRemaining] = useState(0);
+  const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [dragDisabled, setDragDisabled] = useState(false);
 
@@ -47,12 +52,19 @@ const BoardPage = (props) => {
         if (a.rank > b.rank) return 1;
         return -1;
       });
+      // Get the required votes (no need to sort etc. for these)
+      let _votes = await votesService.getAll(props.match.params.boardId, token);
+      // Get the user profile
+      const profile = await usersService.getById(user.sub, token);
+      setProfile(profile);
       // Update the boards
       setBoard(_board);
       // Update the columns
       setColumns(_columns);
       // Update the cards
       setCards(_cards);
+      // Update the votes
+      setVotes(_votes);
       // Stop loading bar
       setLoading(false);
     } catch (error) {
@@ -116,8 +128,32 @@ const BoardPage = (props) => {
       // Filter out the cards not deleted and update
       const _cards = cards.filter((c) => c._id !== cardId);
       setCards(_cards);
+      const _votes = votes.filter((v) => v.cardId !== cardId);
+      setVotes(_votes);
     });
-  }, [cards]);
+
+    io.removeAllListeners('vote created');
+    // On any new cards then update
+    io.on('vote created', (vote) => {
+      const check = votes.find((v) => v._id === vote._id);
+      // If not then add it to the list
+      if (!check) {
+        setVotes([...votes, vote]);
+      }
+    });
+
+    io.removeAllListeners('vote deleted');
+    // For any deleted votes
+    io.on('vote deleted', (voteId) => {
+      // Filter out the cards not deleted and update
+      const _votes = votes.filter((v) => v._id !== voteId);
+      setVotes(_votes);
+    });
+
+    // Recalculate the votes the user has remaining
+    let votesUsed = votes.filter((v) => v.userId === profile.id).length;
+    setVotesRemaining(board.maxVotes - votesUsed);
+  }, [cards, votes, board, profile]);
 
   const addCard = async (card) => {
     // Get the access token required to call the API
@@ -177,6 +213,31 @@ const BoardPage = (props) => {
     });
     // Update state with the re-ordered cards
     setCards(_cards);
+  };
+
+  const addVote = async (vote) => {
+    // Get the access token required to call the API
+    const token = await getAccessTokenSilently();
+    // Call the API
+    const _newVote = await votesService.create(
+      board._id,
+      vote.cardId,
+      vote,
+      token,
+    );
+    // Add the new card to the list
+    setVotes([...votes, _newVote]);
+  };
+
+  const deleteVote = async (voteId, cardId) => {
+    // Get the access token required to call the API
+    const token = await getAccessTokenSilently();
+    // Call the API
+    votesService.remove(board._id, cardId, voteId, token);
+    // Remove the card from the list
+    const _votes = votes.filter((v) => v._id !== voteId);
+    // Save changes to state
+    setVotes(_votes);
   };
 
   const handleDragEnd = (result) => {
@@ -251,6 +312,9 @@ const BoardPage = (props) => {
         </div>
         <div className="column is-narrow">
           <div className="buttons">
+            <button className="button is-rounded">
+              {votesRemaining} Vote(s) Left
+            </button>
             <button
               className="button is-rounded has-tooltip-primary"
               onClick={() => fetchData(false)}
@@ -290,9 +354,14 @@ const BoardPage = (props) => {
                     <BoardColumn
                       deleteCard={deleteCard}
                       updateCard={updateCard}
+                      addVote={addVote}
+                      deleteVote={deleteVote}
                       dragDisabled={dragDisabled}
                       setDragDisabled={setDragDisabled}
                       cards={cards.filter((c) => c.columnId === column._id)}
+                      votes={votes}
+                      votesRemaining={votesRemaining}
+                      profile={profile}
                     />
                     {provided.placeholder}
                   </div>

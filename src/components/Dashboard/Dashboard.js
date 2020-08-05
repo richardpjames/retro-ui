@@ -24,9 +24,12 @@ const Dashboard = (props) => {
   const [pendingTeams, setPendingTeams] = useState(0);
   const Paddle = window.Paddle;
 
-  // Store the current location so that other pages can return here
-  localStorage.setItem('dashboard_path', props.location.pathname);
-  props.setDashboardPath(props.location.pathname);
+  // Set the location of the dashboard for navigation
+  useEffect(() => {
+    // Store the current location so that other pages can return here
+    localStorage.setItem('dashboard_path', props.location.pathname);
+    props.setDashboardPath(props.location.pathname);
+  }, [props]);
 
   // Loading of all initial data
   useEffect(() => {

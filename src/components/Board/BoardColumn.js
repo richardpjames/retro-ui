@@ -22,8 +22,13 @@ const BoardColumn = (props) => {
               <ColumnCard
                 deleteCard={props.deleteCard}
                 updateCard={props.updateCard}
+                addVote={props.addVote}
+                deleteVote={props.deleteVote}
                 setDragDisabled={props.setDragDisabled}
                 card={card}
+                votes={props.votes.filter((vote) => vote.cardId === card._id)}
+                votesRemaining={props.votesRemaining}
+                profile={props.profile}
               />
             </div>
           )}
