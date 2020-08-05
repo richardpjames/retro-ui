@@ -8,6 +8,8 @@ import BoardPage from '../Board/BoardPage';
 import Purchase from '../Pages/Purchase';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoadingSpinner from '../Common/LoadingSpinner';
+import Footer from '../Common/Footer';
+import Page from '../Common/Page';
 
 const AppRouter = () => {
   // Only display the page if Auth0 has completed loading as this is required
@@ -51,7 +53,12 @@ const AppRouter = () => {
               <BoardPage {...props} dashboardPath={dashboardPath} />
             )}
           />
+          <Route
+            path="/privacy"
+            render={(props) => <Page {...props} url="/static/privacy.html" />}
+          />
         </Switch>
+        <Footer />
       </Router>
     );
   }

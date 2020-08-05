@@ -29,23 +29,25 @@ const ProfilePage = (props) => {
         <table className="table">
           <tbody>
             <tr>
-              <td>Nickname</td>
+              <td className="is-50-td">Nickname</td>
               <td className="is-capitalized">{props.profile.nickname}</td>
             </tr>
             <tr>
-              <td>Email</td>
-              <td>{props.profile.email}</td>
+              <td className="is-50-td">Email</td>
+              <td className="is-50-td">{props.profile.email}</td>
             </tr>
             <tr>
-              <td>Member Since</td>
-              <td>{moment(props.profile.created_at).format('DD/MM/YYYY')}</td>
+              <td className="is-50-td">Member Since</td>
+              <td className="is-50-td">
+                {moment(props.profile.created_at).format('DD/MM/YYYY')}
+              </td>
             </tr>
             <tr>
-              <td>Times Logged In</td>
-              <td>{props.profile.logins_count}</td>
+              <td className="is-50-td">Times Logged In</td>
+              <td className="is-50-td">{props.profile.logins_count}</td>
             </tr>
             <tr>
-              <td>Current Subscription Plan</td>
+              <td className="is-50-td">Current Subscription Plan</td>
               <td className="is-capitalized">{props.profile.plan}</td>
             </tr>
           </tbody>
@@ -72,14 +74,14 @@ const ProfilePage = (props) => {
                 <table className="table">
                   <tbody>
                     <tr>
-                      <td>Current Status</td>
+                      <td className="is-50-td">Current Status</td>
                       <td className="is-capitalized">
                         {props.profile.subscription.state}
                       </td>
                     </tr>
                     <tr>
-                      <td>Next Payment Amount</td>
-                      <td>
+                      <td className="is-50-td">Next Payment Amount</td>
+                      <td className="is-50-td">
                         {props.profile.subscription.next_payment &&
                         props.profile.subscription.next_payment.amount
                           ? props.profile.subscription.next_payment.amount
@@ -91,8 +93,8 @@ const ProfilePage = (props) => {
                       </td>
                     </tr>
                     <tr>
-                      <td>Next Payment Date</td>
-                      <td>
+                      <td className="is-50-td">Next Payment Date</td>
+                      <td className="is-50-td">
                         {props.profile.subscription.next_payment &&
                         props.profile.subscription.next_payment.date
                           ? moment(
@@ -102,7 +104,7 @@ const ProfilePage = (props) => {
                       </td>
                     </tr>
                     <tr>
-                      <td>Payment Method</td>
+                      <td className="is-50-td">Payment Method</td>
                       <td className="is-capitalized">
                         {
                           props.profile.subscription.payment_information
