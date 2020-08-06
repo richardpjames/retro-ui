@@ -2,10 +2,25 @@ import React from 'react';
 import NewTeamModal from './NewTeamModal';
 import TeamList from './TeamList';
 import MembershipList from './MembershipList';
+import LeaveTeamModal from './LeaveTeamModal';
+import RemoveTeamMemberModal from './RemoveTeamMemberModal';
 
 const Teams = (props) => {
   return (
     <div className="content mx-5 my-5">
+      <RemoveTeamMemberModal
+        visible={props.removeTeamMemberModalVisible}
+        setModalVisible={props.setRemoveTeamMemberModalVisible}
+        setTeamMemberToRemove={props.setTeamMemberToRemove}
+        teamMemberToRemove={props.teamMemberToRemove}
+        removeTeamMember={props.removeTeamMember}
+      />
+      <LeaveTeamModal
+        visible={props.leaveTeamModalVisible}
+        setModalVisible={props.setLeaveTeamModalVisible}
+        team={props.teamToLeave}
+        removeMembership={props.removeMembership}
+      />
       {props.pendingTeams > 0 ? (
         <div className="notification is-primary">
           <i className="fas fa-exclamation-triangle mr-3"></i>
@@ -46,6 +61,10 @@ const Teams = (props) => {
           removeTeam={props.removeTeam}
           addTeamMember={props.addTeamMember}
           removeTeamMember={props.removeTeamMember}
+          setTeamMemberToRemove={props.setTeamMemberToRemove}
+          setRemoveTeamMemberModalVisible={
+            props.setRemoveTeamMemberModalVisible
+          }
         />
         <div>
           <h1 className="title is-2 mt-5">Memberships</h1>
@@ -58,6 +77,8 @@ const Teams = (props) => {
           teams={props.teams.filter((team) => team.userId !== props.profile.id)}
           removeMembership={props.removeMembership}
           acceptMembership={props.acceptMembership}
+          setLeaveTeamModalVisible={props.setLeaveTeamModalVisible}
+          setTeamToLeave={props.setTeamToLeave}
           profile={props.profile}
         />
       </div>

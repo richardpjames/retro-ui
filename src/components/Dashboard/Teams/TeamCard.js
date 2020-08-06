@@ -103,9 +103,13 @@ const TeamCard = (props) => {
                       <div className="buttons">
                         <button
                           className="button is-danger"
-                          onClick={() =>
-                            props.removeTeamMember(props.team._id, member.email)
-                          }
+                          onClick={() => {
+                            props.setTeamMemberToRemove({
+                              teamId: props.team._id,
+                              email: member.email,
+                            });
+                            props.setRemoveTeamMemberModalVisible(true);
+                          }}
                         >
                           <i className="fas fa-trash-alt"></i>
                         </button>

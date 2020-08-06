@@ -39,7 +39,10 @@ const MembershipCard = (props) => {
             ) : null}
             <button
               className="button is-danger"
-              onClick={() => props.removeMembership(props.team._id)}
+              onClick={() => {
+                props.setTeamToLeave(props.team);
+                props.setLeaveTeamModalVisible(true);
+              }}
             >
               <i className="fas fa-sign-out-alt mr-3"></i> Leave
             </button>

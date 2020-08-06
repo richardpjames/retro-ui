@@ -10,6 +10,8 @@ const MembershipList = (props) => {
             team={team}
             removeMembership={props.removeMembership}
             acceptMembership={props.acceptMembership}
+            setLeaveTeamModalVisible={props.setLeaveTeamModalVisible}
+            setTeamToLeave={props.setTeamToLeave}
             profile={props.profile}
           />
         </div>

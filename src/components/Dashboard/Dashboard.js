@@ -21,6 +21,13 @@ const Dashboard = (props) => {
   const [loading, setLoading] = useState(false);
   const [createBoardModalVisible, setCreateBoardModalVisible] = useState(false);
   const [createTeamModalVisible, setCreateTeamModalVisible] = useState(false);
+  const [leaveTeamModalVisible, setLeaveTeamModalVisible] = useState(false);
+  const [teamToLeave, setTeamToLeave] = useState({});
+  const [
+    removeTeamMemberModalVisible,
+    setRemoveTeamMemberModalVisible,
+  ] = useState(false);
+  const [teamMemberToRemove, setTeamMemberToRemove] = useState({});
   const [pendingTeams, setPendingTeams] = useState(0);
   const Paddle = window.Paddle;
 
@@ -349,6 +356,16 @@ const Dashboard = (props) => {
                 removeMembership={removeMembership}
                 createTeamModalVisible={createTeamModalVisible}
                 setCreateTeamModalVisible={setCreateTeamModalVisible}
+                leaveTeamModalVisible={leaveTeamModalVisible}
+                setLeaveTeamModalVisible={setLeaveTeamModalVisible}
+                teamToLeave={teamToLeave}
+                setTeamToLeave={setTeamToLeave}
+                removeTeamMemberModalVisible={removeTeamMemberModalVisible}
+                setRemoveTeamMemberModalVisible={
+                  setRemoveTeamMemberModalVisible
+                }
+                teamMemberToRemove={teamMemberToRemove}
+                setTeamMemberToRemove={setTeamMemberToRemove}
                 pendingTeams={pendingTeams}
               />
             )}

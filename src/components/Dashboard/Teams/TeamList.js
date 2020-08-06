@@ -26,6 +26,10 @@ const TeamList = (props) => {
             setTeamToDelete={setTeamToDelete}
             addTeamMember={props.addTeamMember}
             removeTeamMember={props.removeTeamMember}
+            setTeamMemberToRemove={props.setTeamMemberToRemove}
+            setRemoveTeamMemberModalVisible={
+              props.setRemoveTeamMemberModalVisible
+            }
           />
         </div>
       ))}
