@@ -19,6 +19,19 @@ const DeleteTeamModal = (props) => {
     }
   };
 
+  const checkKeyPress = (event) => {
+    // If the enter key has been pressed and the wording is correct
+    if (
+      event.charCode === 13 &&
+      event.target.value.toLowerCase() === 'delete'
+    ) {
+      props.removeTeam(props.team._id);
+      props.setModalVisible(false);
+      setButtonDisabled(true);
+      setConfirm('');
+    }
+  };
+
   const checkVisible = () => {
     if (props.visible) {
       return 'modal is-active';
@@ -59,6 +72,7 @@ const DeleteTeamModal = (props) => {
                 placeholder="delete"
                 value={confirm}
                 onChange={checkInput}
+                onKeyPress={checkKeyPress}
                 required
               />
             </div>

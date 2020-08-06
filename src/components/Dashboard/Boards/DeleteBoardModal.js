@@ -19,6 +19,19 @@ const DeleteBoardModal = (props) => {
     }
   };
 
+  const checkKeyPress = (event) => {
+    // If the enter key has been pressed and the wording is correct
+    if (
+      event.charCode === 13 &&
+      event.target.value.toLowerCase() === 'delete'
+    ) {
+      props.removeBoard(props.board._id);
+      props.updateModalVisible(false);
+      updateButtonDisabled(true);
+      updateConfirm('');
+    }
+  };
+
   const checkVisible = () => {
     if (props.visible) {
       return 'modal is-active';
@@ -59,6 +72,7 @@ const DeleteBoardModal = (props) => {
                 placeholder="delete"
                 value={confirm}
                 onChange={checkInput}
+                onKeyPress={checkKeyPress}
                 required
               />
             </div>
