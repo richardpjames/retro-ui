@@ -127,14 +127,17 @@ const Dashboard = (props) => {
   // Data functions for teams
   const calculatePendingTeams = (_teams, _profile) => {
     let _counter = 0;
-    _teams.map((team) =>
-      team.members.map((member) => {
-        if (member.email === _profile.email && member.status === 'invited') {
-          _counter += 1;
-        }
-        return true;
-      }),
-    );
+    _teams.map((team) => {
+      if (team.members) {
+        team.members.map((member) => {
+          if (member.email === _profile.email && member.status === 'invited') {
+            _counter += 1;
+          }
+          return true;
+        });
+      }
+      return true;
+    });
     setPendingTeams(_counter);
   };
 
