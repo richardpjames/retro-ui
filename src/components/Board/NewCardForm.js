@@ -13,6 +13,12 @@ const NewCardForm = (props) => {
     setCard({ ...card, [event.target.name]: event.target.value });
   };
 
+  const onKeyPress = (event) => {
+    if (event.charCode === 13) {
+      handleSubmit(event);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit}>
       <textarea
@@ -22,6 +28,7 @@ const NewCardForm = (props) => {
         name="text"
         value={card.text}
         onChange={onChange}
+        onKeyPress={onKeyPress}
         required
       ></textarea>
       <button className="button is-primary is-fullwidth my-1 is-size-6-7">

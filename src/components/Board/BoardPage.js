@@ -14,6 +14,7 @@ import io from '../../services/socket';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import votesService from '../../services/votesService';
 import usersService from '../../services/usersService';
+import DeleteCardModal from './DeleteCardModal';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -25,6 +26,8 @@ const BoardPage = (props) => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [dragDisabled, setDragDisabled] = useState(false);
+  const [cardToDelete, setCardToDelete] = useState({});
+  const [deleteCardModalVisible, setDeleteCardModalVisible] = useState(false);
 
   const fetchData = async (showLoadingBar = false) => {
     try {
@@ -306,6 +309,12 @@ const BoardPage = (props) => {
       {(() => {
         if (loading) return <LoadingSpinner />;
       })()}
+      <DeleteCardModal
+        card={cardToDelete}
+        visible={deleteCardModalVisible}
+        setModalVisible={setDeleteCardModalVisible}
+        removeCard={deleteCard}
+      />
       <div className="columns is-vcentered">
         <div className="column">
           <h1 className="title is-4">{board.name}</h1>
@@ -352,7 +361,6 @@ const BoardPage = (props) => {
                     {...provided.droppableProps}
                   >
                     <BoardColumn
-                      deleteCard={deleteCard}
                       updateCard={updateCard}
                       addVote={addVote}
                       deleteVote={deleteVote}
@@ -362,6 +370,8 @@ const BoardPage = (props) => {
                       votes={votes}
                       votesRemaining={votesRemaining}
                       profile={profile}
+                      setCardToDelete={setCardToDelete}
+                      setDeleteCardModalVisible={setDeleteCardModalVisible}
                     />
                     {provided.placeholder}
                   </div>

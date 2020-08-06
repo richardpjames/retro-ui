@@ -20,7 +20,6 @@ const BoardColumn = (props) => {
               className="my-2"
             >
               <ColumnCard
-                deleteCard={props.deleteCard}
                 updateCard={props.updateCard}
                 addVote={props.addVote}
                 deleteVote={props.deleteVote}
@@ -29,6 +28,8 @@ const BoardColumn = (props) => {
                 votes={props.votes.filter((vote) => vote.cardId === card._id)}
                 votesRemaining={props.votesRemaining}
                 profile={props.profile}
+                setCardToDelete={props.setCardToDelete}
+                setDeleteCardModalVisible={props.setDeleteCardModalVisible}
               />
             </div>
           )}

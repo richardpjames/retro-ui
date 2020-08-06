@@ -5,7 +5,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const ColumnCard = (props) => {
   const handleDelete = (event) => {
-    props.deleteCard(props.card);
+    props.setCardToDelete(props.card);
+    props.setDeleteCardModalVisible(true);
   };
 
   const handleCancel = (event) => {
