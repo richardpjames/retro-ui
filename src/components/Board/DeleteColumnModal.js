@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LeaveTeamModal = (props) => {
+const DeleteColumnModal = (props) => {
   // Used to close the modal from the cancel or cross button
   const closeModal = () => {
     props.setModalVisible(false);
@@ -20,7 +20,7 @@ const LeaveTeamModal = (props) => {
       <div className="modal-background"></div>
       <div className="modal-card">
         <header className="modal-card-head">
-          <p className="modal-card-title my-0">Leave {props.team.name}</p>
+          <p className="modal-card-title my-0">Delete {props.column.title}</p>
           <button
             className="delete"
             aria-label="close"
@@ -28,17 +28,19 @@ const LeaveTeamModal = (props) => {
           ></button>
         </header>
         <section className="modal-card-body">
-          <p className="my-3">Are you sure that you want to leave this team?</p>
+          <p className="my-3">
+            Are you sure that you want to delete this column?
+          </p>
         </section>
         <footer className="modal-card-foot">
           <button
             className="button is-danger"
             onClick={() => {
-              props.removeMembership(props.team._id);
+              props.removeColumn(props.column._id);
               props.setModalVisible(false);
             }}
           >
-            <i className="fas fa-sign-out-alt mr-3"></i> Leave
+            <i className="fas fa-trash-alt mr-3"></i> Delete
           </button>
           <button className="button" onClick={closeModal}>
             <i className="fas fa-ban mr-3"></i> Cancel
@@ -49,4 +51,4 @@ const LeaveTeamModal = (props) => {
   );
 };
 
-export default LeaveTeamModal;
+export default DeleteColumnModal;

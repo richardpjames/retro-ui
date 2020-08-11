@@ -15,6 +15,9 @@ import LoadingSpinner from '../Common/LoadingSpinner';
 import votesService from '../../services/votesService';
 import usersService from '../../services/usersService';
 import DeleteCardModal from './DeleteCardModal';
+import NewColumnModal from './NewColumnModal';
+import CreateColumnModal from './CreateColumnModal';
+import DeleteColumnModal from './DeleteColumnModal';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -28,6 +31,13 @@ const BoardPage = (props) => {
   const [dragDisabled, setDragDisabled] = useState(false);
   const [cardToDelete, setCardToDelete] = useState({});
   const [deleteCardModalVisible, setDeleteCardModalVisible] = useState(false);
+  const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
+    false,
+  );
+  const [columnToDelete, setColumnToDelete] = useState({});
+  const [deleteColumnModalVisible, setDeleteColumnModalVisible] = useState(
+    false,
+  );
 
   const fetchData = async (showLoadingBar = false) => {
     try {
@@ -91,17 +101,17 @@ const BoardPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  io.removeAllListeners('card created');
-  // On any new cards then update
-  io.on('card created', (card) => {
-    const check = cards.find((c) => c._id === card._id);
-    // If not then add it to the list
-    if (!check) {
-      setCards([...cards, card]);
-    }
-  });
-
   useEffect(() => {
+    io.removeAllListeners('card created');
+    // On any new cards then update
+    io.on('card created', (card) => {
+      const check = cards.find((c) => c._id === card._id);
+      // If not then add it to the list
+      if (!check) {
+        setCards([...cards, card]);
+      }
+    });
+
     io.removeAllListeners('card updated');
     // For any updated cards
     io.on('card updated', (updatedCard) => {
@@ -153,10 +163,51 @@ const BoardPage = (props) => {
       setVotes(_votes);
     });
 
+    io.removeAllListeners('column created');
+    // For new columns
+    io.on('column created', (column) => {
+      const check = columns.find((c) => c._id === column._id);
+      // If not then add it to the list
+      if (!check) {
+        setColumns([...columns, column]);
+      }
+    });
+
+    io.removeAllListeners('column updated');
+    // For any updated columns
+    io.on('column updated', (updatedColumn) => {
+      console.log(updatedColumn);
+      // Take a copy of the columns state
+      let _columns = [...columns];
+      // Update the card that was dragged
+      _columns
+        .filter((c) => c._id === updatedColumn._id)
+        .map(async (card) => {
+          card.title = updatedColumn.title;
+          card.order = updatedColumn.order;
+        });
+
+      // Sort the columns into order
+      _columns = _columns.sort((a, b) => {
+        if (a.order > b.order) return 1;
+        return -1;
+      });
+      // Update state with the re-ordered columns
+      setColumns(_columns);
+    });
+
+    io.removeAllListeners('column deleted');
+    // For any deleted cards
+    io.on('column deleted', (columnId) => {
+      // Filter out the cards not deleted and update
+      const _columns = columns.filter((c) => c._id !== columnId);
+      setColumns(_columns);
+    });
+
     // Recalculate the votes the user has remaining
     let votesUsed = votes.filter((v) => v.userId === profile.id).length;
     setVotesRemaining(board.maxVotes - votesUsed);
-  }, [cards, votes, board, profile]);
+  }, [cards, votes, board, profile, columns]);
 
   const addCard = async (card) => {
     // Get the access token required to call the API
@@ -243,6 +294,57 @@ const BoardPage = (props) => {
     setVotes(_votes);
   };
 
+  const addColumn = async (column) => {
+    const token = await getAccessTokenSilently();
+    // Get the new column from the service
+    const newColumn = await columnsService.create(
+      { ...column, order: columns.length + 1 },
+      board._id,
+      token,
+    );
+    // Now add to the existing columns
+    const _columns = [...columns];
+    _columns.push(newColumn);
+    setColumns(_columns);
+  };
+
+  const deleteColumn = async (columnId) => {
+    const token = await getAccessTokenSilently();
+    // Remove the column from the service
+    columnsService.remove(board._id, columnId, token);
+    // Remove the column from the list
+    const _columns = columns.filter((c) => c._id !== columnId);
+    setColumns(_columns);
+    // Remove any cards
+    const _cards = cards.filter((c) => c.columnId !== columnId);
+    setCards(_cards);
+  };
+
+  const moveColumn = async (column, offset) => {
+    let _columns = [...columns];
+    // Store the old position
+    const oldPosition = column.order;
+    // Find the new position
+    const newPosition = column.order + offset;
+    // Find the affected column and change the order
+    const movedColumn = _columns.find((c) => c._id === column._id);
+    const swappedColumn = _columns.find((c) => c.order === newPosition);
+    // Update after finding the columns
+    movedColumn.order = newPosition;
+    swappedColumn.order = oldPosition;
+    // Update through the service
+    const token = await getAccessTokenSilently();
+    columnsService.update(board._id, movedColumn, token);
+    columnsService.update(board._id, swappedColumn, token);
+    // Sort the columns
+    _columns = _columns.sort((a, b) => {
+      if (a.order > b.order) return 1;
+      return -1;
+    });
+    // Set the state
+    setColumns(_columns);
+  };
+
   const handleDragEnd = (result) => {
     // Take the source and destination details from the result
     const { source, destination } = result;
@@ -315,25 +417,27 @@ const BoardPage = (props) => {
         setModalVisible={setDeleteCardModalVisible}
         removeCard={deleteCard}
       />
+      <CreateColumnModal
+        visible={createColumnModalVisible}
+        setVisible={setCreateColumnModalVisible}
+        addColumn={addColumn}
+      />
+      <DeleteColumnModal
+        column={columnToDelete}
+        visible={deleteColumnModalVisible}
+        setModalVisible={setDeleteColumnModalVisible}
+        removeColumn={deleteColumn}
+      />
       <div className="columns is-vcentered">
         <div className="column">
           <h1 className="title is-4">{board.name}</h1>
         </div>
         <div className="column is-narrow">
           <div className="buttons">
-            <button className="button is-rounded">
-              {votesRemaining} Vote(s) Left
-            </button>
-            <button
-              className="button is-rounded has-tooltip-primary"
-              onClick={() => fetchData(false)}
-              data-tooltip="Refresh Data"
-            >
-              <i className="fas fa-sync-alt"></i>
-            </button>
+            <button className="button">{votesRemaining} Vote(s) Left</button>
             <Link to={props.dashboardPath}>
               <button
-                className="button is-rounded has-tooltip-primary"
+                className="button has-tooltip-primary"
                 data-tooltip="Back to Dashboard"
               >
                 <i className="fas fa-home"></i>
@@ -349,9 +453,43 @@ const BoardPage = (props) => {
               key={column._id}
               className="card column board-column mx-1 my-1"
             >
-              <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">
-                {column.title}
-              </h4>
+              <div className="buttons">
+                {board.userId === profile.id && (
+                  <>
+                    <button
+                      className="button is-small"
+                      disabled={column.order <= 1}
+                      onClick={() => moveColumn(column, -1)}
+                    >
+                      <i className="fas fa-arrow-left"></i>
+                    </button>
+                    <button
+                      className="button is-small"
+                      disabled={column.order === columns.length}
+                      onClick={() => moveColumn(column, 1)}
+                    >
+                      <i className="fas fa-arrow-right"></i>
+                    </button>
+                    <button
+                      className="button is-danger is-small"
+                      onClick={() => {
+                        setColumnToDelete(column);
+                        setDeleteColumnModalVisible(true);
+                      }}
+                      disabled={
+                        cards.filter((c) => c.columnId === column._id).length >
+                        0
+                      }
+                    >
+                      <i className="fas fa-trash-alt"></i>
+                    </button>
+                  </>
+                )}
+                <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">
+                  {column.title}
+                </h4>
+              </div>
+
               <NewCardForm addCard={addCard} column={column} />
               <Droppable droppableId={column._id}>
                 {(provided) => (
@@ -380,6 +518,17 @@ const BoardPage = (props) => {
             </div>
           ))}
         </DragDropContext>
+        <NewColumnModal />
+        {board.userId === profile.id && (
+          <div className="column is-vcentered is-narrow">
+            <button
+              className="button"
+              onClick={() => setCreateColumnModalVisible(true)}
+            >
+              <i className="fas fa-plus"></i>
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

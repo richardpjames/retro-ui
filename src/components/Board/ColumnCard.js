@@ -57,7 +57,7 @@ const ColumnCard = (props) => {
             {user.sub === props.card.userId ? (
               <>
                 <a
-                  className="button is-rounded is-small is-outlined is-primary has-tooltip-primary"
+                  className="button is-small is-outlined is-primary has-tooltip-primary"
                   onClick={() => {
                     setEditable(true);
                     props.setDragDisabled(true);
@@ -67,7 +67,7 @@ const ColumnCard = (props) => {
                   <i className="fas fa-pencil-alt"></i>
                 </a>
                 <a
-                  className="button is-rounded is-small is-outlined is-danger has-tooltip-danger"
+                  className="button is-small is-outlined is-danger has-tooltip-danger"
                   onClick={handleDelete}
                   data-tooltip="Delete Card"
                 >
@@ -78,7 +78,7 @@ const ColumnCard = (props) => {
 
             {!userVote && (
               <a
-                className="button is-rounded is-small is-outlined is-primary has-tooltip-primary"
+                className="button is-small is-outlined is-primary has-tooltip-primary"
                 disabled={props.votesRemaining <= 0}
                 data-tooltip="Vote for Card"
                 onClick={handleVote}
@@ -88,7 +88,7 @@ const ColumnCard = (props) => {
             )}
             {userVote && (
               <a
-                className="button is-rounded is-small is-primary has-tooltip-primary"
+                className="button is-small is-primary has-tooltip-primary"
                 data-tooltip="Cancel vote"
                 onClick={handleVote}
               >
