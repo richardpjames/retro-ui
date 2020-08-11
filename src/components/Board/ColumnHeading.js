@@ -66,8 +66,13 @@ const ColumnHeading = (props) => {
             <a
               className="button is-danger"
               onClick={() => {
-                props.setColumnToDelete(props.column);
-                props.setDeleteColumnModalVisible(true);
+                if (
+                  props.cards.filter((c) => c.columnId === props.column._id)
+                    .length > 0
+                ) {
+                  props.setColumnToDelete(props.column);
+                  props.setDeleteColumnModalVisible(true);
+                }
               }}
               disabled={
                 props.cards.filter((c) => c.columnId === props.column._id)
