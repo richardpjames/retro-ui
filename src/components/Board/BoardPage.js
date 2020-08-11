@@ -4,10 +4,6 @@ import boardsService from '../../services/boardsService';
 import cardsService from '../../services/cardsService';
 import columnsService from '../../services/columnsService';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
-import { Link } from 'react-router-dom';
-import BoardColumn from './BoardColumn';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import NewCardForm from './NewCardForm';
 import { toast } from 'react-toastify';
 import { LexoRank } from 'lexorank';
 import io from '../../services/socket';
@@ -15,9 +11,11 @@ import LoadingSpinner from '../Common/LoadingSpinner';
 import votesService from '../../services/votesService';
 import usersService from '../../services/usersService';
 import DeleteCardModal from './DeleteCardModal';
-import NewColumnModal from './NewColumnModal';
 import CreateColumnModal from './CreateColumnModal';
 import DeleteColumnModal from './DeleteColumnModal';
+import BoardTitleBar from './BoardTitleBar';
+
+import Board from './Board';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -411,6 +409,7 @@ const BoardPage = (props) => {
       {(() => {
         if (loading) return <LoadingSpinner />;
       })()}
+
       <DeleteCardModal
         card={cardToDelete}
         visible={deleteCardModalVisible}
@@ -428,108 +427,34 @@ const BoardPage = (props) => {
         setModalVisible={setDeleteColumnModalVisible}
         removeColumn={deleteColumn}
       />
-      <div className="columns is-vcentered">
-        <div className="column">
-          <h1 className="title is-4">{board.name}</h1>
-        </div>
-        <div className="column is-narrow">
-          <div className="buttons">
-            <button className="button">{votesRemaining} Vote(s) Left</button>
-            <Link to={props.dashboardPath}>
-              <button
-                className="button has-tooltip-primary"
-                data-tooltip="Back to Dashboard"
-              >
-                <i className="fas fa-home"></i>
-              </button>
-            </Link>
-          </div>
-        </div>
-      </div>
-      <div className="columns board-columns">
-        <DragDropContext onDragEnd={handleDragEnd}>
-          {columns.map((column, index) => (
-            <div
-              key={column._id}
-              className="card column board-column mx-1 my-1"
-            >
-              <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">
-                {column.title}
-              </h4>
-              <div className="buttons">
-                {board.userId === profile.id && (
-                  <>
-                    <button
-                      className="button is-small"
-                      disabled={column.order <= 1}
-                      onClick={() => moveColumn(column, -1)}
-                    >
-                      <i className="fas fa-arrow-left"></i>
-                    </button>
-                    <button
-                      className="button is-small"
-                      disabled={column.order === columns.length}
-                      onClick={() => moveColumn(column, 1)}
-                    >
-                      <i className="fas fa-arrow-right"></i>
-                    </button>
-                    <button
-                      className="button is-danger is-small"
-                      onClick={() => {
-                        setColumnToDelete(column);
-                        setDeleteColumnModalVisible(true);
-                      }}
-                      disabled={
-                        cards.filter((c) => c.columnId === column._id).length >
-                        0
-                      }
-                    >
-                      <i className="fas fa-trash-alt"></i>
-                    </button>
-                  </>
-                )}
-              </div>
 
-              <NewCardForm addCard={addCard} column={column} />
-              <Droppable droppableId={column._id}>
-                {(provided) => (
-                  <div
-                    className="is-fullheight"
-                    ref={provided.innerRef}
-                    {...provided.droppableProps}
-                  >
-                    <BoardColumn
-                      updateCard={updateCard}
-                      addVote={addVote}
-                      deleteVote={deleteVote}
-                      dragDisabled={dragDisabled}
-                      setDragDisabled={setDragDisabled}
-                      cards={cards.filter((c) => c.columnId === column._id)}
-                      votes={votes}
-                      votesRemaining={votesRemaining}
-                      profile={profile}
-                      setCardToDelete={setCardToDelete}
-                      setDeleteCardModalVisible={setDeleteCardModalVisible}
-                    />
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </div>
-          ))}
-        </DragDropContext>
-        <NewColumnModal />
-        {board.userId === profile.id && (
-          <div className="column is-vcentered is-narrow">
-            <button
-              className="button"
-              onClick={() => setCreateColumnModalVisible(true)}
-            >
-              <i className="fas fa-plus"></i>
-            </button>
-          </div>
-        )}
-      </div>
+      <BoardTitleBar
+        board={board}
+        votesRemaining={votesRemaining}
+        dashboardPath={props.dashboardPath}
+      />
+
+      <Board
+        board={board}
+        profile={profile}
+        columns={columns}
+        cards={cards}
+        votes={votes}
+        handleDragEnd={handleDragEnd}
+        moveColumn={moveColumn}
+        setColumnToDelete={setColumnToDelete}
+        setDeleteColumnModalVisible={setDeleteColumnModalVisible}
+        addCard={addCard}
+        updateCard={updateCard}
+        addVote={addVote}
+        deleteVote={deleteVote}
+        votesRemaining={votesRemaining}
+        setCreateColumnModalVisible={setCreateColumnModalVisible}
+        dragDisabled={dragDisabled}
+        setDragDisabled={setDragDisabled}
+        setCardToDelete={setCardToDelete}
+        setDeleteCardModalVisible={setDeleteCardModalVisible}
+      />
     </div>
   );
 };
