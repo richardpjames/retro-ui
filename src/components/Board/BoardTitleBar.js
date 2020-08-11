@@ -12,12 +12,17 @@ const BoardTitleBar = (props) => {
           <button className="button">
             {props.votesRemaining} Vote(s) Left
           </button>
-          <Link to={props.dashboardPath}>
+          {props.board.userId === props.profile.id && (
             <button
-              className="button has-tooltip-primary"
-              data-tooltip="Back to Dashboard"
+              className="button"
+              onClick={() => props.setCreateColumnModalVisible(true)}
             >
-              <i className="fas fa-home"></i>
+              <i className="fas fa-plus mr-3"></i> Add Column
+            </button>
+          )}
+          <Link to={props.dashboardPath}>
+            <button className="button">
+              <i className="fas fa-home mr-3"></i> Dashboard
             </button>
           </Link>
         </div>

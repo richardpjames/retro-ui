@@ -2,29 +2,15 @@ import React from 'react';
 
 const ColumnHeading = (props) => {
   return (
-    <>
+    <div {...props.dragHandleProps} className="mb-3">
       <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">
         {props.column.title}
       </h4>
-      <div className="buttons">
+      <div className="buttons are-small">
         {props.board.userId === props.profile.id && (
           <>
             <button
-              className="button is-small"
-              disabled={props.column.order <= 1}
-              onClick={() => props.moveColumn(props.column, -1)}
-            >
-              <i className="fas fa-arrow-left"></i>
-            </button>
-            <button
-              className="button is-small"
-              disabled={props.column.order === props.columns.length}
-              onClick={() => props.moveColumn(props.column, 1)}
-            >
-              <i className="fas fa-arrow-right"></i>
-            </button>
-            <button
-              className="button is-danger is-small"
+              className="button is-danger"
               onClick={() => {
                 props.setColumnToDelete(props.column);
                 props.setDeleteColumnModalVisible(true);
@@ -39,7 +25,7 @@ const ColumnHeading = (props) => {
           </>
         )}
       </div>
-    </>
+    </div>
   );
 };
 

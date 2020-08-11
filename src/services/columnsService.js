@@ -36,7 +36,7 @@ const columnsService = () => {
     const updatedColumn = {
       _id: column._id,
       title: column.title,
-      order: column.order,
+      rank: column.rank,
     };
     try {
       await axios.put(
