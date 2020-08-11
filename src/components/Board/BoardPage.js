@@ -453,6 +453,9 @@ const BoardPage = (props) => {
               key={column._id}
               className="card column board-column mx-1 my-1"
             >
+              <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">
+                {column.title}
+              </h4>
               <div className="buttons">
                 {board.userId === profile.id && (
                   <>
@@ -485,9 +488,6 @@ const BoardPage = (props) => {
                     </button>
                   </>
                 )}
-                <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">
-                  {column.title}
-                </h4>
               </div>
 
               <NewCardForm addCard={addCard} column={column} />
