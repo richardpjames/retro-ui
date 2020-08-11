@@ -67,7 +67,7 @@ const ColumnHeading = (props) => {
               className="button is-danger"
               onClick={() => {
                 if (
-                  props.cards.filter((c) => c.columnId === props.column._id)
+                  !props.cards.filter((c) => c.columnId === props.column._id)
                     .length > 0
                 ) {
                   props.setColumnToDelete(props.column);
