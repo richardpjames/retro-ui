@@ -309,6 +309,17 @@ const BoardPage = (props) => {
     setColumns(_columns);
   };
 
+  const renameColumn = async (column) => {
+    const token = await getAccessTokenSilently();
+    // Rename the column in the service
+    columnsService.update(board._id, column, token);
+    // Rename the column in the list
+    const _columns = [...columns];
+    const updatedColumn = _columns.find((c) => c._id === column._id);
+    updatedColumn.title = column.title;
+    setColumns(_columns);
+  };
+
   const deleteColumn = async (columnId) => {
     const token = await getAccessTokenSilently();
     // Remove the column from the service
@@ -478,6 +489,7 @@ const BoardPage = (props) => {
         setDragDisabled={setDragDisabled}
         setCardToDelete={setCardToDelete}
         setDeleteCardModalVisible={setDeleteCardModalVisible}
+        renameColumn={renameColumn}
       />
     </div>
   );

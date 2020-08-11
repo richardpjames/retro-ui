@@ -114,12 +114,15 @@ const ColumnCard = (props) => {
             ></textarea>
             <div className="columns mt-1">
               <div className="column">
-                <button className="button is-primary is-fullwidth">
+                <button className="button is-primary is-small is-fullwidth">
                   <i className="fas fa-save mr-3"></i>Save
                 </button>
               </div>
               <div className="column">
-                <button className="button is-fullwidth" onClick={handleCancel}>
+                <button
+                  className="button is-small is-fullwidth"
+                  onClick={handleCancel}
+                >
                   <i className="fas fa-ban mr-3"></i>Cancel
                 </button>
               </div>

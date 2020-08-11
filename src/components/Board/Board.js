@@ -40,6 +40,7 @@ const Board = (props) => {
                           props.setDeleteColumnModalVisible
                         }
                         dragHandleProps={provided.dragHandleProps}
+                        renameColumn={props.renameColumn}
                       />
 
                       <NewCardForm addCard={props.addCard} column={column} />
