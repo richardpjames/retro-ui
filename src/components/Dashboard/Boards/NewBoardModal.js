@@ -8,8 +8,9 @@ const NewBoardModal = (props) => {
   // Create three new state objects to hold the name, description and starter template for the board
   const [boardName, setBoardName] = useState('');
   const [boardDescription, setBoardDescription] = useState('');
-  const [boardTemplate, setBoardTemplate] = useState('');
+  const [boardTemplate, setBoardTemplate] = useState();
   const [boardPrivate, setBoardPrivate] = useState(false);
+  const [showActions, setShowActions] = useState(true);
   const [boardTeam, setBoardTeam] = useState('');
   const [templates, setTemplates] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
@@ -17,18 +18,25 @@ const NewBoardModal = (props) => {
   // When the form is submitted
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.addBoard({
+    let newBoard = {
       name: boardName,
       description: boardDescription,
       templateId: boardTemplate,
       teamId: boardTeam,
       private: boardPrivate,
-    });
+      showActions: showActions,
+    };
+    // If the team Id is blank then remove
+    if (newBoard.teamId === '') {
+      delete newBoard.teamId;
+    }
+    props.addBoard(newBoard);
     setBoardName('');
     setBoardDescription('');
     setBoardTemplate('');
     setBoardTeam('');
     setBoardPrivate(false);
+    setShowActions(true);
     props.setVisible(false);
   };
 
@@ -38,6 +46,7 @@ const NewBoardModal = (props) => {
     setBoardTemplate('');
     setBoardTeam('');
     setBoardPrivate(false);
+    setShowActions(true);
     props.setVisible(false);
   };
 
@@ -131,6 +140,7 @@ const NewBoardModal = (props) => {
                 type="text"
                 className="input"
                 id="boardName"
+                name="boardName"
                 placeholder="e.g. Sprint 20.01: A New Hope"
                 value={boardName}
                 onChange={(event) => setBoardName(event.target.value)}
@@ -144,6 +154,7 @@ const NewBoardModal = (props) => {
                 type="text"
                 className="input"
                 id="boardDescription"
+                name="boardDescription"
                 placeholder="e.g. Our first retrospective as a new team"
                 value={boardDescription}
                 onChange={(event) => setBoardDescription(event.target.value)}
@@ -157,6 +168,7 @@ const NewBoardModal = (props) => {
                 <div className="select is-fullwidth">
                   <select
                     id="boardTemplate"
+                    name="boardTemplate"
                     required
                     onChange={(event) => {
                       setBoardTemplate(event.target.value);
@@ -180,8 +192,13 @@ const NewBoardModal = (props) => {
                 <div className="select is-fullwidth">
                   <select
                     id="boardTeam"
+                    name="boardTeam"
                     onChange={(event) => {
-                      setBoardTeam(event.target.value);
+                      if (event.target.value !== '') {
+                        setBoardTeam(event.target.value);
+                      } else {
+                        setBoardTeam();
+                      }
                     }}
                     value={boardTeam}
                   >
@@ -199,14 +216,33 @@ const NewBoardModal = (props) => {
               <div className="control">
                 <div className="b-checkbox is-primary">
                   <input
-                    id="checkbox"
+                    id="privateCheckbox"
+                    name="privateCheckbox"
                     className="styled mr-3"
                     type="checkbox"
-                    value={boardPrivate}
-                    onChange={(event) => setBoardPrivate(event.target.value)}
+                    checked={boardPrivate}
+                    onChange={(event) => setBoardPrivate(event.target.checked)}
                   />
-                  <label htmlFor="checkbox">
+                  <label htmlFor="privateCheckbox">
                     Private (Only members of the team can access this board)
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="field">
+              <div className="control">
+                <div className="b-checkbox is-primary">
+                  <input
+                    id="showActionsCheckbox"
+                    name="showActionsCheckbox"
+                    className="styled mr-3"
+                    type="checkbox"
+                    checked={showActions}
+                    onChange={(event) => setShowActions(event.target.checked)}
+                  />
+                  <label htmlFor="showActionsCheckbox">
+                    Show the actions column
                   </label>
                 </div>
               </div>

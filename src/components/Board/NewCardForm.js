@@ -21,16 +21,22 @@ const NewCardForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <textarea
-        className="is-fullwidth has-fixed-size textarea is-size-6-7"
-        rows="2"
-        placeholder="Card text..."
-        name="text"
-        value={card.text}
-        onChange={onChange}
-        onKeyPress={onKeyPress}
-        required
-      ></textarea>
+      <div className="field">
+        <label htmlFor="text" className="is-size-6-7">
+          New Card
+        </label>
+        <textarea
+          className="is-fullwidth has-fixed-size textarea is-size-6-7"
+          rows="2"
+          placeholder="Card text..."
+          name="text"
+          id="text"
+          value={card.text}
+          onChange={onChange}
+          onKeyPress={onKeyPress}
+          required
+        ></textarea>
+      </div>
       <button className="button is-primary is-fullwidth my-1 is-size-6-7">
         <i className="fas fa-plus mr-3"></i>
         Add Card

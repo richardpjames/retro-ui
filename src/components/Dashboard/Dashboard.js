@@ -107,13 +107,12 @@ const Dashboard = (props) => {
 
   const removeBoard = async (boardId) => {
     try {
+      console.log(boardId);
       // Get the access token and call the delete endpoint
       const token = await getAccessTokenSilently();
-      await boardsService.remove(boardId, token);
+      boardsService.remove(boardId, token);
       // Remove the board from the state
-      let updatedBoards = boards.filter((board) => {
-        return board._id !== boardId;
-      });
+      let updatedBoards = boards.filter((board) => board._id !== boardId);
       setBoards(updatedBoards);
       // Set the total number of boards for the user
       setTotalBoards(totalBoards - 1);

@@ -36,32 +36,53 @@ const CreateActionForm = (props) => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <textarea
-          className="is-fullwidth has-fixed-size textarea is-size-6-7 mb-1"
-          rows="2"
-          placeholder="Action details"
-          name="text"
-          value={actionText}
-          onChange={(event) => setActionText(event.target.value)}
-          required
-        ></textarea>
-        <input
-          type="text"
-          className="input is-fullwidth is-size-6-7 mb-1"
-          name="owner"
-          placeholder="Action owner"
-          value={actionOwner}
-          onChange={(event) => setActionOwner(event.target.value)}
-          required
-        />
-        <input
-          type="date"
-          className="input is-fullwidth is-size-6-7"
-          name="due"
-          value={moment(actionDue).format('DD/MM/YYYY')}
-          onChange={() => {}}
-          required
-        />
+        <div className="field">
+          <label htmlFor="details" className="is-size-6-7">
+            Action Details
+          </label>
+          <textarea
+            className="is-fullwidth has-fixed-size textarea is-size-6-7 mb-1"
+            rows="2"
+            placeholder="Action details..."
+            name="details"
+            id="details"
+            value={actionText}
+            onChange={(event) => setActionText(event.target.value)}
+            required
+          ></textarea>
+        </div>
+
+        <div className="field">
+          <label htmlFor="owner" className="is-size-6-7">
+            Action Owner
+          </label>
+          <input
+            type="text"
+            className="input is-fullwidth is-size-6-7 mb-1"
+            name="owner"
+            id="owner"
+            placeholder="Action owner..."
+            value={actionOwner}
+            onChange={(event) => setActionOwner(event.target.value)}
+            required
+          />
+        </div>
+
+        <div className="field">
+          <label htmlFor="date" className="is-size-6-7">
+            Due Date
+          </label>
+          <input
+            type="date"
+            className="input is-fullwidth is-size-6-7"
+            name="due"
+            id="due"
+            value={moment(actionDue).format('DD/MM/YYYY')}
+            onChange={() => {}}
+            required
+          />
+        </div>
+
         <button className="button is-primary is-fullwidth my-1 is-size-6-7">
           <i className="fas fa-plus mr-3"></i>
           Add Action
