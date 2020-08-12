@@ -16,6 +16,8 @@ import DeleteColumnModal from './DeleteColumnModal';
 import BoardTitleBar from './BoardTitleBar';
 
 import Board from './Board';
+import actionsService from '../../services/actionsService';
+import DeleteActionModal from './DeleteActionModal';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -23,6 +25,7 @@ const BoardPage = (props) => {
   const [columns, setColumns] = useState([]);
   const [cards, setCards] = useState([]);
   const [votes, setVotes] = useState([]);
+  const [actions, setActions] = useState([]);
   const [votesRemaining, setVotesRemaining] = useState(0);
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
@@ -34,6 +37,10 @@ const BoardPage = (props) => {
   );
   const [columnToDelete, setColumnToDelete] = useState({});
   const [deleteColumnModalVisible, setDeleteColumnModalVisible] = useState(
+    false,
+  );
+  const [actionToDelete, setActionToDelete] = useState({});
+  const [deleteActionModalVisible, setDeleteActionModalVisible] = useState(
     false,
   );
 
@@ -65,6 +72,23 @@ const BoardPage = (props) => {
       });
       // Get the required votes (no need to sort etc. for these)
       let _votes = await votesService.getAll(props.match.params.boardId, token);
+      // Get the required actions
+      let _actions = await actionsService.getAll(
+        props.match.params.boardId,
+        token,
+      );
+      // Sort them into order
+      _actions = _actions.sort((a, b) => {
+        if (a.due > b.due) {
+          return 1;
+        } else if (a.due === b.due) {
+          if (a._id > b._id) {
+            return 1;
+          }
+          return -1;
+        }
+        return -1;
+      });
       // Get the user profile
       const profile = await usersService.getById(user.sub, token);
       setProfile(profile);
@@ -76,6 +100,8 @@ const BoardPage = (props) => {
       setCards(_cards);
       // Update the votes
       setVotes(_votes);
+      // Update the actions
+      setActions(_actions);
       // Stop loading bar
       setLoading(false);
     } catch (error) {
@@ -161,6 +187,38 @@ const BoardPage = (props) => {
       setVotes(_votes);
     });
 
+    io.removeAllListeners('action created');
+    // For new columns
+    io.on('action created', (action) => {
+      const check = actions.find((a) => a._id === action._id);
+      // If not then add it to the list
+      if (!check) {
+        let _actions = [...actions];
+        _actions.push(action);
+        // Sort them into order
+        _actions = _actions.sort((a, b) => {
+          if (a.due > b.due) {
+            return 1;
+          } else if (a.due === b.due) {
+            if (a._id > b._id) {
+              return 1;
+            }
+            return -1;
+          }
+          return -1;
+        });
+        setActions(_actions);
+      }
+    });
+
+    io.removeAllListeners('action deleted');
+    // For any deleted votes
+    io.on('action deleted', (actionId) => {
+      // Filter out the cards not deleted and update
+      const _actions = actions.filter((a) => a._id !== actionId);
+      setActions(_actions);
+    });
+
     io.removeAllListeners('column created');
     // For new columns
     io.on('column created', (column) => {
@@ -204,7 +262,7 @@ const BoardPage = (props) => {
     // Recalculate the votes the user has remaining
     let votesUsed = votes.filter((v) => v.userId === profile.id).length;
     setVotesRemaining(board.maxVotes - votesUsed);
-  }, [cards, votes, board, profile, columns]);
+  }, [cards, votes, board, profile, columns, actions]);
 
   const addCard = async (card) => {
     // Get the access token required to call the API
@@ -289,6 +347,37 @@ const BoardPage = (props) => {
     const _votes = votes.filter((v) => v._id !== voteId);
     // Save changes to state
     setVotes(_votes);
+  };
+
+  const addAction = async (action) => {
+    // Get the required access token
+    const token = await getAccessTokenSilently();
+    const _newAction = await actionsService.create(action, board._id, token);
+    let _actions = [...actions];
+    _actions.push(_newAction);
+    // Sort them into order
+    _actions = _actions.sort((a, b) => {
+      if (a.due > b.due) {
+        return 1;
+      } else if (a.due === b.due) {
+        if (a._id > b._id) {
+          return 1;
+        }
+        return -1;
+      }
+      return -1;
+    });
+    console.log(_actions);
+    setActions(_actions);
+  };
+
+  const deleteAction = async (action) => {
+    const token = await getAccessTokenSilently();
+    // Remove the column from the service
+    actionsService.remove(board._id, action._id, token);
+    // Remove the column from the list
+    const _actions = actions.filter((a) => a._id !== action._id);
+    setActions(_actions);
   };
 
   const addColumn = async (column) => {
@@ -450,6 +539,13 @@ const BoardPage = (props) => {
         setModalVisible={setDeleteCardModalVisible}
         removeCard={deleteCard}
       />
+      <DeleteActionModal
+        action={actionToDelete}
+        visible={deleteActionModalVisible}
+        setModalVisible={setDeleteActionModalVisible}
+        removeAction={deleteAction}
+      />
+
       <CreateColumnModal
         visible={createColumnModalVisible}
         setVisible={setCreateColumnModalVisible}
@@ -476,6 +572,8 @@ const BoardPage = (props) => {
         columns={columns}
         cards={cards}
         votes={votes}
+        actions={actions}
+        addAction={addAction}
         handleDragEnd={handleDragEnd}
         setColumnToDelete={setColumnToDelete}
         setDeleteColumnModalVisible={setDeleteColumnModalVisible}
@@ -490,6 +588,8 @@ const BoardPage = (props) => {
         setCardToDelete={setCardToDelete}
         setDeleteCardModalVisible={setDeleteCardModalVisible}
         renameColumn={renameColumn}
+        setActionToDelete={setActionToDelete}
+        setDeleteActionModalVisible={setDeleteActionModalVisible}
       />
     </div>
   );

@@ -3,6 +3,7 @@ import ColumnHeading from './ColumnHeading';
 import BoardColumn from './BoardColumn';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import NewCardForm from './NewCardForm';
+import ActionsColumn from './ActionsColumn';
 
 const Board = (props) => {
   return (
@@ -78,6 +79,13 @@ const Board = (props) => {
                 </Draggable>
               ))}
               {provided.placeholder}
+              <ActionsColumn
+                board={props.board}
+                actions={props.actions}
+                addAction={props.addAction}
+                setActionToDelete={props.setActionToDelete}
+                setDeleteActionModalVisible={props.setDeleteActionModalVisible}
+              />
             </div>
           )}
         </Droppable>

@@ -9,7 +9,7 @@ $tooltip-background-opacity: 1;
 
 @import "../../node_modules/bulma/bulma.sass";
 @import "../../node_modules/bulma-pricingtable/src/sass/index.sass"
-@import "../../node_modules/bulma-tooltip/src/sass/index.sass"
+@import "../../node_modules/bulma-calendar/src/sass/index.sass"
  
 .is-fullheight
   height: calc(100% - 150px) !important;
@@ -51,3 +51,17 @@ $tooltip-background-opacity: 1;
 
 body
   overflow: hidden;
+
+.datetimepicker-clear-button
+  display: none;
+
+.datetimepicker-dummy-input
+  max-width: 100% !important;
+  font-size: 0.75rem !important;
+
+.datetimepicker-dummy-wrapper
+  border: 1px solid #dbdbdb !important;
+  border-radius: 4px !important;
+  &:hover
+    border: 1px solid #b5b5b5 !important;
+
