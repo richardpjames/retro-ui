@@ -10,7 +10,6 @@ const CreateActionForm = (props) => {
   );
 
   const handleSubmit = (event) => {
-    console.log(actionDue);
     event.preventDefault();
     props.addAction({
       text: actionText,
