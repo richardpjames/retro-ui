@@ -5,7 +5,8 @@ const BoardTitleBar = (props) => {
   return (
     <div className="columns is-vcentered">
       <div className="column">
-        <h1 className="title is-4">{props.board.name}</h1>
+        <h1 className="title is-4 mb-0">{props.board.name}</h1>
+        <p>{props.board.description}</p>
       </div>
       <div className="column is-narrow">
         <div className="buttons">

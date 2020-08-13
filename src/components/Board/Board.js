@@ -81,6 +81,7 @@ const Board = (props) => {
               {provided.placeholder}
               <ActionsColumn
                 board={props.board}
+                profile={props.profile}
                 actions={props.actions}
                 addAction={props.addAction}
                 setActionToDelete={props.setActionToDelete}

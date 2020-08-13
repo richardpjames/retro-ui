@@ -17,6 +17,8 @@ const ActionsColumn = (props) => {
             <ActionCard
               key={action._id}
               action={action}
+              board={props.board}
+              profile={props.profile}
               setActionToDelete={props.setActionToDelete}
               setDeleteActionModalVisible={props.setDeleteActionModalVisible}
             />

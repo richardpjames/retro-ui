@@ -169,7 +169,8 @@ const Purchase = () => {
                         </h2>
                         <p>
                           Create boards for your retrospectives which allow team
-                          members to add cards and comments.
+                          members to add cards and vote on the most important
+                          ones.
                         </p>
                       </div>
                     </div>
@@ -234,7 +235,7 @@ const Purchase = () => {
                         </h2>
                         <p>
                           Boards update in real time as other team members add
-                          and remove cards, comments and votes.
+                          and remove cards, actions and votes.
                         </p>
                       </div>
                     </div>
