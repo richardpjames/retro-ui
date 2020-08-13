@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 const ColumnHeading = (props) => {
   const [editable, setEditable] = useState(false);
   const [columnTitle, setColumnTitle] = useState(props.column.title);
+  const [showEditControls, setShowEditControls] = useState(false);
 
   const handleSave = (event) => {
     event.preventDefault();
@@ -55,62 +56,53 @@ const ColumnHeading = (props) => {
         </div>
         <div className="column is-narrow">
           {props.board.userId === props.profile.id && (
-            <div className="dropdown is-right is-hoverable">
-              <div className="dropdown-trigger">
-                <span className="tag is-rounded">
-                  <a
-                    className="is-small"
-                    aria-haspopup="true"
-                    aria-controls={`dropdown-column-${props.column._id}`}
-                  >
-                    <i className="fas fa-ellipsis-h"></i>
-                  </a>
-                </span>
-              </div>
-              <div
-                className="dropdown-menu"
-                id={`dropdown-column-${props.column._id}`}
-                role="menu"
+            <span className="tag is-rounded">
+              <a
+                className="is-small"
+                onClick={() => setShowEditControls(!showEditControls)}
               >
-                <div className="dropdown-content">
-                  <div className="dropdown-item">
-                    <a
-                      className="button is-small is-primary is-fullwidth"
-                      onClick={() => {
-                        setEditable(true);
-                      }}
-                    >
-                      <i className="fas fa-pencil-alt mr-3"></i> Rename Column
-                    </a>
-                  </div>
-                  <div className="dropdown-item">
-                    <a
-                      className="button is-small is-danger is-fullwidth"
-                      onClick={() => {
-                        if (
-                          !props.cards.filter(
-                            (c) => c.columnId === props.column._id,
-                          ).length > 0
-                        ) {
-                          props.setColumnToDelete(props.column);
-                          props.setDeleteColumnModalVisible(true);
-                        }
-                      }}
-                      disabled={
-                        props.cards.filter(
-                          (c) => c.columnId === props.column._id,
-                        ).length > 0
-                      }
-                    >
-                      <i className="fas fa-trash-alt mr-3"></i> Delete Column
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
+                <i className="fas fa-ellipsis-h"></i>
+              </a>
+            </span>
           )}
         </div>
       </div>
+      {showEditControls && (
+        <div className="columns is-mobile">
+          <div className="column">
+            <a
+              className="button is-small is-primary is-fullwidth"
+              onClick={() => {
+                setShowEditControls(false);
+                setEditable(true);
+              }}
+            >
+              <i className="fas fa-pencil-alt mr-3"></i> Rename
+            </a>
+          </div>
+          <div className="column">
+            <a
+              className="button is-small is-danger is-fullwidth"
+              onClick={() => {
+                if (
+                  !props.cards.filter((c) => c.columnId === props.column._id)
+                    .length > 0
+                ) {
+                  setShowEditControls(false);
+                  props.setColumnToDelete(props.column);
+                  props.setDeleteColumnModalVisible(true);
+                }
+              }}
+              disabled={
+                props.cards.filter((c) => c.columnId === props.column._id)
+                  .length > 0
+              }
+            >
+              <i className="fas fa-trash-alt mr-3"></i> Delete
+            </a>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
 const NewCardForm = (props) => {
-  const [card, setCard] = useState({ text: '', columnId: props.column._id });
+  const [card, setCard] = useState({
+    text: '',
+    columnId: props.column._id,
+    colour: '#FFFFFF',
+  });
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -1,9 +1,34 @@
 /* eslint jsx-a11y/anchor-is-valid:0 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
+import { CirclePicker } from 'react-color';
 
 const ColumnCard = (props) => {
+  const [editable, setEditable] = useState(false);
+  const [updatedCard, setUpdatedCard] = useState(props.card);
+  const [showColourPicker, setShowColourPicker] = useState(false);
+  const [showEditControls, setShowEditControls] = useState(false);
+  const { user } = useAuth0();
+  const userVote = props.votes.find((v) => v.userId === props.profile.id);
+
+  const colours = [
+    '#FFFFFF',
+    '#FF9AA2',
+    '#FFB7B2',
+    '#FFDAC1',
+    '#E2F0CB',
+    '#B5EAD7',
+    '#C7CEEA',
+  ];
+
+  const handleColourChange = (colour) => {
+    const _card = { ...props.card };
+    _card.colour = colour.hex;
+    props.updateCard(_card);
+    setShowColourPicker(false);
+  };
+
   const handleDelete = (event) => {
     props.setCardToDelete(props.card);
     props.setDeleteCardModalVisible(true);
@@ -40,14 +65,12 @@ const ColumnCard = (props) => {
     setUpdatedCard({ ...updatedCard, [event.target.name]: event.target.value });
   };
 
-  const [editable, setEditable] = useState(false);
-  const [updatedCard, setUpdatedCard] = useState(props.card);
-  const { user } = useAuth0();
-  const userVote = props.votes.find((v) => v.userId === props.profile.id);
-
   if (!editable) {
     return (
-      <div className="card card-white-bg is-size-6-7">
+      <div
+        className="card is-size-6-7"
+        style={{ backgroundColor: props.card.colour || '#FFFFFF' }}
+      >
         <div className="card-content py-4 px-4">
           <p>
             <strong className="is-capitalized">{props.card.nickName}</strong> -{' '}
@@ -57,7 +80,7 @@ const ColumnCard = (props) => {
             <div className="column">
               {!userVote && (
                 <a
-                  className="button is-small is-outlined is-primary"
+                  className="tag is-small"
                   disabled={props.votesRemaining <= 0}
                   onClick={handleVote}
                 >
@@ -65,62 +88,88 @@ const ColumnCard = (props) => {
                 </a>
               )}
               {userVote && (
-                <a className="button is-small is-primary" onClick={handleVote}>
+                <a className="tag is-small is-primary" onClick={handleVote}>
                   <i className="fas fa-thumbs-up"></i> ({props.votes.length})
                 </a>
               )}
             </div>
             <div className="column is-narrow">
               {user.sub === props.card.userId && (
-                <div className="dropdown is-right is-hoverable">
-                  <div className="dropdown-trigger">
-                    <span className="tag is-rounded">
-                      <a
-                        className="is-small"
-                        aria-haspopup="true"
-                        aria-controls={`dropdown-card-${props.card._id}`}
-                      >
-                        <i className="fas fa-ellipsis-h"></i>
-                      </a>
-                    </span>
-                  </div>
-                  <div
-                    className="dropdown-menu"
-                    id={`dropdown-card-${props.card._id}`}
-                    role="menu"
-                  >
-                    <div className="dropdown-content">
-                      <div className="dropdown-item">
-                        <a
-                          className="button is-small is-fullwidth is-primary"
-                          onClick={() => {
-                            setEditable(true);
-                            props.setDragDisabled(true);
-                          }}
-                        >
-                          <i className="fas fa-pencil-alt mr-3"></i> Edit Card
-                        </a>
-                      </div>
-                      <div className="dropdown-item">
-                        <a
-                          className="button is-small is-fullwidth is-danger"
-                          onClick={handleDelete}
-                        >
-                          <i className="fas fa-trash-alt mr-3"></i> Delete Card
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <>
+                  <span className="tag is-rounded mr-1">
+                    <a
+                      className="is-small"
+                      onClick={() => {
+                        setShowEditControls(false);
+                        setShowColourPicker(!showColourPicker);
+                      }}
+                    >
+                      <i className="fas fa-eye-dropper"></i>
+                    </a>
+                  </span>
+
+                  <span className="tag is-rounded">
+                    <a
+                      className="is-small"
+                      onClick={() => {
+                        setShowColourPicker(false);
+                        setShowEditControls(!showEditControls);
+                      }}
+                    >
+                      <i className="fas fa-ellipsis-h"></i>
+                    </a>
+                  </span>
+                </>
               )}
             </div>
           </div>
+          {showColourPicker && (
+            <CirclePicker
+              onChangeComplete={handleColourChange}
+              width="100%"
+              circleSize={29}
+              circleSpacing={11}
+              colors={colours.filter(
+                (c) => c.toLowerCase() !== props.card.colour,
+              )}
+            />
+          )}
+          {showEditControls && (
+            <div className="columns">
+              <div className="column">
+                <a
+                  className="button is-small is-fullwidth is-primary"
+                  onClick={() => {
+                    setEditable(true);
+                    setShowEditControls(false);
+                    props.setDragDisabled(true);
+                  }}
+                >
+                  <i className="fas fa-pencil-alt mr-3"></i> Edit
+                </a>
+              </div>
+              <div className="column">
+                <a
+                  className="button is-small is-fullwidth is-danger"
+                  onClick={() => {
+                    setShowEditControls(false);
+                    handleDelete();
+                  }}
+                >
+                  <i className="fas fa-trash-alt mr-3"></i> Delete
+                </a>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
   } else {
     return (
-      <div className="card card-white-bg">
+      <div
+        className="card card-white-bg"
+        style={{ backgroundColor: props.card.colour || '#FFFFFF' }}
+      >
         <div className="card-content px-2 py-2">
           <form onSubmit={handleSave}>
             <textarea

@@ -314,6 +314,7 @@ const BoardPage = (props) => {
         c2.text = card.text;
         c2.rank = card.rank;
         c2.columnId = card.columnId;
+        c2.colour = card.colour;
       });
     // Sort the cards into order
     _cards = _cards.sort((a, b) => {

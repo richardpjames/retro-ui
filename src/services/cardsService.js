@@ -55,6 +55,7 @@ const cardsService = () => {
       userId: card.userId,
       columnId: card.columnId,
       boardId: card.boardId,
+      colour: card.colour,
     };
     try {
       await axios.put(
