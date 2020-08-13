@@ -17,6 +17,7 @@ const CreateActionForm = (props) => {
       due: actionDue,
       updates: [],
     });
+    document.getElementById('details').focus();
     setActionText('');
     setActionOwner('');
   };
@@ -25,6 +26,7 @@ const CreateActionForm = (props) => {
     const _calendar = bulmaCalendar.attach('[type="date"]', {
       dateFormat: 'DD/MM/YYYY',
       type: 'date',
+      startDate: new Date(moment(Date.now()).format('YYYY-MM-DD')),
       showHeader: false,
       showFooter: false,
       showClearButton: false,
@@ -78,7 +80,6 @@ const CreateActionForm = (props) => {
             className="input is-fullwidth is-size-6-7"
             name="due"
             id="due"
-            value={moment(actionDue).format('DD/MM/YYYY')}
             onChange={() => {}}
             required
           />
