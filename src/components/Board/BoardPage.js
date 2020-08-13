@@ -148,6 +148,7 @@ const BoardPage = (props) => {
           card.text = updatedCard.text;
           card.rank = updatedCard.rank;
           card.columnId = updatedCard.columnId;
+          card.colour = updatedCard.colour;
         });
 
       // Sort the cards into order
