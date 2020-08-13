@@ -53,41 +53,67 @@ const ColumnCard = (props) => {
             <strong className="is-capitalized">{props.card.nickName}</strong> -{' '}
             {props.card.text}
           </p>
-          <div className="buttons">
-            {user.sub === props.card.userId ? (
-              <>
+          <div className="columns is-vcentered is-mobile">
+            <div className="column">
+              {!userVote && (
                 <a
                   className="button is-small is-outlined is-primary"
-                  onClick={() => {
-                    setEditable(true);
-                    props.setDragDisabled(true);
-                  }}
+                  disabled={props.votesRemaining <= 0}
+                  onClick={handleVote}
                 >
-                  <i className="fas fa-pencil-alt"></i>
+                  <i className="fas fa-thumbs-up"></i> ({props.votes.length})
                 </a>
-                <a
-                  className="button is-small is-outlined is-danger"
-                  onClick={handleDelete}
-                >
-                  <i className="fas fa-trash-alt"></i>
+              )}
+              {userVote && (
+                <a className="button is-small is-primary" onClick={handleVote}>
+                  <i className="fas fa-thumbs-up"></i> ({props.votes.length})
                 </a>
-              </>
-            ) : null}
-
-            {!userVote && (
-              <a
-                className="button is-small is-outlined is-primary"
-                disabled={props.votesRemaining <= 0}
-                onClick={handleVote}
-              >
-                <i className="fas fa-thumbs-up"></i> ({props.votes.length})
-              </a>
-            )}
-            {userVote && (
-              <a className="button is-small is-primary" onClick={handleVote}>
-                <i className="fas fa-thumbs-up"></i> ({props.votes.length})
-              </a>
-            )}
+              )}
+            </div>
+            <div className="column is-narrow">
+              {user.sub === props.card.userId && (
+                <div className="dropdown is-right is-hoverable">
+                  <div className="dropdown-trigger">
+                    <span className="tag is-rounded">
+                      <a
+                        className="is-small"
+                        aria-haspopup="true"
+                        aria-controls={`dropdown-card-${props.card._id}`}
+                      >
+                        <i className="fas fa-ellipsis-h"></i>
+                      </a>
+                    </span>
+                  </div>
+                  <div
+                    className="dropdown-menu"
+                    id={`dropdown-card-${props.card._id}`}
+                    role="menu"
+                  >
+                    <div className="dropdown-content">
+                      <div className="dropdown-item">
+                        <a
+                          className="button is-small is-fullwidth is-primary"
+                          onClick={() => {
+                            setEditable(true);
+                            props.setDragDisabled(true);
+                          }}
+                        >
+                          <i className="fas fa-pencil-alt mr-3"></i> Edit Card
+                        </a>
+                      </div>
+                      <div className="dropdown-item">
+                        <a
+                          className="button is-small is-fullwidth is-danger"
+                          onClick={handleDelete}
+                        >
+                          <i className="fas fa-trash-alt mr-3"></i> Delete Card
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -49,40 +49,67 @@ const ColumnHeading = (props) => {
   }
   return (
     <div {...props.dragHandleProps} className="mb-3">
-      <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">
-        {props.column.title}
-      </h4>
-      <div className="buttons are-small">
-        {props.board.userId === props.profile.id && (
-          <>
-            <a
-              className="button is-primary"
-              onClick={() => {
-                setEditable(true);
-              }}
-            >
-              <i className="fas fa-pencil-alt"></i>
-            </a>
-            <a
-              className="button is-danger"
-              onClick={() => {
-                if (
-                  !props.cards.filter((c) => c.columnId === props.column._id)
-                    .length > 0
-                ) {
-                  props.setColumnToDelete(props.column);
-                  props.setDeleteColumnModalVisible(true);
-                }
-              }}
-              disabled={
-                props.cards.filter((c) => c.columnId === props.column._id)
-                  .length > 0
-              }
-            >
-              <i className="fas fa-trash-alt"></i>
-            </a>
-          </>
-        )}
+      <div className="columns is-mobile is-vcentered">
+        <div className="column">
+          <h4 className="subtitle is-4 mb-0">{props.column.title}</h4>
+        </div>
+        <div className="column is-narrow">
+          {props.board.userId === props.profile.id && (
+            <div className="dropdown is-right is-hoverable">
+              <div className="dropdown-trigger">
+                <span className="tag is-rounded">
+                  <a
+                    className="is-small"
+                    aria-haspopup="true"
+                    aria-controls={`dropdown-column-${props.column._id}`}
+                  >
+                    <i className="fas fa-ellipsis-h"></i>
+                  </a>
+                </span>
+              </div>
+              <div
+                className="dropdown-menu"
+                id={`dropdown-column-${props.column._id}`}
+                role="menu"
+              >
+                <div className="dropdown-content">
+                  <div className="dropdown-item">
+                    <a
+                      className="button is-small is-primary is-fullwidth"
+                      onClick={() => {
+                        setEditable(true);
+                      }}
+                    >
+                      <i className="fas fa-pencil-alt mr-3"></i> Rename Column
+                    </a>
+                  </div>
+                  <div className="dropdown-item">
+                    <a
+                      className="button is-small is-danger is-fullwidth"
+                      onClick={() => {
+                        if (
+                          !props.cards.filter(
+                            (c) => c.columnId === props.column._id,
+                          ).length > 0
+                        ) {
+                          props.setColumnToDelete(props.column);
+                          props.setDeleteColumnModalVisible(true);
+                        }
+                      }}
+                      disabled={
+                        props.cards.filter(
+                          (c) => c.columnId === props.column._id,
+                        ).length > 0
+                      }
+                    >
+                      <i className="fas fa-trash-alt mr-3"></i> Delete Column
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
