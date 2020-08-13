@@ -42,6 +42,15 @@ const Sidebar = (props) => {
           return null;
         })}
       </ul>
+
+      <p className="menu-label">Actions</p>
+      <ul className="menu-list">
+        <li>
+          <NavLink activeClassName="is-active" to="/dashboard/actions" exact>
+            <i className="fas fa-exclamation mr-3"></i>All Actions
+          </NavLink>
+        </li>
+      </ul>
       <p className="menu-label">Manage Teams</p>
       <ul className="menu-list">
         <li>

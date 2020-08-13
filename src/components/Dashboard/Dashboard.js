@@ -9,7 +9,9 @@ import Teams from './Teams/Teams';
 import boardsService from '../../services/boardsService';
 import teamsService from '../../services/teamsService';
 import usersService from '../../services/usersService';
+import actionsService from '../../services/actionsService';
 import LoadingSpinner from '../Common/LoadingSpinner';
+import Actions from './Actions/Actions';
 
 const Dashboard = (props) => {
   // Dashboard state variables
@@ -17,6 +19,7 @@ const Dashboard = (props) => {
   const [boards, setBoards] = useState([]);
   const [totalBoards, setTotalBoards] = useState(5);
   const [teams, setTeams] = useState([]);
+  const [actions, setActions] = useState([]);
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
   const [createBoardModalVisible, setCreateBoardModalVisible] = useState(false);
@@ -70,6 +73,21 @@ const Dashboard = (props) => {
         // Get the user profile
         const profile = await usersService.getById(user.sub, token);
         setProfile(profile);
+        // Get the user actions
+        const actions = await actionsService.getForUser(token);
+        // Sort them into order
+        let _actions = actions.sort((a, b) => {
+          if (a.due > b.due) {
+            return 1;
+          } else if (a.due === b.due) {
+            if (a._id > b._id) {
+              return 1;
+            }
+            return -1;
+          }
+          return -1;
+        });
+        setActions(_actions);
         // Set the total number of boards for the user
         setTotalBoards(
           boards.filter((board) => board.userId === profile.id).length,
@@ -267,6 +285,19 @@ const Dashboard = (props) => {
     }
   };
 
+  const updateAction = async (action) => {
+    // Get the token for updating the service
+    const token = await getAccessTokenSilently();
+    // Update the action within the UI
+    let _actions = [...actions];
+    _actions
+      .filter((a) => a._id === action._id)
+      .map(async (a) => (a.open = action.open));
+    setActions(_actions);
+    // Perform the udpate on the server
+    actionsService.update(action, token);
+  };
+
   return (
     <div className="columns">
       {loading ? <LoadingSpinner /> : null}
@@ -369,6 +400,16 @@ const Dashboard = (props) => {
                 teamMemberToRemove={teamMemberToRemove}
                 setTeamMemberToRemove={setTeamMemberToRemove}
                 pendingTeams={pendingTeams}
+              />
+            )}
+          />
+          <Route
+            path="/dashboard/actions"
+            render={(props) => (
+              <Actions
+                actions={actions}
+                updateAction={updateAction}
+                profile={profile}
               />
             )}
           />

@@ -15,6 +15,7 @@ const CreateActionForm = (props) => {
       text: actionText,
       owner: actionOwner,
       due: actionDue,
+      updates: [],
     });
     setActionText('');
     setActionOwner('');
