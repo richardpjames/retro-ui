@@ -31,7 +31,6 @@ const BoardPage = (props) => {
   const [votesRemaining, setVotesRemaining] = useState(0);
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(false);
-  const [dragDisabled, setDragDisabled] = useState(false);
   const [cardToDelete, setCardToDelete] = useState({});
   const [deleteCardModalVisible, setDeleteCardModalVisible] = useState(false);
   const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
@@ -686,8 +685,6 @@ const BoardPage = (props) => {
         deleteVote={deleteVote}
         votesRemaining={votesRemaining}
         setCreateColumnModalVisible={setCreateColumnModalVisible}
-        dragDisabled={dragDisabled}
-        setDragDisabled={setDragDisabled}
         setCardToDelete={setCardToDelete}
         setDeleteCardModalVisible={setDeleteCardModalVisible}
         renameColumn={renameColumn}

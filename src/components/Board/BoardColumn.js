@@ -6,12 +6,7 @@ const BoardColumn = (props) => {
   return (
     <>
       {props.cards.map((card, index) => (
-        <Draggable
-          key={card._id}
-          draggableId={card._id}
-          index={index}
-          isDragDisabled={props.dragDisabled}
-        >
+        <Draggable key={card._id} draggableId={card._id} index={index}>
           {(drag2Provided, drag2snapshot) => (
             <div
               ref={drag2Provided.innerRef}
@@ -23,7 +18,6 @@ const BoardColumn = (props) => {
                 updateCard={props.updateCard}
                 addVote={props.addVote}
                 deleteVote={props.deleteVote}
-                setDragDisabled={props.setDragDisabled}
                 card={card}
                 votes={props.votes.filter((vote) => vote.cardId === card._id)}
                 votesRemaining={props.votesRemaining}

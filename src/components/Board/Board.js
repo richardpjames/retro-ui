@@ -57,8 +57,6 @@ const Board = (props) => {
                               updateCard={props.updateCard}
                               addVote={props.addVote}
                               deleteVote={props.deleteVote}
-                              dragDisabled={props.dragDisabled}
-                              setDragDisabled={props.setDragDisabled}
                               cards={props.cards.filter(
                                 (c) => c.columnId === column._id,
                               )}

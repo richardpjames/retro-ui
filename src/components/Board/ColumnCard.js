@@ -35,15 +35,15 @@ const ColumnCard = (props) => {
   };
 
   const handleCancel = (event) => {
+    document.activeElement.blur();
     setEditable(false);
-    props.setDragDisabled(false);
     setUpdatedCard(props.card);
   };
 
   const handleSave = (event) => {
+    document.activeElement.blur();
     event.preventDefault();
     setEditable(false);
-    props.setDragDisabled(false);
     props.updateCard(updatedCard);
   };
 
@@ -164,7 +164,6 @@ const ColumnCard = (props) => {
                   onClick={() => {
                     setEditable(true);
                     setShowEditControls(false);
-                    props.setDragDisabled(true);
                   }}
                 >
                   <i className="fas fa-pencil-alt mr-3"></i> Edit
@@ -196,7 +195,7 @@ const ColumnCard = (props) => {
           <form onSubmit={handleSave}>
             <textarea
               className="is-fullwidth has-fixed-size textarea mx-0 my-0 is-size-6-7"
-              rows="2"
+              rows="4"
               name="text"
               value={updatedCard.text}
               onChange={onChange}
