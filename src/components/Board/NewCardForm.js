@@ -11,6 +11,7 @@ const NewCardForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLines(1);
     props.addCard(card);
     setCard({
       text: '',
@@ -28,6 +29,7 @@ const NewCardForm = (props) => {
     if (event.charCode === 13) {
       handleSubmit(event);
     }
+    setLines(4);
   };
 
   return (
@@ -46,7 +48,7 @@ const NewCardForm = (props) => {
           onChange={onChange}
           onKeyPress={onKeyPress}
           onFocus={() => setLines(4)}
-          onBlur={() => setLines(1)}
+          onBlur={() => card.text === '' && setLines(1)}
           required
         ></textarea>
       </div>
