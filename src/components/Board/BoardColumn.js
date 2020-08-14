@@ -12,7 +12,7 @@ const BoardColumn = (props) => {
           index={index}
           isDragDisabled={props.dragDisabled}
         >
-          {(drag2Provided) => (
+          {(drag2Provided, drag2snapshot) => (
             <div
               ref={drag2Provided.innerRef}
               {...drag2Provided.draggableProps}
@@ -33,6 +33,7 @@ const BoardColumn = (props) => {
                 setCardToSeparate={props.setCardToSeparate}
                 setIndexToSeparate={props.setIndexToSeparate}
                 setSeparateCardModalVisible={props.setSeparateCardModalVisible}
+                snapshot={drag2snapshot}
               />
             </div>
           )}
