@@ -8,6 +8,7 @@ const CreateActionForm = (props) => {
   const [actionDue, setActionDue] = useState(
     new Date(moment(Date.now()).format('YYYY-MM-DD')),
   );
+  const [lines, setLines] = useState(1);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -45,12 +46,14 @@ const CreateActionForm = (props) => {
           </label>
           <textarea
             className="is-fullwidth has-fixed-size textarea is-size-6-7 mb-1"
-            rows="2"
+            rows={lines}
             placeholder="Action details..."
             name="details"
             id="details"
             value={actionText}
             onChange={(event) => setActionText(event.target.value)}
+            onFocus={() => setLines(4)}
+            onBlur={() => actionText === '' && setLines(1)}
             required
           ></textarea>
         </div>

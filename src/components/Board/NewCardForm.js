@@ -7,6 +7,7 @@ const NewCardForm = (props) => {
     colour: '#ffffff',
     combinedCards: [],
   });
+  const [lines, setLines] = useState(1);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -37,20 +38,25 @@ const NewCardForm = (props) => {
         </label>
         <textarea
           className="is-fullwidth has-fixed-size textarea is-size-6-7"
-          rows="2"
+          rows={lines}
           placeholder="Card text..."
           name="text"
           id="text"
           value={card.text}
           onChange={onChange}
           onKeyPress={onKeyPress}
+          onFocus={() => setLines(4)}
+          onBlur={() => setLines(1)}
           required
         ></textarea>
       </div>
-      <button className="button is-primary is-fullwidth my-1 is-size-6-7">
-        <i className="fas fa-plus mr-3"></i>
-        Add Card
-      </button>
+      {lines > 1 && (
+        <button className="button is-primary is-fullwidth my-1 is-size-6-7">
+          <i className="fas fa-plus mr-3"></i>
+          Add Card
+        </button>
+      )}
+      <hr className="mt-0 mb-1" />
     </form>
   );
 };
