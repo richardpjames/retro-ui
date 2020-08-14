@@ -56,6 +56,7 @@ const cardsService = () => {
       columnId: card.columnId,
       boardId: card.boardId,
       colour: card.colour,
+      combinedCards: card.combinedCards,
     };
     try {
       await axios.put(

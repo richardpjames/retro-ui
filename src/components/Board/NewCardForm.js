@@ -4,13 +4,19 @@ const NewCardForm = (props) => {
   const [card, setCard] = useState({
     text: '',
     columnId: props.column._id,
-    colour: '#FFFFFF',
+    colour: '#ffffff',
+    combinedCards: [],
   });
 
   const handleSubmit = (event) => {
     event.preventDefault();
     props.addCard(card);
-    setCard({ text: '', columnId: props.column._id });
+    setCard({
+      text: '',
+      columnId: props.column._id,
+      colour: '#ffffff',
+      combinedCards: [],
+    });
   };
 
   const onChange = (event) => {

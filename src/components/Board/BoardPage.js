@@ -439,6 +439,16 @@ const BoardPage = (props) => {
     // A variable for the new rank
     let newRank = LexoRank.middle().toString();
 
+    console.log('Dropped');
+
+    // If this is a combination
+    if (result.combine) {
+      console.log('Combining Cards');
+      console.log(source);
+      console.log(destination);
+      return;
+    }
+
     // If this is movement of a column
     if (destination.droppableId === 'board') {
       // Get the limits of the lexorank system

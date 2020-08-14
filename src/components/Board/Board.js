@@ -46,7 +46,7 @@ const Board = (props) => {
 
                       <NewCardForm addCard={props.addCard} column={column} />
 
-                      <Droppable droppableId={column._id}>
+                      <Droppable droppableId={column._id} isCombineEnabled>
                         {(dropProvided, dropSnapshot) => (
                           <div
                             className="is-fullheight"
