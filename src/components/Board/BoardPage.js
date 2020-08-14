@@ -347,6 +347,7 @@ const BoardPage = (props) => {
     parentCard.combinedCards.push({
       userId: childCard.userId,
       text: childCard.text,
+      colour: childCard.colour,
     });
     // Merge any already merged cards
     if (childCard.combinedCards) {
@@ -355,6 +356,7 @@ const BoardPage = (props) => {
           parentCard.combinedCards.push({
             userId: _card.userId,
             text: _card.text,
+            colour: _card.colour,
           }),
         ),
       );
@@ -398,7 +400,6 @@ const BoardPage = (props) => {
     await addCard({
       ..._newCard,
       columnId: card.columnId,
-      colour: card.colour,
       combinedCards: [],
     });
   };
