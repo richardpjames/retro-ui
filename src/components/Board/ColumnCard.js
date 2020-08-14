@@ -116,33 +116,29 @@ const ColumnCard = (props) => {
               )}
             </div>
             <div className="column is-narrow">
-              {user.sub === props.card.userId && (
-                <>
-                  <span className="tag is-rounded mr-1">
-                    <a
-                      className="is-small"
-                      onClick={() => {
-                        setShowEditControls(false);
-                        setShowColourPicker(!showColourPicker);
-                      }}
-                    >
-                      <i className="fas fa-eye-dropper"></i>
-                    </a>
-                  </span>
+              <span className="tag is-rounded mr-1">
+                <a
+                  className="is-small"
+                  onClick={() => {
+                    setShowEditControls(false);
+                    setShowColourPicker(!showColourPicker);
+                  }}
+                >
+                  <i className="fas fa-eye-dropper"></i>
+                </a>
+              </span>
 
-                  <span className="tag is-rounded">
-                    <a
-                      className="is-small"
-                      onClick={() => {
-                        setShowColourPicker(false);
-                        setShowEditControls(!showEditControls);
-                      }}
-                    >
-                      <i className="fas fa-ellipsis-h"></i>
-                    </a>
-                  </span>
-                </>
-              )}
+              <span className="tag is-rounded">
+                <a
+                  className="is-small"
+                  onClick={() => {
+                    setShowColourPicker(false);
+                    setShowEditControls(!showEditControls);
+                  }}
+                >
+                  <i className="fas fa-ellipsis-h"></i>
+                </a>
+              </span>
             </div>
           </div>
           {showColourPicker && (
