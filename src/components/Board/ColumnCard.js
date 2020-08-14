@@ -1,7 +1,6 @@
 /* eslint jsx-a11y/anchor-is-valid:0 */
 
 import React, { useState } from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { CirclePicker } from 'react-color';
 
 const ColumnCard = (props) => {
@@ -9,7 +8,6 @@ const ColumnCard = (props) => {
   const [updatedCard, setUpdatedCard] = useState(props.card);
   const [showColourPicker, setShowColourPicker] = useState(false);
   const [showEditControls, setShowEditControls] = useState(false);
-  const { user } = useAuth0();
   const userVote = props.votes.find((v) => v.userId === props.profile.id);
 
   const colours = [
