@@ -81,19 +81,20 @@ const ColumnCard = (props) => {
               return (
                 <div key={index} className="mb-3">
                   <hr className="mb-2 mt-1" />
-                  <p>{card.text}</p>
-
-                  <span className="tag is-rounded">
-                    <a
-                      onClick={() => {
-                        props.setCardToSeparate(props.card);
-                        props.setIndexToSeparate(index);
-                        props.setSeparateCardModalVisible(true);
-                      }}
-                    >
-                      <i className="fas fa-unlink"></i> Separate
-                    </a>
-                  </span>
+                  <p>
+                    <span className="tag is-rounded mr-1">
+                      <a
+                        onClick={() => {
+                          props.setCardToSeparate(props.card);
+                          props.setIndexToSeparate(index);
+                          props.setSeparateCardModalVisible(true);
+                        }}
+                      >
+                        <i className="fas fa-unlink"></i>
+                      </a>
+                    </span>{' '}
+                    {card.text}
+                  </p>
                 </div>
               );
             })}
