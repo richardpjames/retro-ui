@@ -18,6 +18,8 @@ import BoardTitleBar from './BoardTitleBar';
 import Board from './Board';
 import actionsService from '../../services/actionsService';
 import DeleteActionModal from './DeleteActionModal';
+import MergeCardModal from './MergeCardModal';
+import SeparateCardModal from './SeparateCardModal';
 
 const BoardPage = (props) => {
   const { getAccessTokenSilently, user } = useAuth0();
@@ -41,6 +43,14 @@ const BoardPage = (props) => {
   );
   const [actionToDelete, setActionToDelete] = useState({});
   const [deleteActionModalVisible, setDeleteActionModalVisible] = useState(
+    false,
+  );
+  const [parentCard, setParentCard] = useState({});
+  const [childCard, setChildCard] = useState({});
+  const [mergeCardModalVisible, setMergeCardModalVisible] = useState(false);
+  const [cardToSeparate, setCardToSeparate] = useState({});
+  const [indexToSeparate, setIndexToSeparate] = useState(0);
+  const [separateCardModalVisible, setSeparateCardModalVisible] = useState(
     false,
   );
 
@@ -132,6 +142,7 @@ const BoardPage = (props) => {
       const check = cards.find((c) => c._id === card._id);
       // If not then add it to the list
       if (!check) {
+        console.log(card);
         setCards([...cards, card]);
       }
     });
@@ -149,6 +160,7 @@ const BoardPage = (props) => {
           card.rank = updatedCard.rank;
           card.columnId = updatedCard.columnId;
           card.colour = updatedCard.colour;
+          card.combinedCards = updatedCard.combinedCards;
         });
 
       // Sort the cards into order
@@ -326,6 +338,71 @@ const BoardPage = (props) => {
     setCards(_cards);
   };
 
+  const combineCards = async (parentCard, childCard) => {
+    // Initialise the array on the object if not already
+    if (!parentCard.combinedCards) {
+      parentCard.combinedCards = [];
+    }
+    // Add the child card to the parent
+    parentCard.combinedCards.push({
+      userId: childCard.userId,
+      text: childCard.text,
+    });
+    // Merge any already merged cards
+    if (childCard.combinedCards) {
+      await Promise.all(
+        childCard.combinedCards.map((_card) =>
+          parentCard.combinedCards.push({
+            userId: _card.userId,
+            text: _card.text,
+          }),
+        ),
+      );
+    }
+    // Remove the child card from the board
+    const _cards = cards.filter((c) => c._id !== childCard._id);
+    // Update the parent card
+    const token = await getAccessTokenSilently();
+    cardsService.update(
+      parentCard.boardId,
+      parentCard.columnId,
+      parentCard,
+      token,
+    );
+    // Remove the child card
+    cardsService.remove(
+      childCard.boardId,
+      childCard.columnId,
+      childCard._id,
+      token,
+    );
+    // Update the state
+    setCards(_cards);
+  };
+
+  const separateCards = async (card, index) => {
+    // Remove from the parent card
+    const token = await getAccessTokenSilently();
+    const _updatedCard = { ...card };
+    const _newCard = { ...card.combinedCards[index] };
+
+    _updatedCard.combinedCards.splice(index, 1);
+    // Update at the service
+    await cardsService.update(
+      _updatedCard.boardId,
+      _updatedCard.columnId,
+      _updatedCard,
+      token,
+    );
+    // Create a new card from the merged card
+    await addCard({
+      ..._newCard,
+      columnId: card.columnId,
+      colour: card.colour,
+      combinedCards: [],
+    });
+  };
+
   const addVote = async (vote) => {
     // Get the access token required to call the API
     const token = await getAccessTokenSilently();
@@ -369,7 +446,6 @@ const BoardPage = (props) => {
       }
       return -1;
     });
-    console.log(_actions);
     setActions(_actions);
   };
 
@@ -427,6 +503,13 @@ const BoardPage = (props) => {
     // Take the source and destination details from the result
     const { source, destination } = result;
 
+    // If combined
+    if (result.combine) {
+      setParentCard(cards.find((c) => c._id === result.combine.draggableId));
+      setChildCard(cards.find((c) => c._id === result.draggableId));
+      setMergeCardModalVisible(true);
+    }
+
     // If there is no destination then exit
     if (!destination) {
       return;
@@ -438,16 +521,6 @@ const BoardPage = (props) => {
     let _columns = [...columns];
     // A variable for the new rank
     let newRank = LexoRank.middle().toString();
-
-    console.log('Dropped');
-
-    // If this is a combination
-    if (result.combine) {
-      console.log('Combining Cards');
-      console.log(source);
-      console.log(destination);
-      return;
-    }
 
     // If this is movement of a column
     if (destination.droppableId === 'board') {
@@ -551,6 +624,23 @@ const BoardPage = (props) => {
         setModalVisible={setDeleteCardModalVisible}
         removeCard={deleteCard}
       />
+
+      <MergeCardModal
+        parentCard={parentCard}
+        childCard={childCard}
+        visible={mergeCardModalVisible}
+        setModalVisible={setMergeCardModalVisible}
+        combineCards={combineCards}
+      />
+
+      <SeparateCardModal
+        card={cardToSeparate}
+        cardIndex={indexToSeparate}
+        visible={separateCardModalVisible}
+        setModalVisible={setSeparateCardModalVisible}
+        separateCards={separateCards}
+      />
+
       <DeleteActionModal
         action={actionToDelete}
         visible={deleteActionModalVisible}
@@ -602,6 +692,9 @@ const BoardPage = (props) => {
         renameColumn={renameColumn}
         setActionToDelete={setActionToDelete}
         setDeleteActionModalVisible={setDeleteActionModalVisible}
+        setCardToSeparate={setCardToSeparate}
+        setIndexToSeparate={setIndexToSeparate}
+        setSeparateCardModalVisible={setSeparateCardModalVisible}
       />
     </div>
   );

@@ -8,7 +8,7 @@ import ActionsColumn from './ActionsColumn';
 const Board = (props) => {
   return (
     <>
-      <DragDropContext onDragEnd={props.handleDragEnd}>
+      <DragDropContext onDragEnd={props.handleDragEnd} isCombineEnabled>
         <Droppable droppableId="board" type="COLUMN" direction="horizontal">
           {(provided) => (
             <div
@@ -23,12 +23,12 @@ const Board = (props) => {
                   key={column._id}
                   isDragDisabled={props.board.userId !== props.profile.id}
                 >
-                  {(provided, snapshot) => (
+                  {(dragProvided, snapshot) => (
                     <div
                       key={column._id}
                       className="card column board-column mx-1 my-1"
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
+                      ref={dragProvided.innerRef}
+                      {...dragProvided.draggableProps}
                     >
                       <ColumnHeading
                         columns={props.columns}
@@ -40,14 +40,14 @@ const Board = (props) => {
                         setDeleteColumnModalVisible={
                           props.setDeleteColumnModalVisible
                         }
-                        dragHandleProps={provided.dragHandleProps}
+                        dragHandleProps={dragProvided.dragHandleProps}
                         renameColumn={props.renameColumn}
                       />
 
                       <NewCardForm addCard={props.addCard} column={column} />
 
                       <Droppable droppableId={column._id} isCombineEnabled>
-                        {(dropProvided, dropSnapshot) => (
+                        {(dropProvided) => (
                           <div
                             className="is-fullheight"
                             ref={dropProvided.innerRef}
@@ -68,6 +68,11 @@ const Board = (props) => {
                               setCardToDelete={props.setCardToDelete}
                               setDeleteCardModalVisible={
                                 props.setDeleteCardModalVisible
+                              }
+                              setCardToSeparate={props.setCardToSeparate}
+                              setIndexToSeparate={props.setIndexToSeparate}
+                              setSeparateCardModalVisible={
+                                props.setSeparateCardModalVisible
                               }
                             />
                             {dropProvided.placeholder}

@@ -12,11 +12,11 @@ const BoardColumn = (props) => {
           index={index}
           isDragDisabled={props.dragDisabled}
         >
-          {(provided) => (
+          {(drag2Provided) => (
             <div
-              ref={provided.innerRef}
-              {...provided.draggableProps}
-              {...provided.dragHandleProps}
+              ref={drag2Provided.innerRef}
+              {...drag2Provided.draggableProps}
+              {...drag2Provided.dragHandleProps}
               className="my-2"
             >
               <ColumnCard
@@ -30,6 +30,9 @@ const BoardColumn = (props) => {
                 profile={props.profile}
                 setCardToDelete={props.setCardToDelete}
                 setDeleteCardModalVisible={props.setDeleteCardModalVisible}
+                setCardToSeparate={props.setCardToSeparate}
+                setIndexToSeparate={props.setIndexToSeparate}
+                setSeparateCardModalVisible={props.setSeparateCardModalVisible}
               />
             </div>
           )}
