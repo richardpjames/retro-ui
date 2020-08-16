@@ -16,6 +16,7 @@ const CreateActionForm = (props) => {
       text: actionText,
       owner: actionOwner,
       due: actionDue,
+      status: 'todo',
       updates: [],
     });
     document.getElementById('details').focus();

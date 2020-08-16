@@ -291,7 +291,7 @@ const Dashboard = (props) => {
     let _actions = [...actions];
     _actions
       .filter((a) => a._id === action._id)
-      .map(async (a) => (a.open = action.open));
+      .map(async (a) => (a.status = action.status));
     setActions(_actions);
     // Perform the udpate on the server
     actionsService.update(action, token);

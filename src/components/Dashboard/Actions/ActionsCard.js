@@ -13,7 +13,11 @@ const ActionsCard = (props) => {
   const boardLink = `/board/${props.action.boardId}`;
 
   const handleOpenReOpen = () => {
-    props.updateAction({ ...props.action, open: !props.action.open });
+    if (props.action.status !== 'closed') {
+      props.updateAction({ ...props.action, status: 'closed' });
+    } else {
+      props.updateAction({ ...props.action, status: 'todo' });
+    }
   };
 
   const removeUpdate = (index) => {
@@ -62,12 +66,12 @@ const ActionsCard = (props) => {
         </div>
         <div className="column is-narrow">
           <div className="buttons">
-            {props.action.open && (
+            {props.action.status !== 'closed' && (
               <button className="button is-primary" onClick={handleOpenReOpen}>
                 <i className="fas fa-check mr-3"></i> Close
               </button>
             )}
-            {!props.action.open && (
+            {props.action.status === 'closed' && (
               <button className="button is-danger" onClick={handleOpenReOpen}>
                 <i className="fas fa-times mr-3"></i> Re-Open
               </button>
@@ -81,17 +85,18 @@ const ActionsCard = (props) => {
           <ul className="mt-0">
             {props.action.updates.map((update, index) => (
               <li key={update.created}>
-                {props.action.open && update.userId === props.profile.user_id && (
-                  <a
-                    onClick={() => {
-                      setUpdateToDelete(index);
-                      setDeleteUpdateModalVisible(true);
-                    }}
-                    className="has-text-danger"
-                  >
-                    <i className="mr-3 far fa-trash-alt has-text-danger"></i>
-                  </a>
-                )}
+                {props.action.status !== 'closed' &&
+                  update.userId === props.profile.user_id && (
+                    <a
+                      onClick={() => {
+                        setUpdateToDelete(index);
+                        setDeleteUpdateModalVisible(true);
+                      }}
+                      className="has-text-danger"
+                    >
+                      <i className="mr-3 far fa-trash-alt has-text-danger"></i>
+                    </a>
+                  )}
                 <strong className="is-capitalized">
                   {update.nickName} (
                   {moment(update.created).format('DD/MM/YYYY')})
@@ -102,7 +107,7 @@ const ActionsCard = (props) => {
           </ul>
         </div>
       )}
-      {props.action.open && (
+      {props.action.status !== 'closed' && (
         <div>
           <form onSubmit={handleUpdate}>
             <label htmlFor="update">Action Update</label>

@@ -52,10 +52,11 @@ const actionsService = () => {
       _id: action._id,
       text: action.text,
       owner: action.owner,
-      open: action.open,
+      status: action.status,
       due: action.due,
       updates: action.updates,
       created: action.created,
+      closed: action.closed,
       userId: action.userId,
       boardId: action.boardId,
     };

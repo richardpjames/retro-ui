@@ -11,13 +11,13 @@ const Actions = (props) => {
         </p>
         <h1 className="title is-2 mt-5">Open</h1>
         <ActionsList
-          actions={props.actions.filter((action) => action.open === true)}
+          actions={props.actions.filter((action) => action.status !== 'closed')}
           updateAction={props.updateAction}
           profile={props.profile}
         />
         <h1 className="title is-2 mt-5">Closed</h1>
         <ActionsList
-          actions={props.actions.filter((action) => action.open === false)}
+          actions={props.actions.filter((action) => action.status === 'closed')}
           updateAction={props.updateAction}
           profile={props.profile}
         />
