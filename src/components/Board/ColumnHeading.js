@@ -1,9 +1,11 @@
 /* eslint jsx-a11y/anchor-is-valid:0 */
 
 import React, { useState } from 'react';
+import Modal from '../Common/Modal';
 
 const ColumnHeading = (props) => {
   const [editable, setEditable] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [columnTitle, setColumnTitle] = useState(props.column.title);
   const [showEditControls, setShowEditControls] = useState(false);
 
@@ -50,6 +52,18 @@ const ColumnHeading = (props) => {
   }
   return (
     <div {...props.dragHandleProps} className="mb-3">
+      {deleteModalVisible && (
+        <Modal
+          title="Delete Column"
+          message="Are you sure that you want to delete this column?"
+          action="Delete"
+          function={() => {
+            props.deleteColumn(props.column);
+          }}
+          setVisible={setDeleteModalVisible}
+          danger
+        />
+      )}
       <div className="columns is-mobile is-vcentered">
         <div className="column">
           <h4 className="subtitle is-4 mb-0">{props.column.title}</h4>
@@ -89,8 +103,7 @@ const ColumnHeading = (props) => {
                     .length > 0
                 ) {
                   setShowEditControls(false);
-                  props.setColumnToDelete(props.column);
-                  props.setDeleteColumnModalVisible(true);
+                  setDeleteModalVisible(true);
                 }
               }}
               disabled={

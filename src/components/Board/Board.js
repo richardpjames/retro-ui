@@ -36,10 +36,7 @@ const Board = (props) => {
                         board={props.board}
                         cards={props.cards}
                         profile={props.profile}
-                        setColumnToDelete={props.setColumnToDelete}
-                        setDeleteColumnModalVisible={
-                          props.setDeleteColumnModalVisible
-                        }
+                        deleteColumn={props.deleteColumn}
                         dragHandleProps={dragProvided.dragHandleProps}
                         renameColumn={props.renameColumn}
                       />
@@ -60,13 +57,10 @@ const Board = (props) => {
                               cards={props.cards.filter(
                                 (c) => c.columnId === column._id,
                               )}
+                              deleteCard={props.deleteCard}
                               votes={props.votes}
                               votesRemaining={props.votesRemaining}
                               profile={props.profile}
-                              setCardToDelete={props.setCardToDelete}
-                              setDeleteCardModalVisible={
-                                props.setDeleteCardModalVisible
-                              }
                               setCardToSeparate={props.setCardToSeparate}
                               setIndexToSeparate={props.setIndexToSeparate}
                               setSeparateCardModalVisible={
@@ -87,8 +81,7 @@ const Board = (props) => {
                 profile={props.profile}
                 actions={props.actions}
                 addAction={props.addAction}
-                setActionToDelete={props.setActionToDelete}
-                setDeleteActionModalVisible={props.setDeleteActionModalVisible}
+                deleteAction={props.deleteAction}
               />
             </div>
           )}

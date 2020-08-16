@@ -19,11 +19,10 @@ const BoardColumn = (props) => {
                 addVote={props.addVote}
                 deleteVote={props.deleteVote}
                 card={card}
+                deleteCard={props.deleteCard}
                 votes={props.votes.filter((vote) => vote.cardId === card._id)}
                 votesRemaining={props.votesRemaining}
                 profile={props.profile}
-                setCardToDelete={props.setCardToDelete}
-                setDeleteCardModalVisible={props.setDeleteCardModalVisible}
                 setCardToSeparate={props.setCardToSeparate}
                 setIndexToSeparate={props.setIndexToSeparate}
                 setSeparateCardModalVisible={props.setSeparateCardModalVisible}

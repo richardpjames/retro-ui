@@ -21,8 +21,7 @@ const ActionsColumn = (props) => {
               action={action}
               board={props.board}
               profile={props.profile}
-              setActionToDelete={props.setActionToDelete}
-              setDeleteActionModalVisible={props.setDeleteActionModalVisible}
+              deleteAction={props.deleteAction}
             />
           ))}
         </div>

@@ -2,14 +2,17 @@
 
 import React, { useState } from 'react';
 import { CirclePicker } from 'react-color';
+import Modal from '../Common/Modal';
 
 const ColumnCard = (props) => {
   const [editable, setEditable] = useState(false);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [updatedCard, setUpdatedCard] = useState(props.card);
   const [showColourPicker, setShowColourPicker] = useState(false);
   const [showEditControls, setShowEditControls] = useState(false);
   const userVote = props.votes.find((v) => v.userId === props.profile.id);
 
+  // The list of colours for the colour picker
   const colours = [
     '#FFFFFF',
     '#FF9AA2',
@@ -25,11 +28,6 @@ const ColumnCard = (props) => {
     _card.colour = colour.hex;
     props.updateCard(_card);
     setShowColourPicker(false);
-  };
-
-  const handleDelete = (event) => {
-    props.setCardToDelete(props.card);
-    props.setDeleteCardModalVisible(true);
   };
 
   const handleCancel = (event) => {
@@ -65,119 +63,133 @@ const ColumnCard = (props) => {
 
   if (!editable) {
     return (
-      <div
-        className="card is-size-6-7"
-        style={{ backgroundColor: props.card.colour || '#FFFFFF' }}
-      >
-        <div className="card-content py-4 px-4">
-          <p>
-            <strong className="is-capitalized">{props.card.nickName}</strong> -{' '}
-            {props.card.text}
-          </p>
-          {props.card.combinedCards &&
-            props.card.combinedCards.map((card, index) => {
-              return (
-                <div key={index} className="mb-3">
-                  <hr className="mb-2 mt-1" />
-                  <p>
-                    <span className="tag is-rounded mr-1">
-                      <a
-                        onClick={() => {
-                          props.setCardToSeparate(props.card);
-                          props.setIndexToSeparate(index);
-                          props.setSeparateCardModalVisible(true);
-                        }}
-                      >
-                        <i className="fas fa-unlink"></i>
-                      </a>
-                    </span>{' '}
-                    {card.text}
-                  </p>
-                </div>
-              );
-            })}
-          <div className="columns is-vcentered is-mobile">
-            <div className="column">
-              {!userVote && (
-                <a
-                  className="tag is-small"
-                  disabled={props.votesRemaining <= 0}
-                  onClick={handleVote}
-                >
-                  <i className="fas fa-thumbs-up"></i> ({props.votes.length})
-                </a>
-              )}
-              {userVote && (
-                <a className="tag is-small is-primary" onClick={handleVote}>
-                  <i className="fas fa-thumbs-up"></i> ({props.votes.length})
-                </a>
-              )}
-            </div>
-            <div className="column is-narrow">
-              <span className="tag is-rounded mr-1">
-                <a
-                  className="is-small"
-                  onClick={() => {
-                    setShowEditControls(false);
-                    setShowColourPicker(!showColourPicker);
-                  }}
-                >
-                  <i className="fas fa-eye-dropper"></i>
-                </a>
-              </span>
+      <>
+        {deleteModalVisible && (
+          <Modal
+            title="Delete Card"
+            message="Are you sure that you want to delete this card?"
+            action="Delete"
+            function={() => {
+              props.deleteCard(props.card);
+            }}
+            setVisible={setDeleteModalVisible}
+            danger
+          />
+        )}
+        <div
+          className="card is-size-6-7"
+          style={{ backgroundColor: props.card.colour || '#FFFFFF' }}
+        >
+          <div className="card-content py-4 px-4">
+            <p>
+              <strong className="is-capitalized">{props.card.nickName}</strong>{' '}
+              - {props.card.text}
+            </p>
+            {props.card.combinedCards &&
+              props.card.combinedCards.map((card, index) => {
+                return (
+                  <div key={index} className="mb-3">
+                    <hr className="mb-2 mt-1" />
+                    <p>
+                      <span className="tag is-rounded mr-1">
+                        <a
+                          onClick={() => {
+                            props.setCardToSeparate(props.card);
+                            props.setIndexToSeparate(index);
+                            props.setSeparateCardModalVisible(true);
+                          }}
+                        >
+                          <i className="fas fa-unlink"></i>
+                        </a>
+                      </span>{' '}
+                      {card.text}
+                    </p>
+                  </div>
+                );
+              })}
+            <div className="columns is-vcentered is-mobile">
+              <div className="column">
+                {!userVote && (
+                  <a
+                    className="tag is-small"
+                    disabled={props.votesRemaining <= 0}
+                    onClick={handleVote}
+                  >
+                    <i className="fas fa-thumbs-up"></i> ({props.votes.length})
+                  </a>
+                )}
+                {userVote && (
+                  <a className="tag is-small is-primary" onClick={handleVote}>
+                    <i className="fas fa-thumbs-up"></i> ({props.votes.length})
+                  </a>
+                )}
+              </div>
+              <div className="column is-narrow">
+                <span className="tag is-rounded mr-1">
+                  <a
+                    className="is-small"
+                    onClick={() => {
+                      setShowEditControls(false);
+                      setShowColourPicker(!showColourPicker);
+                    }}
+                  >
+                    <i className="fas fa-eye-dropper"></i>
+                  </a>
+                </span>
 
-              <span className="tag is-rounded">
-                <a
-                  className="is-small"
-                  onClick={() => {
-                    setShowColourPicker(false);
-                    setShowEditControls(!showEditControls);
-                  }}
-                >
-                  <i className="fas fa-ellipsis-h"></i>
-                </a>
-              </span>
+                <span className="tag is-rounded">
+                  <a
+                    className="is-small"
+                    onClick={() => {
+                      setShowColourPicker(false);
+                      setShowEditControls(!showEditControls);
+                    }}
+                  >
+                    <i className="fas fa-ellipsis-h"></i>
+                  </a>
+                </span>
+              </div>
             </div>
+            {showColourPicker && (
+              <CirclePicker
+                onChangeComplete={handleColourChange}
+                width="100%"
+                circleSize={29}
+                circleSpacing={11}
+                colors={colours.filter(
+                  (c) => c.toLowerCase() !== props.card.colour,
+                )}
+              />
+            )}
+            {showEditControls && (
+              <div className="columns">
+                <div className="column">
+                  <a
+                    className="button is-small is-fullwidth is-primary"
+                    onClick={() => {
+                      setEditable(true);
+                      setShowEditControls(false);
+                    }}
+                  >
+                    <i className="fas fa-pencil-alt mr-3"></i> Edit
+                  </a>
+                </div>
+                <div className="column">
+                  <a
+                    className="button is-small is-fullwidth is-danger"
+                    onClick={() => {
+                      setShowEditControls(false);
+                      setDeleteModalVisible(true);
+                    }}
+                  >
+                    <i className="fas fa-trash-alt mr-3"></i> Delete
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
-          {showColourPicker && (
-            <CirclePicker
-              onChangeComplete={handleColourChange}
-              width="100%"
-              circleSize={29}
-              circleSpacing={11}
-              colors={colours.filter(
-                (c) => c.toLowerCase() !== props.card.colour,
-              )}
-            />
-          )}
-          {showEditControls && (
-            <div className="columns">
-              <div className="column">
-                <a
-                  className="button is-small is-fullwidth is-primary"
-                  onClick={() => {
-                    setEditable(true);
-                    setShowEditControls(false);
-                  }}
-                >
-                  <i className="fas fa-pencil-alt mr-3"></i> Edit
-                </a>
-              </div>
-              <div className="column">
-                <a
-                  className="button is-small is-fullwidth is-danger"
-                  onClick={() => {
-                    setShowEditControls(false);
-                    handleDelete();
-                  }}
-                >
-                  <i className="fas fa-trash-alt mr-3"></i> Delete
-                </a>
-              </div>
-            </div>
-          )}
         </div>
-      </div>
+      </>
     );
   } else {
     return (

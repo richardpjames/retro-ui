@@ -1,18 +1,26 @@
 /* eslint jsx-a11y/anchor-is-valid:0 */
 import React, { useState } from 'react';
 import moment from 'moment';
+import Modal from '../Common/Modal';
 
 const ActionCard = (props) => {
   const [showEditControls, setShowEditControls] = useState(false);
-
-  const handleDelete = () => {
-    setShowEditControls(false);
-    props.setActionToDelete(props.action);
-    props.setDeleteActionModalVisible(true);
-  };
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   return (
     <div className="card card-white-bg is-size-6-7 mb-2">
+      {deleteModalVisible && (
+        <Modal
+          title="Delete Action"
+          message="Are you sure that you want to delete this action?"
+          action="Delete"
+          function={() => {
+            props.deleteAction(props.action);
+          }}
+          setVisible={setDeleteModalVisible}
+          danger
+        />
+      )}
       <div className="card-content py-4 px-4">
         <p>
           <strong className="is-capitalized">{props.action.owner}</strong> -{' '}
@@ -34,7 +42,9 @@ const ActionCard = (props) => {
               <div className="buttons mt-3">
                 <a
                   className="button is-small is-fullwidth is-danger"
-                  onClick={handleDelete}
+                  onClick={() => {
+                    setDeleteModalVisible(true);
+                  }}
                 >
                   <i className="fas fa-trash-alt mr-3"></i>Delete
                 </a>
