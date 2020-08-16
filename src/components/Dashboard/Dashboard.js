@@ -125,7 +125,6 @@ const Dashboard = (props) => {
 
   const removeBoard = async (boardId) => {
     try {
-      console.log(boardId);
       // Get the access token and call the delete endpoint
       const token = await getAccessTokenSilently();
       boardsService.remove(boardId, token);

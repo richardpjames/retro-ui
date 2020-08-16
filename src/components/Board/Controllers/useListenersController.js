@@ -32,7 +32,6 @@ const useListenersController = (
       const check = cards.find((c) => c._id === card._id);
       // If not then add it to the list
       if (!check) {
-        console.log(card);
         setCards([...cards, card]);
       }
     });
@@ -166,7 +165,6 @@ const useListenersController = (
     // For any updated cards
     io.on('board updated', (updatedBoard) => {
       // Update the board
-      console.log(updatedBoard);
       setBoard(updatedBoard);
     });
 
