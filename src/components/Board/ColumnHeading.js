@@ -70,14 +70,18 @@ const ColumnHeading = (props) => {
         </div>
         <div className="column is-narrow">
           {props.board.userId === props.profile.id && (
-            <span className="tag is-rounded">
-              <a
-                className="is-small"
-                onClick={() => setShowEditControls(!showEditControls)}
-              >
-                <i className="fas fa-ellipsis-h"></i>
-              </a>
-            </span>
+            <>
+              {!props.board.locked && (
+                <span className="tag is-rounded">
+                  <a
+                    className="is-small"
+                    onClick={() => setShowEditControls(!showEditControls)}
+                  >
+                    <i className="fas fa-ellipsis-h"></i>
+                  </a>
+                </span>
+              )}
+            </>
           )}
         </div>
       </div>

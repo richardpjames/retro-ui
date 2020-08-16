@@ -44,10 +44,19 @@ const ColumnCard = (props) => {
   };
 
   const handleVote = (event) => {
+    // Check if the board is locked
+    if (props.board.locked) {
+      return false;
+    }
     // If the user has voted already then remove
     if (userVote) {
       return props.deleteVote(userVote._id, props.card._id);
     }
+    // If the user has no votes left then return
+    if (props.votesRemaining <= 0) {
+      return false;
+    }
+
     // Otherwise create a new vote
     const _vote = {
       cardId: props.card._id,
@@ -61,7 +70,7 @@ const ColumnCard = (props) => {
     setUpdatedCard({ ...updatedCard, [event.target.name]: event.target.value });
   };
 
-  if (!editable) {
+  if (!editable || props.board.locked) {
     return (
       <>
         {deleteModalVisible && (
@@ -91,17 +100,21 @@ const ColumnCard = (props) => {
                   <div key={index} className="mb-3">
                     <hr className="mb-2 mt-1" />
                     <p>
-                      <span className="tag is-rounded mr-1">
-                        <a
-                          onClick={() => {
-                            props.setCardToSeparate(props.card);
-                            props.setIndexToSeparate(index);
-                            props.setSeparateCardModalVisible(true);
-                          }}
-                        >
-                          <i className="fas fa-unlink"></i>
-                        </a>
-                      </span>{' '}
+                      {!props.board.locked && (
+                        <>
+                          <span className="tag is-rounded mr-1">
+                            <a
+                              onClick={() => {
+                                props.setCardToSeparate(props.card);
+                                props.setIndexToSeparate(index);
+                                props.setSeparateCardModalVisible(true);
+                              }}
+                            >
+                              <i className="fas fa-unlink"></i>
+                            </a>
+                          </span>{' '}
+                        </>
+                      )}
                       {card.text}
                     </p>
                   </div>
@@ -109,48 +122,48 @@ const ColumnCard = (props) => {
               })}
             <div className="columns is-vcentered is-mobile">
               <div className="column">
-                {!userVote && (
-                  <a
-                    className="tag is-small"
-                    disabled={props.votesRemaining <= 0}
-                    onClick={handleVote}
-                  >
+                {!userVote && props.board.allowVotes && (
+                  <a className="tag is-small" onClick={handleVote}>
                     <i className="fas fa-thumbs-up"></i> ({props.votes.length})
                   </a>
                 )}
-                {userVote && (
+                {userVote && props.board.allowVotes && (
                   <a className="tag is-small is-primary" onClick={handleVote}>
                     <i className="fas fa-thumbs-up"></i> ({props.votes.length})
                   </a>
                 )}
               </div>
               <div className="column is-narrow">
-                <span className="tag is-rounded mr-1">
-                  <a
-                    className="is-small"
-                    onClick={() => {
-                      setShowEditControls(false);
-                      setShowColourPicker(!showColourPicker);
-                    }}
-                  >
-                    <i className="fas fa-eye-dropper"></i>
-                  </a>
-                </span>
+                {!props.board.locked && (
+                  <>
+                    <span className="tag is-rounded mr-1">
+                      <a
+                        className="is-small"
+                        onClick={() => {
+                          setShowEditControls(false);
+                          setShowColourPicker(!showColourPicker);
+                        }}
+                      >
+                        <i className="fas fa-eye-dropper"></i>
+                      </a>
+                    </span>
 
-                <span className="tag is-rounded">
-                  <a
-                    className="is-small"
-                    onClick={() => {
-                      setShowColourPicker(false);
-                      setShowEditControls(!showEditControls);
-                    }}
-                  >
-                    <i className="fas fa-ellipsis-h"></i>
-                  </a>
-                </span>
+                    <span className="tag is-rounded">
+                      <a
+                        className="is-small"
+                        onClick={() => {
+                          setShowColourPicker(false);
+                          setShowEditControls(!showEditControls);
+                        }}
+                      >
+                        <i className="fas fa-ellipsis-h"></i>
+                      </a>
+                    </span>
+                  </>
+                )}
               </div>
             </div>
-            {showColourPicker && (
+            {showColourPicker && !props.board.locked && (
               <CirclePicker
                 onChangeComplete={handleColourChange}
                 width="100%"
@@ -161,19 +174,21 @@ const ColumnCard = (props) => {
                 )}
               />
             )}
-            {showEditControls && (
+            {showEditControls && !props.board.locked && (
               <div className="columns">
-                <div className="column">
-                  <a
-                    className="button is-small is-fullwidth is-primary"
-                    onClick={() => {
-                      setEditable(true);
-                      setShowEditControls(false);
-                    }}
-                  >
-                    <i className="fas fa-pencil-alt mr-3"></i> Edit
-                  </a>
-                </div>
+                {props.card.userId === props.profile.user_id && (
+                  <div className="column">
+                    <a
+                      className="button is-small is-fullwidth is-primary"
+                      onClick={() => {
+                        setEditable(true);
+                        setShowEditControls(false);
+                      }}
+                    >
+                      <i className="fas fa-pencil-alt mr-3"></i> Edit
+                    </a>
+                  </div>
+                )}
                 <div className="column">
                   <a
                     className="button is-small is-fullwidth is-danger"

@@ -21,7 +21,10 @@ const Board = (props) => {
                   draggableId={column._id}
                   index={index}
                   key={column._id}
-                  isDragDisabled={props.board.userId !== props.profile.id}
+                  isDragDisabled={
+                    props.board.userId !== props.profile.id ||
+                    props.board.locked
+                  }
                 >
                   {(dragProvided, snapshot) => (
                     <div
@@ -41,7 +44,9 @@ const Board = (props) => {
                         renameColumn={props.renameColumn}
                       />
 
-                      <NewCardForm addCard={props.addCard} column={column} />
+                      {!props.board.locked && (
+                        <NewCardForm addCard={props.addCard} column={column} />
+                      )}
 
                       <Droppable droppableId={column._id} isCombineEnabled>
                         {(dropProvided) => (
@@ -51,6 +56,7 @@ const Board = (props) => {
                             {...dropProvided.droppableProps}
                           >
                             <BoardColumn
+                              board={props.board}
                               updateCard={props.updateCard}
                               addVote={props.addVote}
                               deleteVote={props.deleteVote}

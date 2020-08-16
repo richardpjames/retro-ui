@@ -9,11 +9,15 @@ const ActionsColumn = (props) => {
         <div className="column card mx-1 my-1">
           <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">Actions</h4>
           {props.profile.id === props.board.userId && (
-            <CreateActionForm
-              board={props.board}
-              profile={props.profile}
-              addAction={props.addAction}
-            />
+            <>
+              {!props.board.locked && (
+                <CreateActionForm
+                  board={props.board}
+                  profile={props.profile}
+                  addAction={props.addAction}
+                />
+              )}
+            </>
           )}
           {props.actions.map((action) => (
             <ActionCard

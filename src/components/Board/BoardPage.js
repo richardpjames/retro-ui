@@ -9,6 +9,7 @@ import CreateColumnModal from './CreateColumnModal';
 import BoardTitleBar from './BoardTitleBar';
 
 import useListenersController from './Controllers/useListenersController';
+import useBoardsController from './Controllers/useBoardsController';
 import useCardsController from './Controllers/useCardsController';
 import useColumnsController from './Controllers/useColumnsController';
 import useVotesController from './Controllers/useVotesController';
@@ -21,6 +22,7 @@ import io from '../../services/socket';
 const BoardPage = (props) => {
   // For storing the board, and the controller
   const [board, setBoard] = useState({});
+  const { updateBoard } = useBoardsController(board, setBoard);
 
   // For storing cards, and the controller
   const [cards, setCards] = useState([]);
@@ -106,6 +108,7 @@ const BoardPage = (props) => {
     columns,
     actions,
     setActions,
+    setBoard,
     setCards,
     setColumns,
     setVotes,
@@ -166,6 +169,7 @@ const BoardPage = (props) => {
 
       <BoardTitleBar
         board={board}
+        updateBoard={updateBoard}
         profile={profile}
         votesRemaining={votesRemaining}
         dashboardPath={props.dashboardPath}

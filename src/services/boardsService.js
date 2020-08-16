@@ -47,6 +47,34 @@ const boardsService = () => {
     }
   };
 
+  const update = async (board, token) => {
+    const updatedBoard = {
+      _id: board._id,
+      name: board.name,
+      description: board.description,
+      maxVotes: board.maxVotes,
+      created: board.created,
+      userId: board.userId,
+      teamId: board.teamId,
+      private: board.private,
+      showActions: board.showActions,
+      allowVotes: board.allowVotes,
+      locked: board.locked,
+    };
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/boards/${board._id}`,
+        updatedBoard,
+        {
+          headers: { Authorization: 'Bearer ' + token },
+        },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
   const remove = async (boardId, token) => {
     try {
       await axios.delete(
@@ -61,7 +89,7 @@ const boardsService = () => {
     }
   };
 
-  return { getAll, getById, create, remove };
+  return { getAll, getById, create, remove, update };
 };
 
 export default boardsService();

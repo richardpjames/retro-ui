@@ -7,6 +7,7 @@ const useListenersController = (
   columns,
   actions,
   setActions,
+  setBoard,
   setCards,
   setColumns,
   setVotes,
@@ -159,6 +160,14 @@ const useListenersController = (
       // Filter out the cards not deleted and update
       const _columns = columns.filter((c) => c._id !== columnId);
       setColumns(_columns);
+    });
+
+    io.removeAllListeners('board updated');
+    // For any updated cards
+    io.on('board updated', (updatedBoard) => {
+      // Update the board
+      console.log(updatedBoard);
+      setBoard(updatedBoard);
     });
 
     // Recalculate the votes the user has remaining
