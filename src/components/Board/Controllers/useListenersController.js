@@ -164,6 +164,14 @@ const useListenersController = (
     io.removeAllListeners('board updated');
     // For any updated cards
     io.on('board updated', (updatedBoard) => {
+      // If teams have changed and this is now a private board then reload the page
+      if (
+        (board.teamId !== updatedBoard.teamId ||
+          board.private !== updatedBoard.private) &&
+        updatedBoard.private
+      ) {
+        window.location.reload(false);
+      }
       // Update the board
       setBoard(updatedBoard);
     });

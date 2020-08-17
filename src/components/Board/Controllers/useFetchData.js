@@ -4,8 +4,10 @@ import cardsService from '../../../services/cardsService';
 import columnsService from '../../../services/columnsService';
 import usersService from '../../../services/usersService';
 import votesService from '../../../services/votesService';
+import teamsService from '../../../services/teamsService';
 
 import { useAuth0 } from '@auth0/auth0-react';
+import { useHistory } from 'react-router-dom';
 
 const useFetchData = (
   props,
@@ -16,7 +18,10 @@ const useFetchData = (
   setColumns,
   setProfile,
   setVotes,
+  setTeams,
 ) => {
+  const history = useHistory();
+
   const { getAccessTokenSilently, user } = useAuth0();
 
   const fetchData = async (showLoadingBar = false) => {
@@ -65,8 +70,19 @@ const useFetchData = (
         return -1;
       });
       // Get the user profile
-      const profile = await usersService.getById(user.sub, token);
-      setProfile(profile);
+      const _profile = await usersService.getById(user.sub, token);
+      // Get any teams
+      const teams = await teamsService.getAll(token);
+      // Update the teams
+      if (teams) {
+        // Sort the teams
+        const _teams = teams.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          return -1;
+        });
+        setTeams(_teams);
+      } // Update the user profile
+      setProfile(_profile);
       // Update the boards
       setBoard(_board);
       // Update the columns
@@ -82,6 +98,8 @@ const useFetchData = (
     } catch (error) {
       // For now just log any errors - TODO: Improve error handling
       console.log(error);
+      setLoading(false);
+      history.push(`/error/${error}`);
     }
   };
 

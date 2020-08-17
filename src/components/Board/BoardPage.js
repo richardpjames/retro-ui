@@ -43,6 +43,10 @@ const BoardPage = (props) => {
     columns,
     setColumns,
   );
+
+  // For storing teams
+  const [teams, setTeams] = useState([]);
+
   // For storing votes and the controller
   const [votes, setVotes] = useState([]);
   const [votesRemaining, setVotesRemaining] = useState(0);
@@ -70,6 +74,7 @@ const BoardPage = (props) => {
     setColumns,
     setProfile,
     setVotes,
+    setTeams,
   );
 
   const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
@@ -169,6 +174,7 @@ const BoardPage = (props) => {
 
       <BoardTitleBar
         board={board}
+        teams={teams}
         updateBoard={updateBoard}
         profile={profile}
         votesRemaining={votesRemaining}

@@ -54,6 +54,7 @@ const Blog = (props) => {
         event.preventDefault();
         _location = _location.substring(25, _location.length);
         // Use the react router to navigate
+        window.scrollTo(0, 0);
         history.push(_location || '/');
       }
       // removing the https://www.retrospectacle.io
@@ -61,6 +62,7 @@ const Blog = (props) => {
         event.preventDefault();
         _location = _location.substring(29, _location.length);
         // Use the react router to navigate
+        window.scrollTo(0, 0);
         history.push(_location || '/');
       }
     }

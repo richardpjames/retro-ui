@@ -12,6 +12,7 @@ import LoadingSpinner from '../Common/LoadingSpinner';
 import Footer from '../Common/Footer';
 import Page from '../Common/Page';
 import Blog from '../Blog/Blog';
+import ErrorPage from '../Pages/ErrorPage';
 
 const AppRouter = () => {
   // Only display the page if Auth0 has completed loading as this is required
@@ -77,6 +78,18 @@ const AppRouter = () => {
               path="/privacy"
               render={(props) => (
                 <Page {...props} slug="privacy-policy" api={api} />
+              )}
+            />
+            <Route
+              path="/error/:error"
+              render={(props) => <ErrorPage {...props} />}
+            />
+            <Route
+              render={(props) => (
+                <ErrorPage
+                  {...props}
+                  error="Error: Request failed with status code 404"
+                />
               )}
             />
           </Switch>

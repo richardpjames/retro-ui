@@ -15,6 +15,7 @@ const Page = (props) => {
         event.preventDefault();
         _location = _location.substring(25, _location.length);
         // Use the react router to navigate
+        window.scrollTo(0, 0);
         history.push(_location || '/');
       }
       // removing the https://www.retrospectacle.io
@@ -22,6 +23,7 @@ const Page = (props) => {
         event.preventDefault();
         _location = _location.substring(29, _location.length);
         // Use the react router to navigate
+        window.scrollTo(0, 0);
         history.push(_location || '/');
       }
     }
@@ -41,7 +43,7 @@ const Page = (props) => {
   });
 
   return (
-    <div className="container my-3">
+    <div className="container mx-5 my-5">
       <div
         className="content"
         onClick={navigate}

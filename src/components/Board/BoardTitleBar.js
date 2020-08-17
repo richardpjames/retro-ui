@@ -12,7 +12,12 @@ const BoardTitleBar = (props) => {
   return (
     <>
       {settingsModalVisible && (
-        <BoardSettingsModal setVisible={setSettingsModalVisible} />
+        <BoardSettingsModal
+          setVisible={setSettingsModalVisible}
+          board={props.board}
+          teams={props.teams}
+          updateBoard={props.updateBoard}
+        />
       )}
       <div className="columns is-vcentered">
         {voteModalVisible && (
