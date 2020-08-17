@@ -73,6 +73,14 @@ const Home = () => {
                       members that strengthen the team spirit.
                     </li>
                   </ul>
+                  <Link to="/blog/posts/getting-started-with-retrospectacle">
+                    <button
+                      className="button is-success"
+                      onClick={() => window.scrollTo(0, 0)}
+                    >
+                      See How to Get Started
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>
