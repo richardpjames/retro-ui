@@ -77,9 +77,13 @@ const BoardPage = (props) => {
     setTeams,
   );
 
+  // Creation of columns
   const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
     false,
   );
+
+  // Showing instructions on load of page
+  const [showInstructions, setShowInstructions] = useState(true);
 
   // These items of state are required to drive the modal for merging and separating cards
   const [parentCard, setParentCard] = useState({});
@@ -140,6 +144,18 @@ const BoardPage = (props) => {
         if (loading) return <LoadingSpinner />;
       })()}
 
+      {showInstructions && board.instructions && (
+        <Modal
+          title="Instructions"
+          action="Okay"
+          setVisible={setShowInstructions}
+          markdown={board.instructions}
+          function={() => {}}
+          icon="fas fa-check"
+          hideCancel
+        />
+      )}
+
       {mergeCardModalVisible && (
         <Modal
           title="Merge Cards"
@@ -180,6 +196,7 @@ const BoardPage = (props) => {
         votesRemaining={votesRemaining}
         dashboardPath={props.dashboardPath}
         setCreateColumnModalVisible={setCreateColumnModalVisible}
+        setShowInstructions={setShowInstructions}
       />
 
       <Board

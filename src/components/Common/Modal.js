@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 
 const Modal = (props) => {
   // Used to close the modal from the cancel or cross button
@@ -27,7 +28,8 @@ const Modal = (props) => {
           ></button>
         </header>
         <section className="modal-card-body">
-          <p className="my-3">{props.message}</p>
+          {props.message && <p className="my-3">{props.message}</p>}
+          {props.markdown && <ReactMarkdown source={props.markdown} />}
         </section>
         <footer className="modal-card-foot">
           <button
@@ -37,9 +39,11 @@ const Modal = (props) => {
             <i className={`${props.icon || 'fas fa-trash-alt'} mr-3`}></i>{' '}
             {props.action}
           </button>
-          <button className="button" onClick={closeModal}>
-            <i className="fas fa-ban mr-3"></i> Cancel
-          </button>
+          {!props.hideCancel && (
+            <button className="button" onClick={closeModal}>
+              <i className="fas fa-ban mr-3"></i> Cancel
+            </button>
+          )}
         </footer>
       </div>
     </div>

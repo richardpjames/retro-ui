@@ -60,6 +60,7 @@ const boardsService = () => {
       showActions: board.showActions,
       allowVotes: board.allowVotes,
       locked: board.locked,
+      instructions: board.instructions,
     };
     try {
       await axios.put(

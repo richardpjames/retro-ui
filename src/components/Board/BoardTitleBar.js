@@ -50,7 +50,7 @@ const BoardTitleBar = (props) => {
           <p>{props.board.description}</p>
         </div>
         <div className="column is-narrow">
-          <div className="buttons">
+          <div className="buttons are-small">
             {props.board.userId === props.profile.id && (
               <>
                 <button
@@ -67,7 +67,7 @@ const BoardTitleBar = (props) => {
                   disabled={props.board.locked}
                 >
                   <Icon class="fas fa-lock" padding />
-                  {props.board.locked ? 'Board Locked' : 'Lock Board'}
+                  {props.board.locked ? 'Locked' : 'Lock'}
                 </button>
                 <button
                   className="button"
@@ -75,7 +75,7 @@ const BoardTitleBar = (props) => {
                   disabled={props.board.locked}
                 >
                   <Icon class="fas fa-cog" padding />
-                  Board Settings
+                  Settings
                 </button>
                 <button
                   className="button"
@@ -86,6 +86,15 @@ const BoardTitleBar = (props) => {
                   Add Column
                 </button>
               </>
+            )}
+            {props.board.instructions && (
+              <button
+                className="button"
+                onClick={() => props.setShowInstructions(true)}
+              >
+                <Icon class="fas fa-info-circle" padding />
+                Instructions
+              </button>
             )}
             <Link to={props.dashboardPath}>
               <button className="button">

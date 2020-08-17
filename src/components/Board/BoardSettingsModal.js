@@ -9,6 +9,7 @@ const BoardSettingsModal = (props) => {
   const [boardPrivate, setBoardPrivate] = useState(props.board.private);
   const [boardTeam, setBoardTeam] = useState(props.board.teamId);
   const [showActions, setShowActions] = useState(props.board.showActions);
+  const [instructions, setInstructions] = useState(props.board.instructions);
 
   // Used to close the modal from the cancel or cross button
   const closeModal = () => {
@@ -17,6 +18,7 @@ const BoardSettingsModal = (props) => {
     setBoardPrivate(props.board.private);
     setBoardTeam(props.board.teamId);
     setShowActions(props.board.showActions);
+    setInstructions(props.board.instructions);
     props.setVisible(false);
     document.activeElement.blur();
   };
@@ -30,6 +32,7 @@ const BoardSettingsModal = (props) => {
       private: boardPrivate,
       teamId: boardTeam,
       showActions: showActions,
+      instructions: instructions,
     });
     props.setVisible(false);
     document.activeElement.blur();
@@ -76,6 +79,22 @@ const BoardSettingsModal = (props) => {
                 required
               />
             </div>
+
+            <div className="field">
+              <label htmlFor="instructions">Instructions (Markdown)</label>
+              <textarea
+                className="is-fullwidth has-fixed-size textarea"
+                rows="5"
+                placeholder="Instructions..."
+                name="instructions"
+                id="instructions"
+                value={instructions}
+                onChange={(event) => {
+                  setInstructions(event.target.value);
+                }}
+              ></textarea>
+            </div>
+
             <div className="field">
               <label htmlFor="boardTeam">Team</label>
               <div className="control">
