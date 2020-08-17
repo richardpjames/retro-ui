@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import usersService from '../../services/usersService';
+import Icon from '../Common/Icon';
 
 const Purchase = () => {
   const Paddle = window.Paddle;
@@ -165,7 +166,7 @@ const Purchase = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i className="fas fa-chalkboard mr-3"></i> Boards
+                          <Icon class="fas fa-chalkboard" padding /> Boards
                         </h2>
                         <p>
                           Create boards for your retrospectives which allow team
@@ -177,7 +178,7 @@ const Purchase = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i className="fas fa-user-friends mr-3"></i> Teams
+                          <Icon class="fas fa-user-friends" padding /> Teams
                         </h2>
                         <p>
                           Create teams and give them access to all of their past
@@ -189,7 +190,7 @@ const Purchase = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i className="fas fa-puzzle-piece mr-3"></i> Templates
+                          <Icon class="fas fa-puzzle-piece" padding /> Templates
                         </h2>
                         <p>
                           With our built in templates you can quickly and easily
@@ -205,7 +206,7 @@ const Purchase = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i className="fas fa-arrows-alt mr-3"></i> Drag and
+                          <Icon class="fas fa-arrows-alt" padding /> Drag and
                           Drop
                         </h2>
                         <p>
@@ -217,7 +218,7 @@ const Purchase = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i className="fas fa-pencil-alt mr-3"></i> Track
+                          <Icon class="fas fa-pencil-alt" padding /> Track
                           Actions
                         </h2>
                         <p>
@@ -230,7 +231,7 @@ const Purchase = () => {
                     <div className="tile card mx-5 my-5">
                       <div className="card-content">
                         <h2>
-                          <i className="far fa-clock mr-3"></i> Real Time
+                          <Icon class="far fa-clock" padding /> Real Time
                           Collaboration
                         </h2>
                         <p>

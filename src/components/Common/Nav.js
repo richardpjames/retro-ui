@@ -119,6 +119,14 @@ const Nav = (props) => {
                 );
               }
             })()}
+            <NavLink
+              className="navbar-item"
+              activeClassName="is-active"
+              to="/blog"
+              onClick={closeNavLinks}
+            >
+              <i className="fas fa-rss-square mr-3"></i> Blog
+            </NavLink>
           </div>
         </div>
         {/* 

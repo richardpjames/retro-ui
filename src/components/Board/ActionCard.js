@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import moment from 'moment';
 import Modal from '../Common/Modal';
+import Icon from '../Common/Icon';
 
 const ActionCard = (props) => {
   const [showEditControls, setShowEditControls] = useState(false);
@@ -34,7 +35,7 @@ const ActionCard = (props) => {
                 className="is-small"
                 onClick={() => setShowEditControls(!showEditControls)}
               >
-                <i className="fas fa-ellipsis-h"></i>
+                <Icon class="fas fa-ellipsis-h" />
               </a>
             </span>
 
@@ -46,7 +47,8 @@ const ActionCard = (props) => {
                     setDeleteModalVisible(true);
                   }}
                 >
-                  <i className="fas fa-trash-alt mr-3"></i>Delete
+                  <Icon class="fas fa-trash-alt" padding />
+                  Delete
                 </a>
               </div>
             )}

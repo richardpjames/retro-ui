@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import bulmaCalendar from 'bulma-calendar';
 import moment from 'moment';
+import Icon from '../Common/Icon';
 
 const CreateActionForm = (props) => {
   const [actionText, setActionText] = useState('');
@@ -90,7 +91,7 @@ const CreateActionForm = (props) => {
         </div>
 
         <button className="button is-primary is-fullwidth my-1 is-size-6-7">
-          <i className="fas fa-plus mr-3"></i>
+          <Icon class="fas fa-plus" padding />
           Add Action
         </button>
       </form>

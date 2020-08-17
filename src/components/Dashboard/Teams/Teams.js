@@ -4,6 +4,7 @@ import TeamList from './TeamList';
 import MembershipList from './MembershipList';
 import LeaveTeamModal from './LeaveTeamModal';
 import RemoveTeamMemberModal from './RemoveTeamMemberModal';
+import Icon from '../../Common/Icon';
 
 const Teams = (props) => {
   return (
@@ -23,7 +24,7 @@ const Teams = (props) => {
       />
       {props.pendingTeams > 0 ? (
         <div className="notification is-primary">
-          <i className="fas fa-exclamation-triangle mr-3"></i>
+          <Icon class="fas fa-exclamation-triangle" padding />
           You have outstanding invitations to new teams, please accept or
           decline these invitations from the Membership section of this screen.
         </div>
@@ -39,7 +40,7 @@ const Teams = (props) => {
               props.setCreateTeamModalVisible(true);
             }}
           >
-            <i className="fas fa-plus mr-3"></i> Create New
+            <Icon class="fas fa-plus" padding /> Create New
           </button>
         </div>
       </div>

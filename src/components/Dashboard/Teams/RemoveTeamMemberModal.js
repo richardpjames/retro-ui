@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../../Common/Icon';
 
 const RemoveTeamMemberModal = (props) => {
   // Used to close the modal from the cancel or cross button
@@ -43,10 +44,10 @@ const RemoveTeamMemberModal = (props) => {
               props.setModalVisible(false);
             }}
           >
-            <i className="fas fa-trash-alt mr-3"></i> Remove
+            <Icon class="fas fa-trash-alt" padding /> Remove
           </button>
           <button className="button" onClick={closeModal}>
-            <i className="fas fa-ban mr-3"></i> Cancel
+            <Icon class="fas fa-ban" padding /> Cancel
           </button>
         </footer>
       </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import Icon from '../../Common/Icon';
 
 const MembershipCard = (props) => {
   const getStatus = () => {
@@ -34,7 +35,7 @@ const MembershipCard = (props) => {
                 className="button is-primary"
                 onClick={() => props.acceptMembership(props.team._id)}
               >
-                <i className="fas fa-user-plus mr-3"></i> Accept Invitation
+                <Icon class="fas fa-user-plus" padding /> Accept Invitation
               </button>
             ) : null}
             <button
@@ -44,7 +45,7 @@ const MembershipCard = (props) => {
                 props.setLeaveTeamModalVisible(true);
               }}
             >
-              <i className="fas fa-sign-out-alt mr-3"></i> Leave
+              <Icon class="fas fa-sign-out-alt" padding /> Leave
             </button>
           </div>
         </div>

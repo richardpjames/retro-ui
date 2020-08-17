@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Modal from '../Common/Modal';
+import Icon from '../Common/Icon';
+import BoardSettingsModal from './BoardSettingsModal';
 
 const BoardTitleBar = (props) => {
   const [voteModalVisible, setVoteModalVisible] = useState(false);
   const [lockModalVisible, setLockModalVisible] = useState(false);
+  const [settingsModalVisible, setSettingsModalVisible] = useState(false);
 
   return (
     <>
+      {settingsModalVisible && (
+        <BoardSettingsModal setVisible={setSettingsModalVisible} />
+      )}
       <div className="columns is-vcentered">
         {voteModalVisible && (
           <Modal
@@ -47,7 +53,7 @@ const BoardTitleBar = (props) => {
                   disabled={props.board.allowVotes}
                   onClick={() => setVoteModalVisible(true)}
                 >
-                  <i className="fas fa-thumbs-up mr-3"></i>
+                  <Icon class="fas fa-thumbs-up" padding />
                   {props.board.allowVotes ? 'Voting Started' : 'Start Voting'}
                 </button>
                 <button
@@ -55,21 +61,30 @@ const BoardTitleBar = (props) => {
                   onClick={() => setLockModalVisible(true)}
                   disabled={props.board.locked}
                 >
-                  <i className="fas fa-lock mr-3"></i>
+                  <Icon class="fas fa-lock" padding />
                   {props.board.locked ? 'Board Locked' : 'Lock Board'}
+                </button>
+                <button
+                  className="button"
+                  onClick={() => setSettingsModalVisible(true)}
+                  disabled={props.board.locked}
+                >
+                  <Icon class="fas fa-cog" padding />
+                  Board Settings
                 </button>
                 <button
                   className="button"
                   onClick={() => props.setCreateColumnModalVisible(true)}
                   disabled={props.board.locked}
                 >
-                  <i className="fas fa-plus mr-3"></i> Add Column
+                  <Icon class="fas fa-plus" padding />
+                  Add Column
                 </button>
               </>
             )}
             <Link to={props.dashboardPath}>
               <button className="button">
-                <i className="fas fa-home mr-3"></i> Dashboard
+                <Icon class="fas fa-home" padding /> Dashboard
               </button>
             </Link>
           </div>
@@ -77,7 +92,7 @@ const BoardTitleBar = (props) => {
       </div>
       {props.board.allowVotes && !props.board.locked ? (
         <div className="notification is-primary">
-          <i className="fas fa-exclamation-triangle mr-3"></i>
+          <Icon class="fas fa-exclamation-triangle" padding />
           Voting is now enabled on this board{' '}
           {props.votesRemaining > 0 ? 'and' : 'but'} you have{' '}
           {props.votesRemaining} votes left.
@@ -85,7 +100,7 @@ const BoardTitleBar = (props) => {
       ) : null}
       {props.board.locked ? (
         <div className="notification is-warning">
-          <i className="fas fa-exclamation-triangle mr-3"></i>
+          <Icon class="fas fa-exclamation-triangle" padding />
           This board is now locked and no further changes can be made.
         </div>
       ) : null}

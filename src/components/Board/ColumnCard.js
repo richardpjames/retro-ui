@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { CirclePicker } from 'react-color';
 import Modal from '../Common/Modal';
+import Icon from '../Common/Icon';
 
 const ColumnCard = (props) => {
   const [editable, setEditable] = useState(false);
@@ -110,7 +111,7 @@ const ColumnCard = (props) => {
                                 props.setSeparateCardModalVisible(true);
                               }}
                             >
-                              <i className="fas fa-unlink"></i>
+                              <Icon class="fas fa-unlink" />
                             </a>
                           </span>{' '}
                         </>
@@ -124,12 +125,12 @@ const ColumnCard = (props) => {
               <div className="column">
                 {!userVote && props.board.allowVotes && (
                   <a className="tag is-small" onClick={handleVote}>
-                    <i className="fas fa-thumbs-up"></i> ({props.votes.length})
+                    <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>
                 )}
                 {userVote && props.board.allowVotes && (
                   <a className="tag is-small is-primary" onClick={handleVote}>
-                    <i className="fas fa-thumbs-up"></i> ({props.votes.length})
+                    <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>
                 )}
               </div>
@@ -144,7 +145,7 @@ const ColumnCard = (props) => {
                           setShowColourPicker(!showColourPicker);
                         }}
                       >
-                        <i className="fas fa-eye-dropper"></i>
+                        <Icon class="fas fa-eye-dropper" />
                       </a>
                     </span>
 
@@ -156,7 +157,7 @@ const ColumnCard = (props) => {
                           setShowEditControls(!showEditControls);
                         }}
                       >
-                        <i className="fas fa-ellipsis-h"></i>
+                        <Icon class="fas fa-ellipsis-h" />
                       </a>
                     </span>
                   </>
@@ -185,7 +186,7 @@ const ColumnCard = (props) => {
                         setShowEditControls(false);
                       }}
                     >
-                      <i className="fas fa-pencil-alt mr-3"></i> Edit
+                      <Icon class="fas fa-pencil-alt" padding /> Edit
                     </a>
                   </div>
                 )}
@@ -197,7 +198,7 @@ const ColumnCard = (props) => {
                       setDeleteModalVisible(true);
                     }}
                   >
-                    <i className="fas fa-trash-alt mr-3"></i> Delete
+                    <Icon class="fas fa-trash-alt" padding /> Delete
                   </a>
                 </div>
               </div>
@@ -225,7 +226,8 @@ const ColumnCard = (props) => {
             <div className="columns mt-1">
               <div className="column">
                 <button className="button is-primary is-small is-fullwidth">
-                  <i className="fas fa-save mr-3"></i>Save
+                  <Icon class="fas fa-save" padding />
+                  Save
                 </button>
               </div>
               <div className="column">
@@ -233,7 +235,8 @@ const ColumnCard = (props) => {
                   className="button is-small is-fullwidth"
                   onClick={handleCancel}
                 >
-                  <i className="fas fa-ban mr-3"></i>Cancel
+                  <Icon class="fas fa-ban" padding />
+                  Cancel
                 </button>
               </div>
             </div>
