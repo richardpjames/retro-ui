@@ -61,6 +61,7 @@ const boardsService = () => {
       allowVotes: board.allowVotes,
       locked: board.locked,
       instructions: board.instructions,
+      showInstructions: board.showInstructions,
     };
     try {
       await axios.put(

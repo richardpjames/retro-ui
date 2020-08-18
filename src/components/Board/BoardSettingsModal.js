@@ -6,10 +6,14 @@ const BoardSettingsModal = (props) => {
   const [boardDescription, setBoardDescription] = useState(
     props.board.description,
   );
+  const [maxVotes, setMaxVotes] = useState(props.board.maxVotes);
   const [boardPrivate, setBoardPrivate] = useState(props.board.private);
   const [boardTeam, setBoardTeam] = useState(props.board.teamId);
   const [showActions, setShowActions] = useState(props.board.showActions);
   const [instructions, setInstructions] = useState(props.board.instructions);
+  const [displayInstructions, setDisplayInstructions] = useState(
+    props.board.showInstructions,
+  );
 
   // Used to close the modal from the cancel or cross button
   const closeModal = () => {
@@ -19,6 +23,7 @@ const BoardSettingsModal = (props) => {
     setBoardTeam(props.board.teamId);
     setShowActions(props.board.showActions);
     setInstructions(props.board.instructions);
+    setMaxVotes(props.board.maxVotes);
     props.setVisible(false);
     document.activeElement.blur();
   };
@@ -32,7 +37,9 @@ const BoardSettingsModal = (props) => {
       private: boardPrivate,
       teamId: boardTeam,
       showActions: showActions,
+      showInstructions: displayInstructions,
       instructions: instructions,
+      maxVotes: maxVotes,
     });
     props.setVisible(false);
     document.activeElement.blur();
@@ -121,6 +128,21 @@ const BoardSettingsModal = (props) => {
                 </div>
               </div>
             </div>
+
+            <div className="field">
+              <label htmlFor="maxVotes">Maximum Votes</label>
+              <input
+                type="number"
+                className="input"
+                id="maxVotes"
+                name="maxVotes"
+                placeholder="5"
+                value={maxVotes}
+                onChange={(event) => setMaxVotes(event.target.value)}
+                required
+              />
+            </div>
+
             <div className="field">
               <div className="control">
                 <div className="b-checkbox is-primary">
@@ -152,6 +174,26 @@ const BoardSettingsModal = (props) => {
                   />
                   <label htmlFor="showActionsCheckbox">
                     Show the actions column
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="field">
+              <div className="control">
+                <div className="b-checkbox is-primary">
+                  <input
+                    id="displayInstructions"
+                    name="displayInstructions"
+                    className="styled mr-3"
+                    type="checkbox"
+                    checked={displayInstructions}
+                    onChange={(event) =>
+                      setDisplayInstructions(event.target.checked)
+                    }
+                  />
+                  <label htmlFor="displayInstructions">
+                    Show instructions when users load the board
                   </label>
                 </div>
               </div>

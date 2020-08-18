@@ -65,6 +65,8 @@ const BoardPage = (props) => {
 
   // After all data is set up, this is used to fetch data
   const [loading, setLoading] = useState(false);
+  // Showing instructions on load of page
+  const [showInstructions, setShowInstructions] = useState(false);
   const { fetchData } = useFetchData(
     props,
     setLoading,
@@ -75,15 +77,13 @@ const BoardPage = (props) => {
     setProfile,
     setVotes,
     setTeams,
+    setShowInstructions,
   );
 
   // Creation of columns
   const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
     false,
   );
-
-  // Showing instructions on load of page
-  const [showInstructions, setShowInstructions] = useState(true);
 
   // These items of state are required to drive the modal for merging and separating cards
   const [parentCard, setParentCard] = useState({});

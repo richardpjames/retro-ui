@@ -14,6 +14,7 @@ const NewBoardModal = (props) => {
   const [boardTeam, setBoardTeam] = useState('');
   const [templates, setTemplates] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
+  const [displayInstructions, setDisplayInstructions] = useState(false);
 
   // When the form is submitted
   const handleSubmit = (event) => {
@@ -25,6 +26,7 @@ const NewBoardModal = (props) => {
       teamId: boardTeam,
       private: boardPrivate,
       showActions: showActions,
+      showInstructions: displayInstructions,
     };
     // If the team Id is blank then remove
     if (newBoard.teamId === '') {
@@ -37,6 +39,7 @@ const NewBoardModal = (props) => {
     setBoardTeam('');
     setBoardPrivate(false);
     setShowActions(true);
+    setDisplayInstructions(false);
     props.setVisible(false);
   };
 
@@ -251,6 +254,26 @@ const NewBoardModal = (props) => {
                   />
                   <label htmlFor="showActionsCheckbox">
                     Show the actions column
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div className="field">
+              <div className="control">
+                <div className="b-checkbox is-primary">
+                  <input
+                    id="displayInstructions"
+                    name="displayInstructions"
+                    className="styled mr-3"
+                    type="checkbox"
+                    checked={displayInstructions}
+                    onChange={(event) =>
+                      setDisplayInstructions(event.target.checked)
+                    }
+                  />
+                  <label htmlFor="displayInstructions">
+                    Show instructions when users load the board
                   </label>
                 </div>
               </div>

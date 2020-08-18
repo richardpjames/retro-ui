@@ -19,6 +19,7 @@ const useFetchData = (
   setProfile,
   setVotes,
   setTeams,
+  showInstructions,
 ) => {
   const history = useHistory();
 
@@ -85,6 +86,7 @@ const useFetchData = (
       setProfile(_profile);
       // Update the boards
       setBoard(_board);
+      showInstructions(_board.showInstructions);
       // Update the columns
       setColumns(_columns);
       // Update the cards
