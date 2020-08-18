@@ -13,6 +13,7 @@ import Footer from '../Common/Footer';
 import Page from '../Common/Page';
 import Blog from '../Blog/Blog';
 import ErrorPage from '../Pages/ErrorPage';
+import CookieBanner from '../Common/CookieBanner';
 
 const AppRouter = () => {
   // Only display the page if Auth0 has completed loading as this is required
@@ -39,6 +40,7 @@ const AppRouter = () => {
       <Router>
         <div className="above-footer">
           <Nav dashboardPath={dashboardPath} />
+          <CookieBanner />
           <ToastContainer
             autoClose={5000}
             newestOnTop
