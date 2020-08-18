@@ -62,8 +62,16 @@ const NewBoardModal = (props) => {
   useEffect(() => {
     const fetchData = async () => {
       const token = await getAccessTokenSilently();
-      const templateData = await templateService.getAll(token);
-      if (templateData) setTemplates(templateData);
+      let templateData = await templateService.getAll(token);
+
+      // If there are templates returned then sort and set
+      if (templateData) {
+        templateData = templateData.sort((a, b) => {
+          if (a.name > b.name) return 1;
+          return -1;
+        });
+        setTemplates(templateData);
+      }
     };
     try {
       fetchData();
