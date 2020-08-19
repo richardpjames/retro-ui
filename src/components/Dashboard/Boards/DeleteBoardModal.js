@@ -61,6 +61,10 @@ const DeleteBoardModal = (props) => {
             If you are sure you want to delete this board, please enter the word
             "delete" into the text box and press the delete button.
           </p>
+          <p>
+            Please note that deleting this board will also delete any actions
+            raised from this retrospective.
+          </p>
           <p className="has-text-danger mb-3">
             There is no way to undo this later.
           </p>
