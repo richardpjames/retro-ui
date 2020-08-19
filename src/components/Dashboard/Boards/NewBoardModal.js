@@ -14,7 +14,7 @@ const NewBoardModal = (props) => {
   const [boardTeam, setBoardTeam] = useState('');
   const [templates, setTemplates] = useState([]);
   const { getAccessTokenSilently } = useAuth0();
-  const [displayInstructions, setDisplayInstructions] = useState(false);
+  const [displayInstructions, setDisplayInstructions] = useState(true);
 
   // When the form is submitted
   const handleSubmit = (event) => {
@@ -39,7 +39,7 @@ const NewBoardModal = (props) => {
     setBoardTeam('');
     setBoardPrivate(false);
     setShowActions(true);
-    setDisplayInstructions(false);
+    setDisplayInstructions(true);
     props.setVisible(false);
   };
 
@@ -50,6 +50,7 @@ const NewBoardModal = (props) => {
     setBoardTeam('');
     setBoardPrivate(false);
     setShowActions(true);
+    setDisplayInstructions(true);
     props.setVisible(false);
   };
 
