@@ -16,6 +16,7 @@ const Footer = (props) => {
         </p>
         <div className="columns">
           <div className="column is-one-fifth">
+            <p>Pages</p>
             <ul>
               <li>
                 <Link to="/blog/posts/getting-started-with-retrospectacle">
@@ -26,11 +27,12 @@ const Footer = (props) => {
                 <Link to="/privacy">Privacy Policy</Link>
               </li>
               <li>
-                <a href="mailto:support@retrospectacle.io">Contact Support</a>
+                <Link to="/blog/tags/faqs">Frequently Asked Questions</Link>
               </li>
             </ul>
           </div>
           <div className="column is-one-fifth">
+            <p>Contact</p>
             <ul>
               <li>
                 <a
@@ -40,6 +42,9 @@ const Footer = (props) => {
                 >
                   Twitter
                 </a>
+              </li>
+              <li>
+                <a href="mailto:support@retrospectacle.io">Contact Support</a>
               </li>
             </ul>
           </div>
