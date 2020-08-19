@@ -88,6 +88,7 @@ const Purchase = () => {
                         <div className="plan-item">5 Boards</div>
                         <div className="plan-item">1 Team</div>
                         <div className="plan-item">5 Team Members</div>
+                        <div className="plan-item">Email Support</div>
                         <div className="plan-item">-</div>
                       </div>
                     </div>
@@ -105,6 +106,7 @@ const Purchase = () => {
                         <div className="plan-item">Unlimited Boards</div>
                         <div className="plan-item">Unlimited Teams</div>
                         <div className="plan-item">Unlimited Team Members</div>
+                        <div className="plan-item">Email Support</div>
                         <div className="plan-item">30 Days Free Trial</div>
                       </div>
                       <div className="plan-footer">

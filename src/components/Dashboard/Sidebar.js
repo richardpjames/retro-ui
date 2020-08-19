@@ -76,8 +76,13 @@ const Sidebar = (props) => {
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/blog/tags/faqs">
-            <i className="fas fa-question mr-3"></i>Frequently Asked Questions
+            <i className="fas fa-question mr-3"></i>FAQs
           </NavLink>
+        </li>
+        <li>
+          <a href="mailto:support@retrospectacle.io">
+            <i className="fas fa-envelope mr-3"></i>Contact Support
+          </a>
         </li>
       </ul>
     </aside>
