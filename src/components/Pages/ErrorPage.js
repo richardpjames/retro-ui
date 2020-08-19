@@ -57,6 +57,16 @@ const ErrorPage = (props) => {
                     </p>
                   </div>
                 )}
+                {error.includes('Network Error') && (
+                  <div>
+                    <p className="mb-3">
+                      This error usually occurs when something has gone wrong on
+                      the RetroSpectacle server or there is an issue with your
+                      internet connection.
+                    </p>
+                    <p>Please try again in a few minutes.</p>
+                  </div>
+                )}
               </div>
               <div className="column is-hidden-mobile">
                 <img src="/retroboard.png" alt="Retrospective Board" />

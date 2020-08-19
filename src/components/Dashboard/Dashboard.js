@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
 import Sidebar from './Sidebar';
@@ -33,6 +33,7 @@ const Dashboard = (props) => {
   const [teamMemberToRemove, setTeamMemberToRemove] = useState({});
   const [pendingTeams, setPendingTeams] = useState(0);
   const Paddle = window.Paddle;
+  const history = useHistory();
 
   // Set the location of the dashboard for navigation
   useEffect(() => {
@@ -97,13 +98,11 @@ const Dashboard = (props) => {
         // Stop loading bar
         setLoading(false);
       } catch (error) {
-        // For now just log any errors - TODO: Improve error handling
-        console.log(error);
-        toast.error(error);
+        history.push(`/error/${error}`);
       }
     };
     fetchData();
-  }, [getAccessTokenSilently, user]);
+  }, [getAccessTokenSilently, user, history]);
 
   // Data functions for boards
   const addBoard = async (board) => {

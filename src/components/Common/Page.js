@@ -34,8 +34,8 @@ const Page = (props) => {
       const _contentCMS = await props.api.pages.read({ slug: props.slug });
       let _content = _contentCMS.html;
       _content = _content.replace(
-        new RegExp('https://cms.retrospectacle.io', 'g'),
-        'https://www.retrospectacle.io',
+        new RegExp('<a href="https://cms.retrospectacle.io', 'g'),
+        '<a href="https://www.retrospectacle.io',
       );
       setPageContent(_content);
     };

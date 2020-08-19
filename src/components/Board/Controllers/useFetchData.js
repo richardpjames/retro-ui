@@ -99,7 +99,6 @@ const useFetchData = (
       setLoading(false);
     } catch (error) {
       // For now just log any errors - TODO: Improve error handling
-      console.log(error);
       setLoading(false);
       history.push(`/error/${error}`);
     }

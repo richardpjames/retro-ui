@@ -7,10 +7,9 @@ const Post = (props) => {
       {props.post.html && (
         <>
           <img
-            className="image mb-5"
+            className="image mb-5 is-half-vh"
             src={props.post.feature_image}
             alt={props.post.title}
-            style={{ maxHeight: '50vh' }}
           />
           <div
             className="content"
@@ -18,8 +17,8 @@ const Post = (props) => {
               __html: props.post.html
                 .replace(new RegExp('<img', 'g'), '<img class="image"')
                 .replace(
-                  new RegExp('https://cms.retrospectacle.io', 'g'),
-                  'https://www.retrospectacle.io',
+                  new RegExp('<a href="https://cms.retrospectacle.io', 'g'),
+                  '<a href="https://www.retrospectacle.io',
                 ),
             }}
           ></div>
