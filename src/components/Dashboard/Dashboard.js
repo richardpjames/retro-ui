@@ -35,6 +35,14 @@ const Dashboard = (props) => {
   const Paddle = window.Paddle;
   const history = useHistory();
 
+  document.title = 'RetroSpectacle - Dashboard';
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute(
+      'content',
+      'The RetroSpectacle user dashboard. Control boards, actions and teams.',
+    );
+
   // Set the location of the dashboard for navigation
   useEffect(() => {
     // Store the current location so that other pages can return here

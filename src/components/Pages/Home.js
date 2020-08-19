@@ -2,6 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+  document.title = 'RetroSpectacle - Home';
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute(
+      'content',
+      'RetroSpecacle provides amazing tools for running effective and engaging retrospectives online.',
+    );
+
   return (
     <>
       {/* This is the main header */}

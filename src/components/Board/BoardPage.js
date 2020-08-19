@@ -133,6 +133,14 @@ const BoardPage = (props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Set the page title
+  useEffect(() => {
+    document.title = `RetroSpectacle - ${board.name}`;
+    document
+      .querySelector('meta[name="description"]')
+      .setAttribute('content', board.description);
+  }, [board]);
+
   useEffect(() => {
     // Set up socket io listeners
     setupListeners();

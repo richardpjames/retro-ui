@@ -2,6 +2,10 @@ import React from 'react';
 
 const ErrorPage = (props) => {
   const error = props.error || props.match.params.error;
+  document.title = 'RetroSpectacle - Error Page';
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute('content', 'An error has occurred');
 
   return (
     <>

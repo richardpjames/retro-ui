@@ -1,6 +1,12 @@
 import React from 'react';
 
 const Post = (props) => {
+  // Set the title and meta tags
+  document.title = `RetroSpectacle - ${props.post.title}`;
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute('content', props.post.meta_description);
+
   return (
     <div className="content mx-5 my-5">
       <h1 className="title is-1">{props.post.title}</h1>

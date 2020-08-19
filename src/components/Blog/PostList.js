@@ -3,9 +3,14 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 
 const PostList = (props) => {
+  document.title = `RetroSpectacle - ${props.title}`;
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute('content', props.meta_description);
+
   return (
     <div className="content mx-5 my-5">
-      <h1 className="title is-1">Blog Posts</h1>
+      <h1 className="title is-1">{props.title ? props.title : 'Blog'}</h1>
       <p>These are the latest posts from the RetroSpectacle blog.</p>
       {props.posts.map((post) => {
         return (

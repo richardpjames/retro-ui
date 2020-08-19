@@ -10,6 +10,8 @@ const Blog = (props) => {
   const [posts, setPosts] = useState([]);
   const [post, setPost] = useState({});
   const [tags, setTags] = useState([]);
+  const [title, setTitle] = useState('Blog');
+  const [description, setDescription] = useState('The RetroSpectacle Blog');
   const history = useHistory();
   const pageNumber = props.match.params.pageNumber || 1;
 
@@ -36,6 +38,16 @@ const Blog = (props) => {
         });
         setPost(_post);
         setPosts([]);
+      }
+      if (props.match.params.tagSlug) {
+        const _tag = await props.api.tags.read({
+          slug: props.match.params.tagSlug,
+        });
+        setTitle(_tag.name);
+        setDescription(_tag.meta_description);
+      } else {
+        setDescription('The RetroSpectacle Blog');
+        setTitle('Blog');
       }
       const _tags = await props.api.tags.browse();
       setTags(_tags);
@@ -82,7 +94,11 @@ const Blog = (props) => {
           {props.match.params.postSlug && <Post post={post} />}
           {!props.match.params.postSlug && posts.meta && (
             <>
-              <PostList posts={posts} />
+              <PostList
+                posts={posts}
+                title={title}
+                meta_description={description}
+              />
               {posts.meta.pagination.pages > 1 && (
                 <nav
                   className="pagination mx-5 mb-5"

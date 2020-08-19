@@ -38,6 +38,10 @@ const Page = (props) => {
         '<a href="https://www.retrospectacle.io',
       );
       setPageContent(_content);
+      document.title = `RetroSpectacle - ${_contentCMS.title}`;
+      document
+        .querySelector('meta[name="description"]')
+        .setAttribute('content', _contentCMS.meta_description);
     };
     fetchData();
   });

@@ -72,6 +72,14 @@ const Sidebar = (props) => {
           </NavLink>
         </li>
       </ul>
+      <p className="menu-label">Help</p>
+      <ul className="menu-list">
+        <li>
+          <NavLink activeClassName="is-active" to="/blog/tags/faqs">
+            <i className="fas fa-question mr-3"></i>Frequently Asked Questions
+          </NavLink>
+        </li>
+      </ul>
     </aside>
   );
 };

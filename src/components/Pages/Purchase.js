@@ -4,6 +4,14 @@ import usersService from '../../services/usersService';
 import Icon from '../Common/Icon';
 
 const Purchase = () => {
+  document.title = 'RetroSpectacle - Pricing and Features';
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute(
+      'content',
+      'Compare features and pricing for the RetroSpectacle starter and professional tiers.',
+    );
+
   const Paddle = window.Paddle;
   const {
     isAuthenticated,
