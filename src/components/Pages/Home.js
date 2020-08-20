@@ -103,7 +103,7 @@ const Home = () => {
               <div className="column">
                 <div className="content">
                   <h1 className="title is-1">
-                    Why are Sprint Retrospectives Important?
+                    Why are Retrospectives Important?
                   </h1>
                   <p className="is-4">
                     Retrospectives are an important part of any agile process.
