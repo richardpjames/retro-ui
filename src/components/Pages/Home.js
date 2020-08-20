@@ -61,8 +61,8 @@ const Home = () => {
                   <p>RetroSpectacle allows you to:</p>
                   <ul>
                     <li>
-                      Create boards and share them with your team to contribute
-                      to.
+                      Create boards (from prebuilt templates or from scratch)
+                      and share them with your team to contribute to.
                     </li>
                     <li>
                       Record and organise issues by changing their colour and
