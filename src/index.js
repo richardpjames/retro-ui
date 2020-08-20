@@ -7,17 +7,28 @@ import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css';
 import 'bulma-calendar/dist/js/bulma-calendar.min.js';
 import './sass/app.sass';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <Auth0Provider
-      domain={process.env.REACT_APP_AUTH0_DOMAIN}
-      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-      redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
-      audience={process.env.REACT_APP_AUTH0_AUDIENCE}
-      scope="read:current_user update:current_user_metadata"
-    >
-      <AppRouter />
-    </Auth0Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+const Index = (props) => {
+  const onRedirectCallback = () => {
+    const gtag = window.gtag;
+    gtag('event', 'conversion', {
+      send_to: 'AW-806522976/mwTyCOCH_dsBEOCgyoAD',
+    });
+  };
+
+  return (
+    <React.StrictMode>
+      <Auth0Provider
+        domain={process.env.REACT_APP_AUTH0_DOMAIN}
+        clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
+        redirectUri={process.env.REACT_APP_AUTH0_REDIRECT_URI}
+        audience={process.env.REACT_APP_AUTH0_AUDIENCE}
+        scope="read:current_user update:current_user_metadata"
+        onRedirectCallback={onRedirectCallback}
+      >
+        <AppRouter />
+      </Auth0Provider>
+    </React.StrictMode>
+  );
+};
+
+ReactDOM.render(<Index />, document.getElementById('root'));
