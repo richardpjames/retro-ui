@@ -11,7 +11,12 @@ const Blog = (props) => {
   const [post, setPost] = useState({});
   const [tags, setTags] = useState([]);
   const [title, setTitle] = useState('Blog');
-  const [description, setDescription] = useState('The RetroSpectacle Blog');
+  const [metaDescription, setMetaDescription] = useState(
+    'The RetroSpectacle Blog',
+  );
+  const [description, setDescription] = useState(
+    'These are the latest posts from the RetroSpectacle blog.',
+  );
   const history = useHistory();
   const pageNumber = props.match.params.pageNumber || 1;
 
@@ -44,10 +49,14 @@ const Blog = (props) => {
           slug: props.match.params.tagSlug,
         });
         setTitle(_tag.name);
-        setDescription(_tag.meta_description);
+        setMetaDescription(_tag.meta_description);
+        setDescription(_tag.description);
       } else {
-        setDescription('The RetroSpectacle Blog');
-        setTitle('Blog');
+        setDescription(
+          'These are the latest posts from the RetroSpectacle blog.',
+        );
+        setMetaDescription('The RetroSpectacle Blog');
+        setTitle('All Posts');
       }
       const _tags = await props.api.tags.browse();
       setTags(_tags);
@@ -97,7 +106,8 @@ const Blog = (props) => {
               <PostList
                 posts={posts}
                 title={title}
-                meta_description={description}
+                description={description}
+                meta_description={metaDescription}
               />
               {posts.meta.pagination.pages > 1 && (
                 <nav

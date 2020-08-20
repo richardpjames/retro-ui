@@ -11,7 +11,10 @@ const PostList = (props) => {
   return (
     <div className="content mx-5 my-5">
       <h1 className="title is-1">{props.title ? props.title : 'Blog'}</h1>
-      <p>These are the latest posts from the RetroSpectacle blog.</p>
+      <p>
+        {props.description ||
+          'These are the latest posts from the RetroSpectacle blog.'}
+      </p>
       {props.posts.map((post) => {
         return (
           <div key={post.id} className="mb-5">
