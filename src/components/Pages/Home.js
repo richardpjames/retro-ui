@@ -41,8 +41,59 @@ const Home = () => {
           </div>
         </div>
       </div>
+      {/* What is retrospectacle?*/}
+      <div className="hero is-medium is-bold">
+        <div className="hero-body">
+          <div className="container">
+            <div className="columns is-vcentered">
+              <div className="column is-one-third">
+                <img src="/screenshot.png" alt="RetroSpectacle" />
+              </div>
+              <div className="column">
+                <div className="content">
+                  <h1 className="title is-1">What Is RetroSpectacle?</h1>
+                  <p className="is-4">
+                    Retrospectacle is an online tool for running retrospectives.
+                    It provides a number of features which will make running
+                    retrospectives easy, allowing you to focus on making them
+                    fun, engaging and valuable.
+                  </p>
+                  <p>RetroSpectacle allows you to:</p>
+                  <ul>
+                    <li>
+                      Create boards and share them with your team to contribute
+                      to.
+                    </li>
+                    <li>
+                      Record and organise issues by changing their colour and
+                      combinine duplicate and similar issues into a single card.
+                    </li>
+                    <li>Allow users to vote on the most important issues.</li>
+                    <li>
+                      Organise boards by team and allow your teams to view all
+                      of their past retrospectives.
+                    </li>
+                    <li>
+                      Track actions coming from retrospectives and share
+                      progress with your teams.
+                    </li>
+                  </ul>
+                  <Link to="/blog/posts/getting-started-with-retrospectacle">
+                    <button
+                      className="button is-success"
+                      onClick={() => window.scrollTo(0, 0)}
+                    >
+                      See How to Get Started
+                    </button>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Why retrospectives are important */}
-      <div className="hero is-medium is-bold ">
+      <div className="hero is-medium is-bold is-dark">
         <div className="hero-body">
           <div className="container">
             <div className="columns is-vcentered">
@@ -96,11 +147,11 @@ const Home = () => {
         </div>
       </div>
       {/* Why use retrospectacle? */}
-      <div className="hero is-medium is-bold is-dark">
+      <div className="hero is-medium is-bold">
         <div className="hero-body">
           <div className="container">
             <div className="columns is-vcentered">
-              <div className="column is-one-third is-hidden-tablet">
+              <div className="column is-one-third">
                 <img src="/kanban.png" alt="Retrospective Board" />
               </div>
               <div className="column">
@@ -139,9 +190,6 @@ const Home = () => {
                     </button>
                   </Link>
                 </div>
-              </div>
-              <div className="column is-one-third is-hidden-mobile">
-                <img src="/kanban.png" alt="Retrospective Board" />
               </div>
             </div>
           </div>
