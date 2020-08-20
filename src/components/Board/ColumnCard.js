@@ -22,7 +22,18 @@ const ColumnCard = (props) => {
     '#E2F0CB',
     '#B5EAD7',
     '#C7CEEA',
+    '#444444',
   ];
+  // These are the foreground colours to use with the colours above
+  const foreground = [];
+  foreground['#FFFFFF'] = '#4a4a4a';
+  foreground['#FF9AA2'] = '#4a4a4a';
+  foreground['#FFB7B2'] = '#4a4a4a';
+  foreground['#FFDAC1'] = '#4a4a4a';
+  foreground['#E2F0CB'] = '#4a4a4a';
+  foreground['#B5EAD7'] = '#4a4a4a';
+  foreground['#C7CEEA'] = '#4a4a4a';
+  foreground['#444444'] = '#b5b5b5';
 
   const handleColourChange = (colour) => {
     const _card = { ...props.card };
@@ -88,11 +99,19 @@ const ColumnCard = (props) => {
         )}
         <div
           className="card is-size-6-7"
-          style={{ backgroundColor: props.card.colour || '#FFFFFF' }}
+          style={{
+            backgroundColor: props.card.colour || '#FFFFFF',
+            color: foreground[props.card.colour] || '#4a4a4a',
+          }}
         >
           <div className="card-content py-4 px-4">
             <p>
-              <strong className="is-capitalized">{props.card.nickName}</strong>{' '}
+              <strong
+                className="is-capitalized"
+                style={{ color: foreground[props.card.colour] || '#4a4a4a' }}
+              >
+                {props.card.nickName}
+              </strong>{' '}
               - {props.card.text}
             </p>
             {props.card.combinedCards &&
