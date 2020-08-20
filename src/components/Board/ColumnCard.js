@@ -16,6 +16,7 @@ const ColumnCard = (props) => {
   // The list of colours for the colour picker
   const colours = [
     '#FFFFFF',
+    '#FDFD96',
     '#FF9AA2',
     '#FFB7B2',
     '#FFDAC1',
@@ -27,6 +28,7 @@ const ColumnCard = (props) => {
   // These are the foreground colours to use with the colours above
   const foreground = [];
   foreground['#FFFFFF'] = '#4a4a4a';
+  foreground['#FDFD96'] = '#4a4a4a';
   foreground['#FF9AA2'] = '#4a4a4a';
   foreground['#FFB7B2'] = '#4a4a4a';
   foreground['#FFDAC1'] = '#4a4a4a';
