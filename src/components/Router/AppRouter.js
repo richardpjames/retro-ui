@@ -6,7 +6,6 @@ import GhostContentAPI from '@tryghost/content-api';
 import Nav from '../Common/Nav';
 import Dashboard from '../Dashboard/Dashboard';
 import BoardPage from '../Board/BoardPage';
-import Purchase from '../Pages/Purchase';
 import Footer from '../Common/Footer';
 import Page from '../Common/Page';
 import Blog from '../Blog/Blog';
