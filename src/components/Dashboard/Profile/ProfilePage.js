@@ -1,7 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import moment from 'moment';
 
 const ProfilePage = (props) => {
   return (

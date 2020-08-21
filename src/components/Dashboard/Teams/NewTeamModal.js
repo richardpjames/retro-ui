@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const NewTeamModal = (props) => {
   // Create three new state objects to hold the name, description and starter template for the board

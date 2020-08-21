@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
 
 const TeamCard = (props) => {
   const [email, setEmail] = useState('');
@@ -14,17 +13,6 @@ const TeamCard = (props) => {
     event.preventDefault();
     props.addTeamMember(props.team._id, email);
     setEmail('');
-  };
-
-  // Check whether the user is allowed more than 5 boards
-  const checkMembersRestriction = () => {
-    if (props.profile && props.profile.plan && props.profile.plan !== 'free') {
-      return false;
-    }
-    if (props.team.members && props.team.members.length >= 5) {
-      return true;
-    }
-    return false;
   };
 
   return (
