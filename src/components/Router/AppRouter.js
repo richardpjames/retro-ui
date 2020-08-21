@@ -60,8 +60,13 @@ const AppRouter = () => {
             render={(props) => (
               <Page {...props} slug="homepage" api={api} noContainer />
             )}
+          />
+          <Route
+            path="/features"
+            render={(props) => (
+              <Page {...props} slug="features" api={api} noContainer />
+            )}
           />{' '}
-          <Route path="/pricing" component={Purchase} />
           <Route
             path="/dashboard"
             render={(props) => (

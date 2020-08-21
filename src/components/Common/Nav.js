@@ -78,10 +78,10 @@ const Nav = (props) => {
             <NavLink
               className="navbar-item"
               activeClassName="is-active"
-              to="/pricing"
+              to="/features"
               onClick={closeNavLinks}
             >
-              <i className="fas fa-shopping-cart mr-3"></i> Pricing & Features
+              <i className="fas fa-mouse mr-3"></i> Features
             </NavLink>
 
             {/* 
