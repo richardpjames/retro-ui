@@ -72,7 +72,6 @@ const TeamCard = (props) => {
             </div>
           </div>
         </form>
-        )
       </div>
       <div>
         {props.team.members && props.team.members.length >= 1 ? (
