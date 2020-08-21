@@ -4,7 +4,6 @@ import { Slide, ToastContainer } from 'react-toastify';
 import { useCookies } from 'react-cookie';
 import GhostContentAPI from '@tryghost/content-api';
 import Nav from '../Common/Nav';
-import Home from '../Pages/Home';
 import Dashboard from '../Dashboard/Dashboard';
 import BoardPage from '../Board/BoardPage';
 import Purchase from '../Pages/Purchase';
@@ -55,7 +54,13 @@ const AppRouter = () => {
           transition={Slide}
         />
         <Switch>
-          <Route path="/" component={Home} exact />
+          <Route
+            path="/"
+            exact
+            render={(props) => (
+              <Page {...props} slug="homepage" api={api} noContainer />
+            )}
+          />{' '}
           <Route path="/pricing" component={Purchase} />
           <Route
             path="/dashboard"

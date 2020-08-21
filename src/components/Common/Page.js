@@ -6,6 +6,7 @@ const Page = (props) => {
   const history = useHistory();
 
   const navigate = (event) => {
+    debugger;
     // If the user has clicked a link to within the site then we want to capture and use the router
     if (event.target.getAttribute('href')) {
       // Pull the location from the string,
@@ -38,7 +39,7 @@ const Page = (props) => {
         '<a href="https://www.retrospectacle.io',
       );
       setPageContent(_content);
-      document.title = `RetroSpectacle - ${_contentCMS.title}`;
+      document.title = `RetroSpectacle - ${_contentCMS.meta_title}`;
       document
         .querySelector('meta[name="description"]')
         .setAttribute('content', _contentCMS.meta_description);
@@ -47,7 +48,7 @@ const Page = (props) => {
   });
 
   return (
-    <div className="container mx-5 my-5">
+    <div className={props.noContainer ? '' : 'container mx-5 my-5'}>
       <div
         className="content"
         onClick={navigate}

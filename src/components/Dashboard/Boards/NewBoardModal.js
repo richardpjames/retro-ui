@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import templateService from '../../../services/templatesService';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
 
 const NewBoardModal = (props) => {
   // Create three new state objects to hold the name, description and starter template for the board
@@ -81,53 +80,6 @@ const NewBoardModal = (props) => {
     }
   }, []);
 
-  // Check whether the user is allowed more than 5 boards
-  const checkBoardRestriction = () => {
-    if (props.profile && props.profile.plan && props.profile.plan !== 'free') {
-      return false;
-    }
-    if (props.totalBoards >= 5) {
-      return true;
-    }
-    return false;
-  };
-
-  if (checkBoardRestriction()) {
-    return (
-      <div className={checkVisible()} id="createBoardModal">
-        <div className="modal-background"></div>
-        <div className="modal-card">
-          <header className="modal-card-head">
-            <p className="modal-card-title my-0">Create a New Board</p>
-            <button
-              className="delete"
-              aria-label="close"
-              onClick={closeModal}
-            ></button>
-          </header>
-          <section className="modal-card-body">
-            <p>
-              You already have the maximum number of allowed boards on the free
-              plan, please upgrade or delete some existing boards before
-              creating more.
-            </p>
-          </section>
-          <footer className="modal-card-foot">
-            <div className="buttons">
-              <Link to="/pricing">
-                <button className="button is-primary mr-2">
-                  <i className="fas fa-shopping-cart mr-3"></i>Upgrade
-                </button>
-              </Link>
-              <button className="button" onClick={closeModal}>
-                <i className="fas fa-ban mr-3"></i> Close
-              </button>
-            </div>
-          </footer>
-        </div>
-      </div>
-    );
-  }
   // This returns the markup
   return (
     <div className={checkVisible()} id="createBoardModal">

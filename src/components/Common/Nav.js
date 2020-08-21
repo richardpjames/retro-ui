@@ -103,18 +103,6 @@ const Nav = (props) => {
                       <i className="fas fa-chalkboard-teacher mr-3"></i>
                       Dashboard
                     </NavLink>
-                    {/* 
-                      Upgrade to paid account
-                    
-                    <NavLink
-                      className="navbar-item"
-                      activeClassName="is-active"
-                      to="/purchase"
-                      onClick={closeNavLinks}
-                    >
-                      <i className="fas fa-shopping-cart mr-3"></i> Upgrade
-                    </NavLink>
-                    */}
                   </>
                 );
               }

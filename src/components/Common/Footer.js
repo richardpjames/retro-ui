@@ -48,9 +48,6 @@ const Footer = (props) => {
                   Twitter
                 </a>
               </li>
-              <li>
-                <a href="mailto:support@retrospectacle.io">Contact Support</a>
-              </li>
             </ul>
           </div>
         </div>

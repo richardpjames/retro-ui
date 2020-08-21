@@ -45,50 +45,34 @@ const TeamCard = (props) => {
         </div>
       </div>
       <div>
-        {!checkMembersRestriction() ? (
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="email">Email Address</label>
-            <div className="columns">
-              <div className="column">
-                <div className="field">
-                  <input
-                    type="email"
-                    className="input"
-                    id="email"
-                    placeholder="e.g. richard@retrospectacle.io"
-                    value={email}
-                    onChange={(event) =>
-                      setEmail(event.target.value.toLowerCase())
-                    }
-                    required
-                  />
-                </div>
-              </div>
-              <div className="column is-narrow">
-                <div className="buttons">
-                  <button className="button is-primary">
-                    <i className="fas fa-plus mr-3"></i> Add Team Member
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
-        ) : (
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email Address</label>
           <div className="columns">
             <div className="column">
-              You already have the maximum number of allowed team members on the
-              free plan, please upgrade or remove some existing team members
-              before adding more.
+              <div className="field">
+                <input
+                  type="email"
+                  className="input"
+                  id="email"
+                  placeholder="e.g. richard@retrospectacle.io"
+                  value={email}
+                  onChange={(event) =>
+                    setEmail(event.target.value.toLowerCase())
+                  }
+                  required
+                />
+              </div>
             </div>
             <div className="column is-narrow">
-              <Link to="/pricing">
+              <div className="buttons">
                 <button className="button is-primary">
-                  <i className="fas fa-shopping-cart mr-3"></i>Upgrade
+                  <i className="fas fa-plus mr-3"></i> Add Team Member
                 </button>
-              </Link>
+              </div>
             </div>
           </div>
-        )}
+        </form>
+        )
       </div>
       <div>
         {props.team.members && props.team.members.length >= 1 ? (
