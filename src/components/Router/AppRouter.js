@@ -73,13 +73,18 @@ const AppRouter = () => {
                 {...props}
                 dashboardPath={dashboardPath}
                 setDashboardPath={setDashboardPath}
+                isAuthenticated={isAuthenticated}
               />
             )}
           />
           <Route
             path="/board/:boardId"
             render={(props) => (
-              <BoardPage {...props} dashboardPath={dashboardPath} />
+              <BoardPage
+                {...props}
+                dashboardPath={dashboardPath}
+                isAuthenticated={isAuthenticated}
+              />
             )}
           />
           <Route
@@ -105,7 +110,11 @@ const AppRouter = () => {
           <Route
             path="/auth/login"
             render={(props) => (
-              <LoginPage {...props} setIsAuthenticated={setIsAuthenticated} />
+              <LoginPage
+                {...props}
+                isAuthenticated={isAuthenticated}
+                setIsAuthenticated={setIsAuthenticated}
+              />
             )}
           />
           <Route

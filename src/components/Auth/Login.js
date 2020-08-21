@@ -29,9 +29,10 @@ const Login = (props) => {
         { withCredentials: true },
       );
       props.setIsAuthenticated(true);
-      history.push(localStorage.getItem('returnUrl') || '/');
+      const url = localStorage.getItem('returnUrl') || '/';
+      history.push(url);
       localStorage.removeItem('returnUrl');
-      return true;
+      //history.push(url);
     } catch (error) {
       setMessage(
         'Incorrect username or password, please check your input and try again.',

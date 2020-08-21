@@ -45,7 +45,11 @@ const Dashboard = (props) => {
     // Store the current location so that other pages can return here
     localStorage.setItem('dashboard_path', props.location.pathname);
     props.setDashboardPath(props.location.pathname);
-  }, [props]);
+    if (props.isAuthenticated === false) {
+      localStorage.setItem('returnUrl', props.location.pathname);
+      history.push('/auth/login');
+    }
+  }, [props, history]);
 
   // Loading of all initial data
   useEffect(() => {

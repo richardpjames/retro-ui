@@ -6,7 +6,6 @@ const Page = (props) => {
   const history = useHistory();
 
   const navigate = (event) => {
-    debugger;
     // If the user has clicked a link to within the site then we want to capture and use the router
     if (event.target.getAttribute('href')) {
       // Pull the location from the string,

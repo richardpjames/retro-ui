@@ -8,7 +8,10 @@ const useAuth = () => {
 
   const logout = (setIsAuthenticated) => {
     setIsAuthenticated(false);
-    removeAuthCookie('isAuthenticated');
+    removeAuthCookie('isAuthenticated', {
+      domain: process.env.REACT_APP_COOKIE_DOMAIN,
+      path: '/',
+    });
     history.push('/');
   };
   return { logout };

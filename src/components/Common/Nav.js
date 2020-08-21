@@ -73,7 +73,7 @@ const Nav = (props) => {
               <i className="fas fa-home mr-3"></i> Home
             </NavLink>
             {/* 
-                      Upgrade to paid account */}
+                      Features */}
 
             <NavLink
               className="navbar-item"

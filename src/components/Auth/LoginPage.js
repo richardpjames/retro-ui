@@ -10,16 +10,18 @@ const LoginPage = (props) => {
 
   return (
     <>
-      <div className="container">
-        <div className="columns mx-5 my-5">
-          <div className="column">
-            <Login setIsAuthenticated={props.setIsAuthenticated} />
-          </div>
-          <div className="column">
-            <Register setIsAuthenticated={props.setIsAuthenticated} />
+      {props.isAuthenticated === false && (
+        <div className="container">
+          <div className="columns mx-5 my-5">
+            <div className="column">
+              <Login setIsAuthenticated={props.setIsAuthenticated} />
+            </div>
+            <div className="column">
+              <Register setIsAuthenticated={props.setIsAuthenticated} />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
