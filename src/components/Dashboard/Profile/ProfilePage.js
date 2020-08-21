@@ -3,7 +3,7 @@ import React from 'react';
 const ProfilePage = (props) => {
   return (
     <div className="content mx-5 my-5">
-      <div className="columns">
+      <div className="columns is-vcentered">
         <div className="column is-narrow">
           <p className="image is-128x128">
             <img
@@ -16,6 +16,16 @@ const ProfilePage = (props) => {
         <div className="column">
           <h1 className="title is-1 mt-3">Your Profile</h1>
           <p>From here you can view the details that we hold about you.</p>
+          <p>
+            You can change your profile picture on{' '}
+            <a
+              href="https://gravatar.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Gravatar!
+            </a>
+          </p>
         </div>
       </div>
       <div className="content">
