@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const columnsService = () => {
-  const getAll = async (boardId, token) => {
+  const getAll = async (boardId) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -16,14 +14,12 @@ const columnsService = () => {
     }
   };
 
-  const create = async (column, boardId, token) => {
+  const create = async (column, boardId) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns`,
         column,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -32,7 +28,7 @@ const columnsService = () => {
     }
   };
 
-  const update = async (boardId, column, token) => {
+  const update = async (boardId, column) => {
     const updatedColumn = {
       _id: column._id,
       title: column.title,
@@ -42,9 +38,7 @@ const columnsService = () => {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${column._id}`,
         updatedColumn,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);
@@ -52,13 +46,11 @@ const columnsService = () => {
     }
   };
 
-  const remove = async (boardId, columnId, token) => {
+  const remove = async (boardId, columnId) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);

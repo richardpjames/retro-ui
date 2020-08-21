@@ -2,7 +2,6 @@ import cardsService from '../../../services/cardsService';
 import columnsService from '../../../services/columnsService';
 
 import { LexoRank } from 'lexorank';
-import { useAuth0 } from '@auth0/auth0-react';
 
 const useDragDropController = (
   board,
@@ -14,8 +13,6 @@ const useDragDropController = (
   setChildCard,
   setMergeCardModalVisible,
 ) => {
-  const { getAccessTokenSilently } = useAuth0();
-
   const handleDragEnd = (result) => {
     // Take the source and destination details from the result
     const { source, destination } = result;
@@ -65,8 +62,7 @@ const useDragDropController = (
         .filter((c) => c._id === result.draggableId)
         .map(async (column) => {
           column.rank = newRank;
-          const token = await getAccessTokenSilently();
-          columnsService.update(board._id, column, token);
+          columnsService.update(board._id, column);
         });
 
       // Sort the cards into order
@@ -116,8 +112,7 @@ const useDragDropController = (
       .map(async (card) => {
         card.rank = newRank;
         card.columnId = destination.droppableId;
-        const token = await getAccessTokenSilently();
-        cardsService.update(board._id, source.droppableId, card, token);
+        cardsService.update(board._id, source.droppableId, card);
       });
 
     // Sort the cards into order

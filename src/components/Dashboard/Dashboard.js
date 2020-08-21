@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
 import Sidebar from './Sidebar';
 import Boards from './Boards/Boards';
@@ -15,7 +14,6 @@ import Actions from './Actions/Actions';
 
 const Dashboard = (props) => {
   // Dashboard state variables
-  const { getAccessTokenSilently, user } = useAuth0();
   const [boards, setBoards] = useState([]);
   const [totalBoards, setTotalBoards] = useState(5);
   const [teams, setTeams] = useState([]);
@@ -32,7 +30,6 @@ const Dashboard = (props) => {
   ] = useState(false);
   const [teamMemberToRemove, setTeamMemberToRemove] = useState({});
   const [pendingTeams, setPendingTeams] = useState(0);
-  const Paddle = window.Paddle;
   const history = useHistory();
 
   document.title = 'RetroSpectacle - Dashboard';
@@ -55,10 +52,8 @@ const Dashboard = (props) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        // Get the access token required to call the API
-        const token = await getAccessTokenSilently();
         // Call the API
-        const boards = await boardsService.getAll(token);
+        const boards = await boardsService.getAll();
         // Update the boards
         if (boards) {
           // Sort the boards
@@ -69,7 +64,7 @@ const Dashboard = (props) => {
           setBoards(_boards);
         }
         // Get any teams
-        const teams = await teamsService.getAll(token);
+        const teams = await teamsService.getAll();
         // Update the teams
         if (teams) {
           // Sort the teams
@@ -80,10 +75,10 @@ const Dashboard = (props) => {
           setTeams(_teams);
         }
         // Get the user profile
-        const profile = await usersService.getById(user.sub, token);
+        const profile = await usersService.getProfile();
         setProfile(profile);
         // Get the user actions
-        const actions = await actionsService.getForUser(token);
+        const actions = await actionsService.getForUser();
         // Sort them into order
         let _actions = actions.sort((a, b) => {
           if (a.due > b.due) {
@@ -98,11 +93,10 @@ const Dashboard = (props) => {
         });
         setActions(_actions);
         // Set the total number of boards for the user
-        setTotalBoards(
-          boards.filter((board) => board.userId === profile.id).length,
-        );
+        setTotalBoards(0);
         // Set the number of teams with pending invitation
         calculatePendingTeams(teams, profile);
+
         // Stop loading bar
         setLoading(false);
       } catch (error) {
@@ -110,14 +104,13 @@ const Dashboard = (props) => {
       }
     };
     fetchData();
-  }, [getAccessTokenSilently, user, history]);
+  }, [history]);
 
   // Data functions for boards
   const addBoard = async (board) => {
     try {
       // Get the access token required to call the API
-      const token = await getAccessTokenSilently();
-      const newBoard = await boardsService.create(board, token);
+      const newBoard = await boardsService.create(board);
       // Add the new board returned to the existing list
       setBoards([newBoard, ...boards]);
       // Set the total number of boards for the user
@@ -133,8 +126,7 @@ const Dashboard = (props) => {
   const removeBoard = async (boardId) => {
     try {
       // Get the access token and call the delete endpoint
-      const token = await getAccessTokenSilently();
-      boardsService.remove(boardId, token);
+      boardsService.remove(boardId);
       // Remove the board from the state
       let updatedBoards = boards.filter((board) => board._id !== boardId);
       setBoards(updatedBoards);
@@ -167,8 +159,7 @@ const Dashboard = (props) => {
   const addTeam = async (team) => {
     try {
       // Get the access token required to call the API
-      const token = await getAccessTokenSilently();
-      const newTeam = await teamsService.create(team, token);
+      const newTeam = await teamsService.create(team);
       // Add to the list and sort
       let _teams = [newTeam, ...teams];
       _teams = _teams.sort((a, b) => {
@@ -200,10 +191,8 @@ const Dashboard = (props) => {
     } else {
       _team.members.push({ email: emailAddress, status: 'invited' });
       try {
-        // Get the token required for the API call
-        const token = await getAccessTokenSilently();
         // Update the team
-        await teamsService.update(teamId, _team, token);
+        await teamsService.update(teamId, _team);
         // Post a sucucess message
         toast.success('Your new team member has been added');
         setTeams(_teams);
@@ -221,10 +210,8 @@ const Dashboard = (props) => {
       (member) => member.email !== emailAddress,
     );
     try {
-      // Get the token required for the API call
-      const token = await getAccessTokenSilently();
       // Update the team
-      await teamsService.update(teamId, _team, token);
+      await teamsService.update(teamId, _team);
       // Post a sucucess message
       toast.success('Your team member has been removed');
       setTeams(_teams);
@@ -236,8 +223,7 @@ const Dashboard = (props) => {
   const removeMembership = async (teamId) => {
     try {
       // Remove using the API
-      const token = await getAccessTokenSilently();
-      await teamsService.removeMembership(teamId, token);
+      await teamsService.removeMembership(teamId);
       // Now remove the team from local list
       let _teams = [...teams];
       _teams = _teams.filter((team) => team._id !== teamId);
@@ -252,10 +238,8 @@ const Dashboard = (props) => {
 
   const acceptMembership = async (teamId) => {
     try {
-      // Get the token for the API
-      const token = await getAccessTokenSilently();
       // Accept membership
-      await teamsService.acceptMembership(teamId, token);
+      await teamsService.acceptMembership(teamId);
       // Now update the team
       let _teams = [...teams];
       const _team = _teams.find((team) => team._id === teamId);
@@ -276,8 +260,7 @@ const Dashboard = (props) => {
     try {
       setLoading(true);
       // Get the access token and call the delete endpoint
-      const token = await getAccessTokenSilently();
-      await teamsService.remove(teamId, token);
+      await teamsService.remove(teamId);
       // Remove the board from the state
       let updatedTeams = teams.filter((team) => {
         return team._id !== teamId;
@@ -293,7 +276,6 @@ const Dashboard = (props) => {
 
   const updateAction = async (action) => {
     // Get the token for updating the service
-    const token = await getAccessTokenSilently();
     // Update the action within the UI
     let _actions = [...actions];
     _actions
@@ -301,7 +283,7 @@ const Dashboard = (props) => {
       .map(async (a) => (a.status = action.status));
     setActions(_actions);
     // Perform the udpate on the server
-    actionsService.update(action, token);
+    actionsService.update(action);
   };
 
   return (
@@ -314,9 +296,7 @@ const Dashboard = (props) => {
         <Switch>
           <Route
             path="/dashboard/profile"
-            render={(props) => (
-              <ProfilePage {...props} paddle={Paddle} profile={profile} />
-            )}
+            render={(props) => <ProfilePage {...props} profile={profile} />}
           />
           <Route
             path="/dashboard/boards"
@@ -325,7 +305,7 @@ const Dashboard = (props) => {
               <Boards
                 title="Your Boards"
                 {...props}
-                boards={boards.filter((board) => board.userId === profile.id)}
+                boards={boards.filter((board) => board.userId === profile._id)}
                 totalBoards={totalBoards}
                 teams={teams}
                 profile={profile}
@@ -421,7 +401,7 @@ const Dashboard = (props) => {
           />
           <Boards
             title="Your Boards"
-            boards={boards.filter((board) => board.userId === profile.id)}
+            boards={boards.filter((board) => board.userId === profile._id)}
             totalBoards={totalBoards}
             profile={profile}
             teams={teams}
@@ -436,4 +416,4 @@ const Dashboard = (props) => {
   );
 };
 
-export default withAuthenticationRequired(Dashboard);
+export default Dashboard;

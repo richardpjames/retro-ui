@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const teamsService = () => {
-  const getAll = async (token) => {
+  const getAll = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/teams`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -16,13 +14,11 @@ const teamsService = () => {
     }
   };
 
-  const getById = async (teamId, token) => {
+  const getById = async (teamId) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -31,14 +27,12 @@ const teamsService = () => {
     }
   };
 
-  const create = async (team, token) => {
+  const create = async (team) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/teams`,
         team,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -47,13 +41,11 @@ const teamsService = () => {
     }
   };
 
-  const remove = async (teamId, token) => {
+  const remove = async (teamId) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);
@@ -61,13 +53,11 @@ const teamsService = () => {
     }
   };
 
-  const removeMembership = async (teamId, token) => {
+  const removeMembership = async (teamId) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/teams/${teamId}/memberships`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);
@@ -75,14 +65,12 @@ const teamsService = () => {
     }
   };
 
-  const acceptMembership = async (teamId, token) => {
+  const acceptMembership = async (teamId) => {
     try {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/api/teams/${teamId}/memberships`,
         { status: 'accepted' },
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);
@@ -90,14 +78,12 @@ const teamsService = () => {
     }
   };
 
-  const update = async (teamId, team, token) => {
+  const update = async (teamId, team) => {
     try {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
         team,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);

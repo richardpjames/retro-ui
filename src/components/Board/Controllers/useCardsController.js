@@ -1,10 +1,7 @@
 import cardsService from '../../../services/cardsService';
 import { LexoRank } from 'lexorank';
-import { useAuth0 } from '@auth0/auth0-react';
 
 const useCardsController = (board, cards, setCards) => {
-  const { getAccessTokenSilently } = useAuth0();
-
   const addCard = async (card) => {
     // Get the column from the card and then remove
     const columnId = card.columnId;
@@ -17,24 +14,15 @@ const useCardsController = (board, cards, setCards) => {
     } else {
       card.rank = LexoRank.middle().toString();
     }
-    // Get the access token
-    const token = await getAccessTokenSilently();
     // Call the API
-    const _newCard = await cardsService.create(
-      board._id,
-      card.columnId,
-      card,
-      token,
-    );
+    const _newCard = await cardsService.create(board._id, card.columnId, card);
     // Add the new card to the list
     setCards([...cards, _newCard]);
   };
 
   const deleteCard = async (card) => {
-    // Get the access token
-    const token = await getAccessTokenSilently();
     // Call the API
-    cardsService.remove(board._id, card.columnId, card._id, token);
+    cardsService.remove(board._id, card.columnId, card._id);
     // Remove the card from the list
     const _cards = cards.filter((c) => c._id !== card._id);
     // Save changes to state
@@ -42,10 +30,8 @@ const useCardsController = (board, cards, setCards) => {
   };
 
   const updateCard = async (card) => {
-    // Get the access token
-    const token = await getAccessTokenSilently();
     // Call the api
-    cardsService.update(board._id, card.columnId, card, token);
+    cardsService.update(board._id, card.columnId, card);
     // Take a copy of the cards state
     let _cards = [...cards];
     // Update the card that was updated
@@ -91,22 +77,10 @@ const useCardsController = (board, cards, setCards) => {
     }
     // Remove the child card from the board
     const _cards = cards.filter((c) => c._id !== childCard._id);
-    // Get the access token
-    const token = await getAccessTokenSilently();
     // Update the parent card
-    cardsService.update(
-      parentCard.boardId,
-      parentCard.columnId,
-      parentCard,
-      token,
-    );
+    cardsService.update(parentCard.boardId, parentCard.columnId, parentCard);
     // Remove the child card
-    cardsService.remove(
-      childCard.boardId,
-      childCard.columnId,
-      childCard._id,
-      token,
-    );
+    cardsService.remove(childCard.boardId, childCard.columnId, childCard._id);
     // Update the state
     setCards(_cards);
   };
@@ -118,14 +92,11 @@ const useCardsController = (board, cards, setCards) => {
     const _newCard = { ...card.combinedCards[index] };
 
     _updatedCard.combinedCards.splice(index, 1);
-    // Get the access token
-    const token = await getAccessTokenSilently();
     // Update at the service
     await cardsService.update(
       _updatedCard.boardId,
       _updatedCard.columnId,
       _updatedCard,
-      token,
     );
     // Create a new card from the merged card
     await addCard({

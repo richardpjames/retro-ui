@@ -118,60 +118,6 @@ const ProfilePage = (props) => {
                     </tr>
                   </tbody>
                 </table>
-                {(() => {
-                  if (props.profile.subscription.state !== 'deleted') {
-                    return (
-                      <>
-                        <div className="buttons">
-                          <button
-                            onClick={() => {
-                              props.paddle.Checkout.open({
-                                override: props.profile.subscription.update_url,
-                                passthrough: props.profile.id,
-                                success: '/dashboard/profile',
-                              });
-                            }}
-                            className="button is-primary"
-                          >
-                            <i className="fas fa-shopping-cart mr-3"></i>Update
-                            Payment Information
-                          </button>
-                          <button
-                            onClick={() => {
-                              props.paddle.Checkout.open({
-                                override: props.profile.subscription.cancel_url,
-                                passthrough: props.profile.id,
-                                success: '/dashboard/profile',
-                              });
-                            }}
-                            className="button is-danger"
-                          >
-                            <i className="fas fa-ban mr-3"></i>Cancel
-                            Subscription
-                          </button>
-                        </div>
-                        <p>
-                          Note: if you cancel your subscription now, you will
-                          still retain access to your current subscription plan
-                          until your next billing date.
-                        </p>
-                      </>
-                    );
-                  } else {
-                    return (
-                      <>
-                        <div className="buttons">
-                          <Link to="/pricing">
-                            <button className="button is-primary">
-                              <i className="fas fa-shopping-cart mr-3"></i>Start
-                              New Subscription
-                            </button>
-                          </Link>
-                        </div>
-                      </>
-                    );
-                  }
-                })()}
               </>
             );
           }

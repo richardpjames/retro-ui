@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const boardsService = () => {
-  const getAll = async (token) => {
+  const getAll = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/boards`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -16,13 +14,11 @@ const boardsService = () => {
     }
   };
 
-  const getById = async (boardId, token) => {
+  const getById = async (boardId) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -31,14 +27,12 @@ const boardsService = () => {
     }
   };
 
-  const create = async (board, token) => {
+  const create = async (board) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/boards`,
         board,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -47,7 +41,7 @@ const boardsService = () => {
     }
   };
 
-  const update = async (board, token) => {
+  const update = async (board) => {
     const updatedBoard = {
       _id: board._id,
       name: board.name,
@@ -67,9 +61,7 @@ const boardsService = () => {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/api/boards/${board._id}`,
         updatedBoard,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);
@@ -77,13 +69,11 @@ const boardsService = () => {
     }
   };
 
-  const remove = async (boardId, token) => {
+  const remove = async (boardId) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);

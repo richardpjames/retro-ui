@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const votesService = () => {
-  const getAll = async (boardId, token) => {
+  const getAll = async (boardId) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/votes`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -16,14 +14,12 @@ const votesService = () => {
     }
   };
 
-  const create = async (boardId, cardId, vote, token) => {
+  const create = async (boardId, cardId, vote) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${cardId}/votes`,
         vote,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -32,13 +28,11 @@ const votesService = () => {
     }
   };
 
-  const remove = async (boardId, cardId, voteId, token) => {
+  const remove = async (boardId, cardId, voteId) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${cardId}/votes/${voteId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);

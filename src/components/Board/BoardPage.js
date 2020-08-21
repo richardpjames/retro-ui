@@ -1,6 +1,5 @@
 /* eslint array-callback-return: 0 */
 import React, { useEffect, useState } from 'react';
-import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 import Board from './Board';
 import Modal from '../Common/Modal';
@@ -234,4 +233,4 @@ const BoardPage = (props) => {
   );
 };
 
-export default withAuthenticationRequired(BoardPage);
+export default BoardPage;

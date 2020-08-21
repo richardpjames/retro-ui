@@ -22,7 +22,7 @@ const Board = (props) => {
                   index={index}
                   key={column._id}
                   isDragDisabled={
-                    props.board.userId !== props.profile.id ||
+                    props.board.userId !== props.profile._id ||
                     props.board.locked
                   }
                 >

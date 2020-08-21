@@ -6,7 +6,6 @@ import usersService from '../../../services/usersService';
 import votesService from '../../../services/votesService';
 import teamsService from '../../../services/teamsService';
 
-import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from 'react-router-dom';
 
 const useFetchData = (
@@ -23,41 +22,29 @@ const useFetchData = (
 ) => {
   const history = useHistory();
 
-  const { getAccessTokenSilently, user } = useAuth0();
-
   const fetchData = async (showLoadingBar = false) => {
     try {
       setLoading(showLoadingBar);
       // Get the access token required to call the API
-      const token = await getAccessTokenSilently();
       // Call the API
-      let _board = await boardsService.getById(
-        props.match.params.boardId,
-        token,
-      );
-      let _columns = await columnsService.getAll(
-        props.match.params.boardId,
-        token,
-      );
+      let _board = await boardsService.getById(props.match.params.boardId);
+      let _columns = await columnsService.getAll(props.match.params.boardId);
       // Sort the columns
       _columns = _columns.sort((a, b) => {
         if (a.rank > b.rank) return 1;
         return -1;
       });
       // Get the required cards
-      let _cards = await cardsService.getAll(props.match.params.boardId, token);
+      let _cards = await cardsService.getAll(props.match.params.boardId);
       // Sort them into order
       _cards = _cards.sort((a, b) => {
         if (a.rank > b.rank) return 1;
         return -1;
       });
       // Get the required votes (no need to sort etc. for these)
-      let _votes = await votesService.getAll(props.match.params.boardId, token);
+      let _votes = await votesService.getAll(props.match.params.boardId);
       // Get the required actions
-      let _actions = await actionsService.getAll(
-        props.match.params.boardId,
-        token,
-      );
+      let _actions = await actionsService.getAll(props.match.params.boardId);
       // Sort them into order
       _actions = _actions.sort((a, b) => {
         if (a.due > b.due) {
@@ -71,9 +58,9 @@ const useFetchData = (
         return -1;
       });
       // Get the user profile
-      const _profile = await usersService.getById(user.sub, token);
+      const _profile = await usersService.getProfile();
       // Get any teams
-      const teams = await teamsService.getAll(token);
+      const teams = await teamsService.getAll();
       // Update the teams
       if (teams) {
         // Sort the teams

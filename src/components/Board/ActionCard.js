@@ -28,7 +28,7 @@ const ActionCard = (props) => {
           {props.action.text}
           <strong> by {moment(props.action.due).format('DD/MM/YYYY')}</strong>
         </p>
-        {props.board.userId === props.profile.id && !props.board.locked && (
+        {props.board.userId === props.profile._id && !props.board.locked && (
           <div className="has-text-right">
             <span className="tag is-rounded">
               <a

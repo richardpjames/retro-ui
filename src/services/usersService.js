@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const usersService = () => {
-  const getAll = async (token) => {
+  const getAll = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/users`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -16,13 +14,23 @@ const usersService = () => {
     }
   };
 
-  const getById = async (userId, token) => {
+  const getProfile = async (userId) => {
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/api/auth/profile`,
+        { withCredentials: true },
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+  const getById = async (userId) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/users/${userId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -31,7 +39,7 @@ const usersService = () => {
     }
   };
 
-  return { getAll, getById };
+  return { getAll, getById, getProfile };
 };
 
 export default usersService();

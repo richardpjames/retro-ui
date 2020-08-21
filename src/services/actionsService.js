@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const actionsService = () => {
-  const getAll = async (boardId, token) => {
+  const getAll = async (boardId) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/actions`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -16,13 +14,11 @@ const actionsService = () => {
     }
   };
 
-  const getForUser = async (token) => {
+  const getForUser = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/actions`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -31,14 +27,12 @@ const actionsService = () => {
     }
   };
 
-  const create = async (action, boardId, token) => {
+  const create = async (action, boardId) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/actions`,
         action,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -47,7 +41,7 @@ const actionsService = () => {
     }
   };
 
-  const update = async (action, token) => {
+  const update = async (action) => {
     const updatedAction = {
       _id: action._id,
       text: action.text,
@@ -64,9 +58,7 @@ const actionsService = () => {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/api/boards/${action.boardId}/actions/${action._id}`,
         updatedAction,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);
@@ -74,13 +66,11 @@ const actionsService = () => {
     }
   };
 
-  const remove = async (boardId, actionId, token) => {
+  const remove = async (boardId, actionId) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/actions/${actionId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);

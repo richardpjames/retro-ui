@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const templatesService = () => {
-  const getAll = async (token) => {
+  const getAll = async () => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/templates`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {

@@ -177,7 +177,7 @@ const useListenersController = (
     });
 
     // Recalculate the votes the user has remaining
-    let votesUsed = votes.filter((v) => v.userId === profile.id).length;
+    let votesUsed = votes.filter((v) => v.userId === profile._id).length;
     setVotesRemaining(board.maxVotes - votesUsed);
   };
 

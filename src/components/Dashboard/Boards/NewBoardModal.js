@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import templateService from '../../../services/templatesService';
-import { useAuth0 } from '@auth0/auth0-react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +12,6 @@ const NewBoardModal = (props) => {
   const [showActions, setShowActions] = useState(true);
   const [boardTeam, setBoardTeam] = useState('');
   const [templates, setTemplates] = useState([]);
-  const { getAccessTokenSilently } = useAuth0();
   const [displayInstructions, setDisplayInstructions] = useState(true);
 
   // When the form is submitted
@@ -65,8 +63,7 @@ const NewBoardModal = (props) => {
   // This is the initial load of templates for the user
   useEffect(() => {
     const fetchData = async () => {
-      const token = await getAccessTokenSilently();
-      let templateData = await templateService.getAll(token);
+      let templateData = await templateService.getAll();
 
       // If there are templates returned then sort and set
       if (templateData) {
@@ -82,7 +79,7 @@ const NewBoardModal = (props) => {
     } catch (error) {
       toast.error(error);
     }
-  }, [getAccessTokenSilently]);
+  }, []);
 
   // Check whether the user is allowed more than 5 boards
   const checkBoardRestriction = () => {

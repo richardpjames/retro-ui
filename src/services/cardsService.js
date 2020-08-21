@@ -1,13 +1,11 @@
 import axios from 'axios';
 
 const cardsService = () => {
-  const getAll = async (boardId, token) => {
+  const getAll = async (boardId) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -16,14 +14,12 @@ const cardsService = () => {
     }
   };
 
-  const create = async (boardId, columnId, card, token) => {
+  const create = async (boardId, columnId, card) => {
     try {
       const response = await axios.post(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards`,
         card,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
       return response.data;
     } catch (error) {
@@ -32,13 +28,11 @@ const cardsService = () => {
     }
   };
 
-  const remove = async (boardId, columnId, cardId, token) => {
+  const remove = async (boardId, columnId, cardId) => {
     try {
       await axios.delete(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${cardId}`,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);
@@ -46,7 +40,7 @@ const cardsService = () => {
     }
   };
 
-  const update = async (boardId, columnId, card, token) => {
+  const update = async (boardId, columnId, card) => {
     const updatedCard = {
       _id: card._id,
       text: card.text,
@@ -62,9 +56,7 @@ const cardsService = () => {
       await axios.put(
         `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${card._id}`,
         updatedCard,
-        {
-          headers: { Authorization: 'Bearer ' + token },
-        },
+        { withCredentials: true },
       );
     } catch (error) {
       console.log(error);

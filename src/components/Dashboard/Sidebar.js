@@ -29,7 +29,7 @@ const Sidebar = (props) => {
                 member.status === 'accepted',
             );
           }
-          if (team.userId === props.profile.id || membership) {
+          if (team.userId === props.profile._id || membership) {
             return (
               <li key={team._id}>
                 <NavLink activeClassName="is-active" to={link} exact>

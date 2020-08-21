@@ -1,11 +1,11 @@
 /* eslint jsx-a11y/anchor-is-valid:0 */
 import React, { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { useAuth0 } from '@auth0/auth0-react';
+import useAuth from '../Auth/useAuth';
 
 const Nav = (props) => {
   // Used to determine whether the user is logged in (and so which links to show)
-  const { isAuthenticated, loginWithRedirect, logout } = useAuth0();
+  const { logout } = useAuth();
   // This is toggled by pressing the burger menu on a mobile screen size
   const [navLinksOpen, updateNavLinksOpen] = useState(false);
 
@@ -88,7 +88,7 @@ const Nav = (props) => {
             This section is only shown if the user is logged in
             */}
             {(() => {
-              if (isAuthenticated) {
+              if (props.isAuthenticated) {
                 return (
                   <>
                     {/* 
@@ -134,13 +134,16 @@ const Nav = (props) => {
         */}
         <div className="navbar-end">
           {(() => {
-            if (isAuthenticated) {
+            if (props.isAuthenticated) {
               return (
                 <>
                   <NavLink
                     to=""
                     className="navbar-item"
-                    onClick={() => logout()}
+                    onClick={() => {
+                      closeNavLinks();
+                      logout(props.setIsAuthenticated);
+                    }}
                   >
                     <i className="fas fa-sign-out-alt mr-3"></i> Log Out
                   </NavLink>
@@ -150,9 +153,9 @@ const Nav = (props) => {
             return (
               <>
                 <NavLink
-                  to=""
+                  to="/auth/login"
                   className="navbar-item"
-                  onClick={() => loginWithRedirect()}
+                  onClick={closeNavLinks}
                 >
                   <i className="fas fa-sign-in-alt mr-3"></i> Log In / Sign Up
                 </NavLink>
