@@ -27,6 +27,25 @@ const BlogSideBar = (props) => {
           );
         })}
       </ul>
+      <p className="menu-label">Donate</p>
+      <ul className="menu-list">
+        <li>
+          <a
+            className="bmc-button"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://www.buymeacoffee.com/richardpjames"
+          >
+            <img
+              src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg"
+              alt="Buy me a coffee"
+            />
+            <span style={{ marginLeft: '5px', fontSize: '24px' }}>
+              Buy me a coffee
+            </span>
+          </a>
+        </li>
+      </ul>
     </aside>
   );
 };
