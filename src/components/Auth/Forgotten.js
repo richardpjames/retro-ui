@@ -3,6 +3,11 @@ import axios from 'axios';
 import Icon from '../Common/Icon';
 
 const Forgotten = (props) => {
+  document.title = 'RetroSpectacle - Forgotten Password';
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute('content', 'The RetroSpectacle forgotten password page');
+
   const [email, setEmail] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [message, setMessage] = useState('');

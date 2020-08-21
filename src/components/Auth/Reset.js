@@ -3,6 +3,11 @@ import axios from 'axios';
 import Icon from '../Common/Icon';
 
 const Reset = (props) => {
+  document.title = 'RetroSpectacle - Password Reset';
+  document
+    .querySelector('meta[name="description"]')
+    .setAttribute('content', 'The RetroSpectacle password reset page');
+
   const [input, setInput] = useState({ password: '', confirmPassword: '' });
   const [disabled, setDisabled] = useState(false);
   const [message, setMessage] = useState('');
