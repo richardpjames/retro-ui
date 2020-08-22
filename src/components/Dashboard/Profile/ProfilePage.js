@@ -1,5 +1,4 @@
 import React from 'react';
-import UpdatePassword from '../../Auth/UpdatePassword';
 
 const ProfilePage = (props) => {
   return (
@@ -43,7 +42,6 @@ const ProfilePage = (props) => {
             </tr>
           </tbody>
         </table>
-        <UpdatePassword profile={props.profile} />
       </div>
     </div>
   );
