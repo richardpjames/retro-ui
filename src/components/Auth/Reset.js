@@ -30,7 +30,7 @@ const Reset = (props) => {
         return true;
       }
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/reset`,
+        '/api/auth/reset',
         {
           userId: props.match.params.userId,
           resetToken: props.match.params.resetToken,

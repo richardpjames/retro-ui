@@ -3,10 +3,7 @@ import axios from 'axios';
 const teamsService = () => {
   const getAll = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/teams`,
-        { withCredentials: true },
-      );
+      const response = await axios.get('/api/teams', { withCredentials: true });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -16,10 +13,9 @@ const teamsService = () => {
 
   const getById = async (teamId) => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
-        { withCredentials: true },
-      );
+      const response = await axios.get(`/api/teams/${teamId}`, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -29,11 +25,9 @@ const teamsService = () => {
 
   const create = async (team) => {
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/teams`,
-        team,
-        { withCredentials: true },
-      );
+      const response = await axios.post('/api/teams', team, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -43,10 +37,7 @@ const teamsService = () => {
 
   const remove = async (teamId) => {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
-        { withCredentials: true },
-      );
+      await axios.delete(`/api/teams/${teamId}`, { withCredentials: true });
     } catch (error) {
       console.log(error);
       throw error;
@@ -55,10 +46,9 @@ const teamsService = () => {
 
   const removeMembership = async (teamId) => {
     try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}/memberships`,
-        { withCredentials: true },
-      );
+      await axios.delete(`/api/teams/${teamId}/memberships`, {
+        withCredentials: true,
+      });
     } catch (error) {
       console.log(error);
       throw error;
@@ -68,7 +58,7 @@ const teamsService = () => {
   const acceptMembership = async (teamId) => {
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}/memberships`,
+        `/api/teams/${teamId}/memberships`,
         { status: 'accepted' },
         { withCredentials: true },
       );
@@ -80,11 +70,7 @@ const teamsService = () => {
 
   const update = async (teamId, team) => {
     try {
-      await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/teams/${teamId}`,
-        team,
-        { withCredentials: true },
-      );
+      await axios.put(`/api/teams/${teamId}`, team, { withCredentials: true });
     } catch (error) {
       console.log(error);
       throw error;

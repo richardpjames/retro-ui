@@ -24,7 +24,7 @@ const Forgotten = (props) => {
     // Make the request
     try {
       await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/forgotten`,
+        '/api/auth/forgotten',
         { email },
         { withCredentials: true },
       );

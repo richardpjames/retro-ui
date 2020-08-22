@@ -3,10 +3,9 @@ import axios from 'axios';
 const templatesService = () => {
   const getAll = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/templates`,
-        { withCredentials: true },
-      );
+      const response = await axios.get('/api/templates', {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.log(error);

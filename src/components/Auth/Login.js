@@ -23,11 +23,9 @@ const Login = (props) => {
     event.preventDefault();
     // Make the login request
     try {
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/auth/login`,
-        loginRequest,
-        { withCredentials: true },
-      );
+      await axios.post('/api/auth/login', loginRequest, {
+        withCredentials: true,
+      });
       props.setIsAuthenticated(true);
       const url = localStorage.getItem('returnUrl') || '/';
       history.push(url);

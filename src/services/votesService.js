@@ -3,10 +3,9 @@ import axios from 'axios';
 const votesService = () => {
   const getAll = async (boardId) => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/votes`,
-        { withCredentials: true },
-      );
+      const response = await axios.get(`/api/boards/${boardId}/votes`, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -17,7 +16,7 @@ const votesService = () => {
   const create = async (boardId, cardId, vote) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${cardId}/votes`,
+        `/api/boards/${boardId}/cards/${cardId}/votes`,
         vote,
         { withCredentials: true },
       );
@@ -31,7 +30,7 @@ const votesService = () => {
   const remove = async (boardId, cardId, voteId) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${cardId}/votes/${voteId}`,
+        `/api/boards/${boardId}/cards/${cardId}/votes/${voteId}`,
         { withCredentials: true },
       );
     } catch (error) {

@@ -31,16 +31,11 @@ const Register = (props) => {
     if (registrationRequest.password === registrationRequest.confirmPassword) {
       // Make the registration request
       try {
-        await axios.post(
-          `${process.env.REACT_APP_API_URL}/api/auth/signup`,
-          registrationRequest,
-        );
+        await axios.post('/api/auth/signup', registrationRequest);
         // If no errors then log in
-        await axios.post(
-          `${process.env.REACT_APP_API_URL}/api/auth/login`,
-          registrationRequest,
-          { withCredentials: true },
-        );
+        await axios.post('/api/auth/login', registrationRequest, {
+          withCredentials: true,
+        });
         // Fire the google conversion tag
         const gtag = window.gtag;
         gtag('event', 'conversion', {

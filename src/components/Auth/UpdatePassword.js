@@ -26,7 +26,7 @@ const UpdatePassword = (props) => {
         return true;
       }
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/users/${props.profile._id}`,
+        `/api/users/${props.profile._id}`,
         {
           _id: props.profile._id,
           email: props.profile.email,

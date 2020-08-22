@@ -3,10 +3,9 @@ import axios from 'axios';
 const cardsService = () => {
   const getAll = async (boardId) => {
     try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards`,
-        { withCredentials: true },
-      );
+      const response = await axios.get(`/api/boards/${boardId}/cards`, {
+        withCredentials: true,
+      });
       return response.data;
     } catch (error) {
       console.log(error);
@@ -17,7 +16,7 @@ const cardsService = () => {
   const create = async (boardId, columnId, card) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards`,
+        `/api/boards/${boardId}/columns/${columnId}/cards`,
         card,
         { withCredentials: true },
       );
@@ -31,7 +30,7 @@ const cardsService = () => {
   const remove = async (boardId, columnId, cardId) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${cardId}`,
+        `/api/boards/${boardId}/columns/${columnId}/cards/${cardId}`,
         { withCredentials: true },
       );
     } catch (error) {
@@ -54,7 +53,7 @@ const cardsService = () => {
     };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${card._id}`,
+        `/api/boards/${boardId}/columns/${columnId}/cards/${card._id}`,
         updatedCard,
         { withCredentials: true },
       );
