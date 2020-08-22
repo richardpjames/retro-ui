@@ -197,31 +197,27 @@ const ColumnCard = (props) => {
               />
             )}
             {showEditControls && !props.board.locked && (
-              <div className="columns">
+              <div className="buttons">
                 {props.card.userId === props.profile._id && (
-                  <div className="column">
-                    <a
-                      className="button is-small is-fullwidth is-primary"
-                      onClick={() => {
-                        setEditable(true);
-                        setShowEditControls(false);
-                      }}
-                    >
-                      <Icon class="fas fa-pencil-alt" padding /> Edit
-                    </a>
-                  </div>
-                )}
-                <div className="column">
                   <a
-                    className="button is-small is-fullwidth is-danger"
+                    className="button is-small is-primary"
                     onClick={() => {
+                      setEditable(true);
                       setShowEditControls(false);
-                      setDeleteModalVisible(true);
                     }}
                   >
-                    <Icon class="fas fa-trash-alt" padding /> Delete
+                    <Icon class="fas fa-pencil-alt" padding /> Edit
                   </a>
-                </div>
+                )}
+                <a
+                  className="button is-small is-danger"
+                  onClick={() => {
+                    setShowEditControls(false);
+                    setDeleteModalVisible(true);
+                  }}
+                >
+                  <Icon class="fas fa-trash-alt" padding /> Delete
+                </a>
               </div>
             )}
           </div>
@@ -231,7 +227,7 @@ const ColumnCard = (props) => {
   } else {
     return (
       <div
-        className="card card-white-bg"
+        className="box card-white-bg px-1 py-1"
         style={{ backgroundColor: props.card.colour || '#FFFFFF' }}
       >
         <div className="card-content px-2 py-2">
@@ -244,22 +240,16 @@ const ColumnCard = (props) => {
               onChange={onChange}
               required
             ></textarea>
-            <div className="columns mt-1">
-              <div className="column">
-                <button className="button is-primary is-small is-fullwidth">
-                  <Icon class="fas fa-save" padding />
-                  Save
-                </button>
-              </div>
-              <div className="column">
-                <button
-                  className="button is-small is-fullwidth"
-                  onClick={handleCancel}
-                >
-                  <Icon class="fas fa-ban" padding />
-                  Cancel
-                </button>
-              </div>
+            <div className="buttons mt-1">
+              <button className="button is-primary is-small">
+                <Icon class="fas fa-save" padding />
+                Save
+              </button>
+
+              <button className="button is-small" onClick={handleCancel}>
+                <Icon class="fas fa-ban" padding />
+                Cancel
+              </button>
             </div>
           </form>
         </div>
