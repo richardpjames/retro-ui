@@ -1,2 +1,3 @@
 /sitemap https://api.retrospectacle.io/sitemap
+/api/*  https://api.retrospectacle.io/:splat  200
 /*  /index.html 200
