@@ -36,7 +36,7 @@ const Boards = (props) => {
         visible={props.createBoardModalVisible}
         setVisible={props.setCreateBoardModalVisible}
       />
-      <div className="content">
+      <div className="box has-background-white-ter">
         <BoardList
           boards={props.boards}
           profile={props.profile}

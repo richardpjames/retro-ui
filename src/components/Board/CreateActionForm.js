@@ -41,7 +41,7 @@ const CreateActionForm = (props) => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="mb-3">
         <div className="field">
           <label htmlFor="details" className="is-size-6-7">
             Action Details

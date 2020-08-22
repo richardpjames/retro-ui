@@ -9,7 +9,7 @@ const ActionCard = (props) => {
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   return (
-    <div className="card card-white-bg is-size-6-7 mb-2">
+    <div className="box card-white-bg is-size-6-7 px-1 py-1 mb-2">
       {deleteModalVisible && (
         <Modal
           title="Delete Action"

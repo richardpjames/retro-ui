@@ -100,7 +100,7 @@ const ColumnCard = (props) => {
           />
         )}
         <div
-          className="card is-size-6-7"
+          className="box is-size-6-7 px-1 py-1"
           style={{
             backgroundColor: props.card.colour || '#FFFFFF',
             color: foreground[props.card.colour] || '#4a4a4a',

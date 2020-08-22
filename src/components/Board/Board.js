@@ -12,7 +12,7 @@ const Board = (props) => {
         <Droppable droppableId="board" type="COLUMN" direction="horizontal">
           {(provided) => (
             <div
-              className="columns board-columns"
+              className="columns board-columns box has-background-white-ter px-3 py-3"
               ref={provided.innerRef}
               {...provided.droppableProps}
             >
@@ -29,7 +29,7 @@ const Board = (props) => {
                   {(dragProvided, snapshot) => (
                     <div
                       key={column._id}
-                      className="card column board-column mx-1 my-1"
+                      className="box column board-column mx-1 my-1"
                       ref={dragProvided.innerRef}
                       {...dragProvided.draggableProps}
                     >

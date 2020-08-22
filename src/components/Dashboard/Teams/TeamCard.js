@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
 import moment from 'moment';
 
@@ -16,7 +18,7 @@ const TeamCard = (props) => {
   };
 
   return (
-    <div className="box">
+    <div className="box has-background-white-ter">
       <div className="columns is-vcentered">
         <div className="column">
           <h5 className="title is-5 mb-0">{props.team.name}</h5>
@@ -68,27 +70,23 @@ const TeamCard = (props) => {
         {props.team.members
           ? props.team.members.map((member) => {
               return (
-                <div key={member.email}>
-                  <div className="columns is-vcentered">
-                    <div className="column is-narrow">
-                      <div className="buttons">
-                        <button
-                          className="button is-danger"
-                          onClick={() => {
-                            props.setTeamMemberToRemove({
-                              teamId: props.team._id,
-                              email: member.email,
-                            });
-                            props.setRemoveTeamMemberModalVisible(true);
-                          }}
-                        >
-                          <i className="fas fa-trash-alt"></i>
-                        </button>
-                      </div>
-                    </div>
+                <div key={member.email} className="box px-3 py-3 my-2">
+                  <div className="columns is-vcentered is-mobile">
                     <div className="column">
                       {member.email} (
                       <span className="is-capitalized">{member.status}</span>)
+                    </div>
+                    <div className="column is-narrow">
+                      <a
+                        className="delete"
+                        onClick={() => {
+                          props.setTeamMemberToRemove({
+                            teamId: props.team._id,
+                            email: member.email,
+                          });
+                          props.setRemoveTeamMemberModalVisible(true);
+                        }}
+                      ></a>
                     </div>
                   </div>
                 </div>

@@ -17,7 +17,7 @@ const MembershipCard = (props) => {
   };
 
   return (
-    <div className="box">
+    <div className="box has-background-white-ter">
       <div className="columns is-vcentered">
         <div className="column">
           <h5 className="title is-5 mb-0">

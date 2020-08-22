@@ -3,7 +3,7 @@ import ActionsCard from './ActionsCard';
 
 const ActionsList = (props) => {
   return (
-    <div>
+    <div className="box has-background-white-ter">
       {props.actions.length === 0 && (
         <p>There are currently no actions to show.</p>
       )}

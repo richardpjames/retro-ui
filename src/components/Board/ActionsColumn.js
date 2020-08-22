@@ -6,7 +6,7 @@ const ActionsColumn = (props) => {
   if (props.board.showActions) {
     return (
       <>
-        <div className="column card mx-1 my-1">
+        <div className="column box mx-1 my-1">
           <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">Actions</h4>
           {props.profile._id === props.board.userId && (
             <>
