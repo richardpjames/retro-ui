@@ -137,12 +137,14 @@ const BoardPage = (props) => {
 
   // This is the initial load of existing boards for the user
   useEffect(() => {
-    // Fetch initial data
-    fetchData(true);
+    if (props.isAuthenticated) {
+      // Fetch initial data
+      fetchData(true);
+    }
     // Join the board socket io
     joinBoard(props);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [props]);
 
   // Set the page title
   useEffect(() => {
@@ -158,90 +160,94 @@ const BoardPage = (props) => {
   }, [setupListeners]);
 
   return (
-    <div className="content mx-5 my-5">
-      {(() => {
-        if (loading) return <LoadingSpinner />;
-      })()}
+    <>
+      {props.isAuthenticated && (
+        <div className="content mx-5 my-5">
+          {(() => {
+            if (loading) return <LoadingSpinner />;
+          })()}
 
-      {showInstructions && board.instructions && (
-        <Modal
-          title="Instructions"
-          action="Okay"
-          setVisible={setShowInstructions}
-          markdown={board.instructions}
-          function={() => {}}
-          icon="fas fa-check"
-          hideCancel
-        />
+          {showInstructions && board.instructions && (
+            <Modal
+              title="Instructions"
+              action="Okay"
+              setVisible={setShowInstructions}
+              markdown={board.instructions}
+              function={() => {}}
+              icon="fas fa-check"
+              hideCancel
+            />
+          )}
+
+          {mergeCardModalVisible && (
+            <Modal
+              title="Merge Cards"
+              message="Are you sure that you want to merge these cards?"
+              action="Merge"
+              function={() => {
+                combineCards(parentCard, childCard);
+              }}
+              setVisible={setMergeCardModalVisible}
+              icon="fas fa-link"
+            />
+          )}
+
+          {separateCardModalVisible && (
+            <Modal
+              title="Separate Cards"
+              message="Are you sure that you want to separate these cards?"
+              action="Separate"
+              function={() => {
+                separateCards(cardToSeparate, indexToSeparate);
+              }}
+              setVisible={setSeparateCardModalVisible}
+              icon="fas fa-unlink"
+            />
+          )}
+
+          <CreateColumnModal
+            visible={createColumnModalVisible}
+            setVisible={setCreateColumnModalVisible}
+            addColumn={addColumn}
+          />
+
+          <BoardTitleBar
+            board={board}
+            teams={teams}
+            updateBoard={updateBoard}
+            profile={profile}
+            votesRemaining={votesRemaining}
+            dashboardPath={props.dashboardPath}
+            setCreateColumnModalVisible={setCreateColumnModalVisible}
+            setShowInstructions={setShowInstructions}
+          />
+
+          <Board
+            board={board}
+            profile={profile}
+            columns={columns}
+            cards={cards}
+            votes={votes}
+            actions={actions}
+            addAction={addAction}
+            handleDragEnd={handleDragEnd}
+            deleteColumn={deleteColumn}
+            addCard={addCard}
+            updateCard={updateCard}
+            deleteCard={deleteCard}
+            addVote={addVote}
+            deleteVote={deleteVote}
+            votesRemaining={votesRemaining}
+            setCreateColumnModalVisible={setCreateColumnModalVisible}
+            renameColumn={renameColumn}
+            deleteAction={deleteAction}
+            setCardToSeparate={setCardToSeparate}
+            setIndexToSeparate={setIndexToSeparate}
+            setSeparateCardModalVisible={setSeparateCardModalVisible}
+          />
+        </div>
       )}
-
-      {mergeCardModalVisible && (
-        <Modal
-          title="Merge Cards"
-          message="Are you sure that you want to merge these cards?"
-          action="Merge"
-          function={() => {
-            combineCards(parentCard, childCard);
-          }}
-          setVisible={setMergeCardModalVisible}
-          icon="fas fa-link"
-        />
-      )}
-
-      {separateCardModalVisible && (
-        <Modal
-          title="Separate Cards"
-          message="Are you sure that you want to separate these cards?"
-          action="Separate"
-          function={() => {
-            separateCards(cardToSeparate, indexToSeparate);
-          }}
-          setVisible={setSeparateCardModalVisible}
-          icon="fas fa-unlink"
-        />
-      )}
-
-      <CreateColumnModal
-        visible={createColumnModalVisible}
-        setVisible={setCreateColumnModalVisible}
-        addColumn={addColumn}
-      />
-
-      <BoardTitleBar
-        board={board}
-        teams={teams}
-        updateBoard={updateBoard}
-        profile={profile}
-        votesRemaining={votesRemaining}
-        dashboardPath={props.dashboardPath}
-        setCreateColumnModalVisible={setCreateColumnModalVisible}
-        setShowInstructions={setShowInstructions}
-      />
-
-      <Board
-        board={board}
-        profile={profile}
-        columns={columns}
-        cards={cards}
-        votes={votes}
-        actions={actions}
-        addAction={addAction}
-        handleDragEnd={handleDragEnd}
-        deleteColumn={deleteColumn}
-        addCard={addCard}
-        updateCard={updateCard}
-        deleteCard={deleteCard}
-        addVote={addVote}
-        deleteVote={deleteVote}
-        votesRemaining={votesRemaining}
-        setCreateColumnModalVisible={setCreateColumnModalVisible}
-        renameColumn={renameColumn}
-        deleteAction={deleteAction}
-        setCardToSeparate={setCardToSeparate}
-        setIndexToSeparate={setIndexToSeparate}
-        setSeparateCardModalVisible={setSeparateCardModalVisible}
-      />
-    </div>
+    </>
   );
 };
 

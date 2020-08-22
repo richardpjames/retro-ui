@@ -40,9 +40,11 @@ const UpdatePassword = (props) => {
       setInput(blankInput);
       setDisabled(false);
     } catch (error) {
+      console.log(error);
       setError(
         'An error has occurred, please check your password and try again.',
       );
+      setInput(blankInput);
       setDisabled(false);
     }
   };

@@ -107,8 +107,10 @@ const Dashboard = (props) => {
         history.push(`/error/${error}`);
       }
     };
-    fetchData();
-  }, [history]);
+    if (props.isAuthenticated) {
+      fetchData();
+    }
+  }, [history, props]);
 
   // Data functions for boards
   const addBoard = async (board) => {
@@ -291,132 +293,144 @@ const Dashboard = (props) => {
   };
 
   return (
-    <div className="columns">
-      {loading ? <LoadingSpinner /> : null}
-      <div className="column is-one-fifth">
-        <Sidebar teams={teams} profile={profile} pendingTeams={pendingTeams} />
-      </div>
-      <div className="column">
-        <Switch>
-          <Route
-            path="/dashboard/profile"
-            render={(props) => <ProfilePage {...props} profile={profile} />}
-          />
-          <Route
-            path="/dashboard/boards"
-            exact
-            render={(props) => (
+    <>
+      {props.isAuthenticated && (
+        <div className="columns">
+          {loading ? <LoadingSpinner /> : null}
+          <div className="column is-one-fifth">
+            <Sidebar
+              teams={teams}
+              profile={profile}
+              pendingTeams={pendingTeams}
+            />
+          </div>
+          <div className="column">
+            <Switch>
+              <Route
+                path="/dashboard/profile"
+                render={(props) => <ProfilePage {...props} profile={profile} />}
+              />
+              <Route
+                path="/dashboard/boards"
+                exact
+                render={(props) => (
+                  <Boards
+                    title="Your Boards"
+                    {...props}
+                    boards={boards.filter(
+                      (board) => board.userId === profile._id,
+                    )}
+                    totalBoards={totalBoards}
+                    teams={teams}
+                    profile={profile}
+                    addBoard={addBoard}
+                    removeBoard={removeBoard}
+                    createBoardModalVisible={createBoardModalVisible}
+                    setCreateBoardModalVisible={setCreateBoardModalVisible}
+                  />
+                )}
+              />
+              <Route
+                path="/dashboard/boards/all"
+                exact
+                render={(props) => (
+                  <Boards
+                    title="All Boards"
+                    {...props}
+                    boards={boards}
+                    totalBoards={totalBoards}
+                    teams={teams}
+                    profile={profile}
+                    addBoard={addBoard}
+                    removeBoard={removeBoard}
+                    createBoardModalVisible={createBoardModalVisible}
+                    setCreateBoardModalVisible={setCreateBoardModalVisible}
+                  />
+                )}
+              />
+              <Route
+                path="/dashboard/boards/:teamId"
+                render={(props) => (
+                  <Boards
+                    title={
+                      teams.find(
+                        (team) => team._id === props.match.params.teamId,
+                      )
+                        ? `${
+                            teams.find(
+                              (team) => team._id === props.match.params.teamId,
+                            ).name
+                          } Boards`
+                        : null
+                    }
+                    {...props}
+                    boards={boards.filter(
+                      (board) => board.teamId === props.match.params.teamId,
+                    )}
+                    totalBoards={totalBoards}
+                    teams={teams}
+                    profile={profile}
+                    addBoard={addBoard}
+                    removeBoard={removeBoard}
+                    createBoardModalVisible={createBoardModalVisible}
+                    setCreateBoardModalVisible={setCreateBoardModalVisible}
+                  />
+                )}
+              />
+              <Route
+                path="/dashboard/teams"
+                render={(props) => (
+                  <Teams
+                    teams={teams}
+                    profile={profile}
+                    addTeam={addTeam}
+                    addTeamMember={addTeamMember}
+                    acceptMembership={acceptMembership}
+                    removeTeam={removeTeam}
+                    removeTeamMember={removeTeamMember}
+                    removeMembership={removeMembership}
+                    createTeamModalVisible={createTeamModalVisible}
+                    setCreateTeamModalVisible={setCreateTeamModalVisible}
+                    leaveTeamModalVisible={leaveTeamModalVisible}
+                    setLeaveTeamModalVisible={setLeaveTeamModalVisible}
+                    teamToLeave={teamToLeave}
+                    setTeamToLeave={setTeamToLeave}
+                    removeTeamMemberModalVisible={removeTeamMemberModalVisible}
+                    setRemoveTeamMemberModalVisible={
+                      setRemoveTeamMemberModalVisible
+                    }
+                    teamMemberToRemove={teamMemberToRemove}
+                    setTeamMemberToRemove={setTeamMemberToRemove}
+                    pendingTeams={pendingTeams}
+                  />
+                )}
+              />
+              <Route
+                path="/dashboard/actions"
+                render={(props) => (
+                  <Actions
+                    actions={actions}
+                    updateAction={updateAction}
+                    profile={profile}
+                  />
+                )}
+              />
               <Boards
                 title="Your Boards"
-                {...props}
                 boards={boards.filter((board) => board.userId === profile._id)}
                 totalBoards={totalBoards}
-                teams={teams}
                 profile={profile}
+                teams={teams}
                 addBoard={addBoard}
                 removeBoard={removeBoard}
                 createBoardModalVisible={createBoardModalVisible}
                 setCreateBoardModalVisible={setCreateBoardModalVisible}
               />
-            )}
-          />
-          <Route
-            path="/dashboard/boards/all"
-            exact
-            render={(props) => (
-              <Boards
-                title="All Boards"
-                {...props}
-                boards={boards}
-                totalBoards={totalBoards}
-                teams={teams}
-                profile={profile}
-                addBoard={addBoard}
-                removeBoard={removeBoard}
-                createBoardModalVisible={createBoardModalVisible}
-                setCreateBoardModalVisible={setCreateBoardModalVisible}
-              />
-            )}
-          />
-          <Route
-            path="/dashboard/boards/:teamId"
-            render={(props) => (
-              <Boards
-                title={
-                  teams.find((team) => team._id === props.match.params.teamId)
-                    ? `${
-                        teams.find(
-                          (team) => team._id === props.match.params.teamId,
-                        ).name
-                      } Boards`
-                    : null
-                }
-                {...props}
-                boards={boards.filter(
-                  (board) => board.teamId === props.match.params.teamId,
-                )}
-                totalBoards={totalBoards}
-                teams={teams}
-                profile={profile}
-                addBoard={addBoard}
-                removeBoard={removeBoard}
-                createBoardModalVisible={createBoardModalVisible}
-                setCreateBoardModalVisible={setCreateBoardModalVisible}
-              />
-            )}
-          />
-          <Route
-            path="/dashboard/teams"
-            render={(props) => (
-              <Teams
-                teams={teams}
-                profile={profile}
-                addTeam={addTeam}
-                addTeamMember={addTeamMember}
-                acceptMembership={acceptMembership}
-                removeTeam={removeTeam}
-                removeTeamMember={removeTeamMember}
-                removeMembership={removeMembership}
-                createTeamModalVisible={createTeamModalVisible}
-                setCreateTeamModalVisible={setCreateTeamModalVisible}
-                leaveTeamModalVisible={leaveTeamModalVisible}
-                setLeaveTeamModalVisible={setLeaveTeamModalVisible}
-                teamToLeave={teamToLeave}
-                setTeamToLeave={setTeamToLeave}
-                removeTeamMemberModalVisible={removeTeamMemberModalVisible}
-                setRemoveTeamMemberModalVisible={
-                  setRemoveTeamMemberModalVisible
-                }
-                teamMemberToRemove={teamMemberToRemove}
-                setTeamMemberToRemove={setTeamMemberToRemove}
-                pendingTeams={pendingTeams}
-              />
-            )}
-          />
-          <Route
-            path="/dashboard/actions"
-            render={(props) => (
-              <Actions
-                actions={actions}
-                updateAction={updateAction}
-                profile={profile}
-              />
-            )}
-          />
-          <Boards
-            title="Your Boards"
-            boards={boards.filter((board) => board.userId === profile._id)}
-            totalBoards={totalBoards}
-            profile={profile}
-            teams={teams}
-            addBoard={addBoard}
-            removeBoard={removeBoard}
-            createBoardModalVisible={createBoardModalVisible}
-            setCreateBoardModalVisible={setCreateBoardModalVisible}
-          />
-        </Switch>
-      </div>
-    </div>
+            </Switch>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
