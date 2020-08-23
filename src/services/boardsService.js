@@ -46,16 +46,16 @@ const boardsService = () => {
       boardid: board.boardid,
       name: board.name,
       description: board.description,
-      maxVotes: board.maxVotes,
+      maxvotes: board.maxvotes,
       created: board.created,
       userId: board.userid,
       teamId: board.teamid,
       private: board.private,
-      showActions: board.showActions,
-      allowVotes: board.allowVotes,
+      showactions: board.showactions,
+      allowvotes: board.allowvotes,
       locked: board.locked,
       instructions: board.instructions,
-      showInstructions: board.showInstructions,
+      showinstructions: board.showinstructions,
     };
     try {
       await axios.put(

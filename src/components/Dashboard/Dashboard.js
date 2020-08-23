@@ -354,19 +354,22 @@ const Dashboard = (props) => {
                   <Boards
                     title={
                       teams.find(
-                        (team) => team.teamid === props.match.params.teamId,
+                        (team) =>
+                          team.teamid === parseInt(props.match.params.teamId),
                       )
                         ? `${
                             teams.find(
                               (team) =>
-                                team.teamid === props.match.params.teamId,
+                                team.teamid ===
+                                parseInt(props.match.params.teamId),
                             ).name
                           } Boards`
                         : null
                     }
                     {...props}
                     boards={boards.filter(
-                      (board) => board.teamid === props.match.params.teamId,
+                      (board) =>
+                        board.teamid === parseInt(props.match.params.teamId),
                     )}
                     totalBoards={totalBoards}
                     teams={teams}

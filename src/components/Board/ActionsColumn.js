@@ -3,7 +3,7 @@ import CreateActionForm from './CreateActionForm';
 import ActionCard from './ActionCard';
 
 const ActionsColumn = (props) => {
-  if (props.board.showActions) {
+  if (props.board.showactions) {
     return (
       <>
         <div className="column box mx-1 my-1">

@@ -66,7 +66,7 @@ const BoardPage = (props) => {
   // After all data is set up, this is used to fetch data
   const [loading, setLoading] = useState(false);
   // Showing instructions on load of page
-  const [showInstructions, setShowInstructions] = useState(false);
+  const [showinstructions, setShowinstructions] = useState(false);
   const { fetchData } = useFetchData(
     props,
     setLoading,
@@ -77,7 +77,7 @@ const BoardPage = (props) => {
     setProfile,
     setVotes,
     setTeams,
-    setShowInstructions,
+    setShowinstructions,
   );
 
   // Creation of columns
@@ -167,11 +167,11 @@ const BoardPage = (props) => {
             if (loading) return <LoadingSpinner />;
           })()}
 
-          {showInstructions && board.instructions && (
+          {showinstructions && board.instructions && (
             <Modal
               title="Instructions"
               action="Okay"
-              setVisible={setShowInstructions}
+              setVisible={setShowinstructions}
               markdown={board.instructions}
               function={() => {}}
               icon="fas fa-check"
@@ -219,7 +219,7 @@ const BoardPage = (props) => {
             votesRemaining={votesRemaining}
             dashboardPath={props.dashboardPath}
             setCreateColumnModalVisible={setCreateColumnModalVisible}
-            setShowInstructions={setShowInstructions}
+            setShowinstructions={setShowinstructions}
           />
 
           <Board

@@ -24,19 +24,19 @@ const useColumnsController = (board, cards, setCards, columns, setColumns) => {
     columnsService.update(board.boardid, column);
     // Rename the column in the list
     const _columns = [...columns];
-    const updatedColumn = _columns.find((c) => c._id === column._id);
+    const updatedColumn = _columns.find((c) => c.columnid === column.columnid);
     updatedColumn.title = column.title;
     setColumns(_columns);
   };
 
   const deleteColumn = async (column) => {
     // Remove the column from the service
-    columnsService.remove(board.boardid, column._id);
+    columnsService.remove(board.boardid, column.columnid);
     // Remove the column from the list
-    const _columns = columns.filter((c) => c._id !== column._id);
+    const _columns = columns.filter((c) => c.columnid !== column.columnid);
     setColumns(_columns);
     // Remove any cards
-    const _cards = cards.filter((c) => c.columnId !== column._id);
+    const _cards = cards.filter((c) => c.columnid !== column.columnid);
     setCards(_cards);
   };
 

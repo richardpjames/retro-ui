@@ -29,7 +29,7 @@ const useListenersController = (
     io.removeAllListeners('card created');
     // On any new cards then update
     io.on('card created', (card) => {
-      const check = cards.find((c) => c._id === card._id);
+      const check = cards.find((c) => c.cardid === card.cardid);
       // If not then add it to the list
       if (!check) {
         setCards([...cards, card]);
@@ -43,11 +43,11 @@ const useListenersController = (
       let _cards = [...cards];
       // Update the card that was dragged
       _cards
-        .filter((c) => c._id === updatedCard._id)
+        .filter((c) => c._id === updatedCard.cardid)
         .map(async (card) => {
           card.text = updatedCard.text;
           card.rank = updatedCard.rank;
-          card.columnId = updatedCard.columnId;
+          card.columnid = updatedCard.columnid;
           card.colour = updatedCard.colour;
           card.combinedCards = updatedCard.combinedCards;
         });
@@ -74,7 +74,7 @@ const useListenersController = (
     io.removeAllListeners('vote created');
     // On any new cards then update
     io.on('vote created', (vote) => {
-      const check = votes.find((v) => v._id === vote._id);
+      const check = votes.find((v) => v.voteid === vote.voteid);
       // If not then add it to the list
       if (!check) {
         setVotes([...votes, vote]);
@@ -124,7 +124,7 @@ const useListenersController = (
     io.removeAllListeners('column created');
     // For new columns
     io.on('column created', (column) => {
-      const check = columns.find((c) => c._id === column._id);
+      const check = columns.find((c) => c.columnid === column.columnid);
       // If not then add it to the list
       if (!check) {
         setColumns([...columns, column]);
@@ -138,7 +138,7 @@ const useListenersController = (
       let _columns = [...columns];
       // Update the card that was dragged
       _columns
-        .filter((c) => c._id === updatedColumn._id)
+        .filter((c) => c._id === updatedColumn.columnid)
         .map(async (column) => {
           column.title = updatedColumn.title;
           column.rank = updatedColumn.rank;
@@ -178,7 +178,7 @@ const useListenersController = (
 
     // Recalculate the votes the user has remaining
     let votesUsed = votes.filter((v) => v.userId === profile.userid).length;
-    setVotesRemaining(board.maxVotes - votesUsed);
+    setVotesRemaining(board.maxvotes - votesUsed);
   };
 
   return { joinBoard, setupListeners };

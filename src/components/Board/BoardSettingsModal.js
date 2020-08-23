@@ -6,13 +6,13 @@ const BoardSettingsModal = (props) => {
   const [boardDescription, setBoardDescription] = useState(
     props.board.description,
   );
-  const [maxVotes, setMaxVotes] = useState(props.board.maxVotes);
+  const [maxvotes, setMaxvotes] = useState(props.board.maxvotes);
   const [boardPrivate, setBoardPrivate] = useState(props.board.private);
   const [boardTeam, setBoardTeam] = useState(props.board.teamid);
-  const [showActions, setShowActions] = useState(props.board.showActions);
+  const [showactions, setShowactions] = useState(props.board.showactions);
   const [instructions, setInstructions] = useState(props.board.instructions);
   const [displayInstructions, setDisplayInstructions] = useState(
-    props.board.showInstructions,
+    props.board.showinstructions,
   );
 
   // Used to close the modal from the cancel or cross button
@@ -21,9 +21,9 @@ const BoardSettingsModal = (props) => {
     setBoardDescription(props.board.description);
     setBoardPrivate(props.board.private);
     setBoardTeam(props.board.teamid);
-    setShowActions(props.board.showActions);
+    setShowactions(props.board.showactions);
     setInstructions(props.board.instructions);
-    setMaxVotes(props.board.maxVotes);
+    setMaxvotes(props.board.maxvotes);
     props.setVisible(false);
     document.activeElement.blur();
   };
@@ -36,10 +36,10 @@ const BoardSettingsModal = (props) => {
       description: boardDescription,
       private: boardPrivate,
       teamId: boardTeam,
-      showActions: showActions,
-      showInstructions: displayInstructions,
+      showactions: showactions,
+      showinstructions: displayInstructions,
       instructions: instructions,
-      maxVotes: maxVotes,
+      maxvotes: maxvotes,
     });
     props.setVisible(false);
     document.activeElement.blur();
@@ -130,15 +130,15 @@ const BoardSettingsModal = (props) => {
             </div>
 
             <div className="field">
-              <label htmlFor="maxVotes">Maximum Votes</label>
+              <label htmlFor="maxvotes">Maximum Votes</label>
               <input
                 type="number"
                 className="input"
-                id="maxVotes"
-                name="maxVotes"
+                id="maxvotes"
+                name="maxvotes"
                 placeholder="5"
-                value={maxVotes}
-                onChange={(event) => setMaxVotes(event.target.value)}
+                value={maxvotes}
+                onChange={(event) => setMaxvotes(event.target.value)}
                 required
               />
             </div>
@@ -165,14 +165,14 @@ const BoardSettingsModal = (props) => {
               <div className="control">
                 <div className="b-checkbox is-primary">
                   <input
-                    id="showActionsCheckbox"
-                    name="showActionsCheckbox"
+                    id="showactionsCheckbox"
+                    name="showactionsCheckbox"
                     className="styled mr-3"
                     type="checkbox"
-                    checked={showActions}
-                    onChange={(event) => setShowActions(event.target.checked)}
+                    checked={showactions}
+                    onChange={(event) => setShowactions(event.target.checked)}
                   />
-                  <label htmlFor="showActionsCheckbox">
+                  <label htmlFor="showactionsCheckbox">
                     Show the actions column
                   </label>
                 </div>

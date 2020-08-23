@@ -26,7 +26,7 @@ const BoardTitleBar = (props) => {
             message="Are you sure that you want to start voting for this board? Once voting is started it cannot be stopped."
             action="Start Voting"
             function={() => {
-              props.updateBoard({ ...props.board, allowVotes: true });
+              props.updateBoard({ ...props.board, allowvotes: true });
             }}
             setVisible={setVoteModalVisible}
             icon="fas fa-thumbs-up"
@@ -54,12 +54,12 @@ const BoardTitleBar = (props) => {
             {props.board.userid === props.profile.userid && (
               <>
                 <button
-                  className={`button ${props.board.allowVotes && 'is-primary'}`}
-                  disabled={props.board.allowVotes}
+                  className={`button ${props.board.allowvotes && 'is-primary'}`}
+                  disabled={props.board.allowvotes}
                   onClick={() => setVoteModalVisible(true)}
                 >
                   <Icon class="fas fa-thumbs-up" padding />
-                  {props.board.allowVotes ? 'Voting Started' : 'Start Voting'}
+                  {props.board.allowvotes ? 'Voting Started' : 'Start Voting'}
                 </button>
                 <button
                   className={`button ${props.board.locked && 'is-primary'}`}
@@ -90,7 +90,7 @@ const BoardTitleBar = (props) => {
             {props.board.instructions && (
               <button
                 className="button"
-                onClick={() => props.setShowInstructions(true)}
+                onClick={() => props.setShowinstructions(true)}
               >
                 <Icon class="fas fa-info-circle" padding />
                 Instructions
@@ -104,7 +104,7 @@ const BoardTitleBar = (props) => {
           </div>
         </div>
       </div>
-      {props.board.allowVotes && !props.board.locked ? (
+      {props.board.allowvotes && !props.board.locked ? (
         <div className="notification is-primary">
           <Icon class="fas fa-exclamation-triangle" padding />
           Voting is now enabled on this board{' '}

@@ -64,7 +64,7 @@ const ColumnCard = (props) => {
     }
     // If the user has voted already then remove
     if (userVote) {
-      return props.deleteVote(userVote._id, props.card._id);
+      return props.deleteVote(userVote.voteid, props.card.cardid);
     }
     // If the user has no votes left then return
     if (props.votesRemaining <= 0) {
@@ -73,9 +73,9 @@ const ColumnCard = (props) => {
 
     // Otherwise create a new vote
     const _vote = {
-      cardId: props.card._id,
-      boardId: props.card.boardId,
-      userId: props.profile.userid,
+      cardid: props.card.cardid,
+      boardid: props.card.boardid,
+      userid: props.profile.userid,
     };
     return props.addVote(_vote);
   };
@@ -112,7 +112,7 @@ const ColumnCard = (props) => {
                 className="is-capitalized"
                 style={{ color: foreground[props.card.colour] || '#4a4a4a' }}
               >
-                {props.card.nickName}
+                {props.card.nickname}
               </strong>{' '}
               - {props.card.text}
             </p>
@@ -144,12 +144,12 @@ const ColumnCard = (props) => {
               })}
             <div className="columns is-vcentered is-mobile">
               <div className="column">
-                {!userVote && props.board.allowVotes && (
+                {!userVote && props.board.allowvotes && (
                   <a className="tag is-small" onClick={handleVote}>
                     <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>
                 )}
-                {userVote && props.board.allowVotes && (
+                {userVote && props.board.allowvotes && (
                   <a className="tag is-small is-primary" onClick={handleVote}>
                     <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>

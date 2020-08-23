@@ -103,15 +103,16 @@ const ColumnHeading = (props) => {
               className="button is-small is-danger is-fullwidth"
               onClick={() => {
                 if (
-                  !props.cards.filter((c) => c.columnId === props.column._id)
-                    .length > 0
+                  !props.cards.filter(
+                    (c) => c.columnId === props.column.columnid,
+                  ).length > 0
                 ) {
                   setShowEditControls(false);
                   setDeleteModalVisible(true);
                 }
               }}
               disabled={
-                props.cards.filter((c) => c.columnId === props.column._id)
+                props.cards.filter((c) => c.columnId === props.column.columnid)
                   .length > 0
               }
             >

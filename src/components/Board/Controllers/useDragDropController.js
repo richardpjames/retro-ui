@@ -19,8 +19,12 @@ const useDragDropController = (
 
     // If combined
     if (result.combine) {
-      setParentCard(cards.find((c) => c._id === result.combine.draggableId));
-      setChildCard(cards.find((c) => c._id === result.draggableId));
+      setParentCard(
+        cards.find((c) => c.cardid === parseInt(result.combine.draggableId)),
+      );
+      setChildCard(
+        cards.find((c) => c.cardid === parseInt(result.draggableId)),
+      );
       setMergeCardModalVisible(true);
     }
 
@@ -59,7 +63,7 @@ const useDragDropController = (
       newRank = lowerRank.between(higherRank).toString();
       // Update the column that was dragged
       _columns
-        .filter((c) => c._id === result.draggableId)
+        .filter((c) => c.columnid === parseInt(result.draggableId))
         .map(async (column) => {
           column.rank = newRank;
           columnsService.update(board.boardid, column);
@@ -78,7 +82,7 @@ const useDragDropController = (
     // Otherwise this is the movement of a card
     // Find the cards in the column that was dragged to
     const columnCards = _cards.filter(
-      (c) => c.columnId === destination.droppableId,
+      (c) => c.columnid === parseInt(destination.droppableId),
     );
     // If there is nothing in the column already then no action required
     // Otherwise set the new rank based on the existing card it replaces
@@ -108,10 +112,10 @@ const useDragDropController = (
 
     // Update the card that was dragged
     _cards
-      .filter((c) => c._id === result.draggableId)
+      .filter((c) => c.cardid === parseInt(result.draggableId))
       .map(async (card) => {
         card.rank = newRank;
-        card.columnId = destination.droppableId;
+        card.columnid = parseInt(destination.droppableId);
         cardsService.update(board.boardid, source.droppableId, card);
       });
 

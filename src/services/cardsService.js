@@ -42,7 +42,7 @@ const cardsService = () => {
 
   const update = async (boardId, columnId, card) => {
     const updatedCard = {
-      _id: card._id,
+      cardid: card.cardid,
       text: card.text,
       rank: card.rank,
       created: card.created,
@@ -54,7 +54,7 @@ const cardsService = () => {
     };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${card._id}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${card.cardid}`,
         updatedCard,
         { withCredentials: true },
       );

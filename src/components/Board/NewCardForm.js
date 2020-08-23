@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const NewCardForm = (props) => {
   const [card, setCard] = useState({
     text: '',
-    columnId: props.column._id,
+    columnId: props.column.columnid,
     colour: '#ffffff',
     combinedCards: [],
   });
@@ -15,7 +15,7 @@ const NewCardForm = (props) => {
     props.addCard(card);
     setCard({
       text: '',
-      columnId: props.column._id,
+      columnId: props.column.columnid,
       colour: '#ffffff',
       combinedCards: [],
     });

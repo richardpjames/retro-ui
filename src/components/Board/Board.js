@@ -18,9 +18,9 @@ const Board = (props) => {
             >
               {props.columns.map((column, index) => (
                 <Draggable
-                  draggableId={column._id}
+                  draggableId={column.columnid.toString()}
                   index={index}
-                  key={column._id}
+                  key={column.columnid}
                   isDragDisabled={
                     props.board.userid !== props.profile.userid ||
                     props.board.locked
@@ -28,7 +28,7 @@ const Board = (props) => {
                 >
                   {(dragProvided, snapshot) => (
                     <div
-                      key={column._id}
+                      key={column.columnid}
                       className="box column board-column mx-1 my-1"
                       ref={dragProvided.innerRef}
                       {...dragProvided.draggableProps}
@@ -48,7 +48,10 @@ const Board = (props) => {
                         <NewCardForm addCard={props.addCard} column={column} />
                       )}
 
-                      <Droppable droppableId={column._id} isCombineEnabled>
+                      <Droppable
+                        droppableId={column.columnid.toString()}
+                        isCombineEnabled
+                      >
                         {(dropProvided) => (
                           <div
                             className="is-fullheight"
@@ -61,7 +64,7 @@ const Board = (props) => {
                               addVote={props.addVote}
                               deleteVote={props.deleteVote}
                               cards={props.cards.filter(
-                                (c) => c.columnId === column._id,
+                                (c) => c.columnid === column.columnid,
                               )}
                               deleteCard={props.deleteCard}
                               votes={props.votes}

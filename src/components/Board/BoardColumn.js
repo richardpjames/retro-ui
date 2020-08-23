@@ -7,8 +7,8 @@ const BoardColumn = (props) => {
     <>
       {props.cards.map((card, index) => (
         <Draggable
-          key={card._id}
-          draggableId={card._id}
+          key={card.cardid}
+          draggableId={card.cardid.toString()}
           index={index}
           isDragDisabled={props.board.locked}
         >
@@ -26,7 +26,9 @@ const BoardColumn = (props) => {
                 card={card}
                 board={props.board}
                 deleteCard={props.deleteCard}
-                votes={props.votes.filter((vote) => vote.cardId === card._id)}
+                votes={props.votes.filter(
+                  (vote) => vote.cardid === card.cardid,
+                )}
                 votesRemaining={props.votesRemaining}
                 profile={props.profile}
                 setCardToSeparate={props.setCardToSeparate}

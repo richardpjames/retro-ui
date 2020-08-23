@@ -31,7 +31,7 @@ const ActionsCard = (props) => {
       created: Date.now(),
       userId: props.profile.userid,
       update: update,
-      nickName: props.profile.nickname,
+      nickname: props.profile.nickname,
     });
     props.updateAction(props.action);
     setUpdate('');
@@ -98,7 +98,7 @@ const ActionsCard = (props) => {
                     </a>
                   )}
                 <strong className="is-capitalized">
-                  {update.nickName} (
+                  {update.nickname} (
                   {moment(update.created).format('DD/MM/YYYY')})
                 </strong>{' '}
                 - {update.update}

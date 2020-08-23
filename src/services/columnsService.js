@@ -36,7 +36,7 @@ const columnsService = () => {
     };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${column._id}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${column.columnid}`,
         updatedColumn,
         { withCredentials: true },
       );

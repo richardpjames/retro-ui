@@ -26,9 +26,9 @@ const useCardsController = (board, cards, setCards) => {
 
   const deleteCard = async (card) => {
     // Call the API
-    cardsService.remove(board.boardid, card.columnId, card._id);
+    cardsService.remove(board.boardid, card.columnid, card.cardid);
     // Remove the card from the list
-    const _cards = cards.filter((c) => c._id !== card._id);
+    const _cards = cards.filter((c) => c.cardid !== card.cardid);
     // Save changes to state
     setCards(_cards);
   };
@@ -40,11 +40,11 @@ const useCardsController = (board, cards, setCards) => {
     let _cards = [...cards];
     // Update the card that was updated
     _cards
-      .filter((c) => c._id === card._id)
+      .filter((c) => c.cardid === card.cardid)
       .map(async (c2) => {
         c2.text = card.text;
         c2.rank = card.rank;
-        c2.columnId = card.columnId;
+        c2.columnid = card.columnid;
         c2.colour = card.colour;
       });
     // Sort the cards into order
@@ -80,11 +80,15 @@ const useCardsController = (board, cards, setCards) => {
       );
     }
     // Remove the child card from the board
-    const _cards = cards.filter((c) => c._id !== childCard._id);
+    const _cards = cards.filter((c) => c.cardid !== childCard.cardid);
     // Update the parent card
-    cardsService.update(parentCard.boardId, parentCard.columnId, parentCard);
+    cardsService.update(parentCard.boardid, parentCard.columnid, parentCard);
     // Remove the child card
-    cardsService.remove(childCard.boardId, childCard.columnId, childCard._id);
+    cardsService.remove(
+      childCard.boardid,
+      childCard.columnid,
+      childCard.cardid,
+    );
     // Update the state
     setCards(_cards);
   };

@@ -8,7 +8,7 @@ const NewBoardModal = (props) => {
   const [boardDescription, setBoardDescription] = useState('');
   const [boardTemplate, setBoardTemplate] = useState();
   const [boardPrivate, setBoardPrivate] = useState(false);
-  const [showActions, setShowActions] = useState(true);
+  const [showactions, setShowactions] = useState(true);
   const [boardTeam, setBoardTeam] = useState('');
   const [templates, setTemplates] = useState([]);
   const [displayInstructions, setDisplayInstructions] = useState(true);
@@ -22,8 +22,8 @@ const NewBoardModal = (props) => {
       templateId: boardTemplate,
       teamId: boardTeam,
       private: boardPrivate,
-      showActions: showActions,
-      showInstructions: displayInstructions,
+      showactions: showactions,
+      showinstructions: displayInstructions,
     };
     // If the team Id is blank then remove
     if (newBoard.teamid === '') {
@@ -35,7 +35,7 @@ const NewBoardModal = (props) => {
     setBoardTemplate('');
     setBoardTeam('');
     setBoardPrivate(false);
-    setShowActions(true);
+    setShowactions(true);
     setDisplayInstructions(true);
     props.setVisible(false);
   };
@@ -46,7 +46,7 @@ const NewBoardModal = (props) => {
     setBoardTemplate('');
     setBoardTeam('');
     setBoardPrivate(false);
-    setShowActions(true);
+    setShowactions(true);
     setDisplayInstructions(true);
     props.setVisible(false);
   };
@@ -198,14 +198,14 @@ const NewBoardModal = (props) => {
               <div className="control">
                 <div className="b-checkbox is-primary">
                   <input
-                    id="showActionsCheckbox"
-                    name="showActionsCheckbox"
+                    id="showactionsCheckbox"
+                    name="showactionsCheckbox"
                     className="styled mr-3"
                     type="checkbox"
-                    checked={showActions}
-                    onChange={(event) => setShowActions(event.target.checked)}
+                    checked={showactions}
+                    onChange={(event) => setShowactions(event.target.checked)}
                   />
-                  <label htmlFor="showActionsCheckbox">
+                  <label htmlFor="showactionsCheckbox">
                     Show the actions column
                   </label>
                 </div>
