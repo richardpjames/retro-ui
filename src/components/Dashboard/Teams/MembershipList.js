@@ -5,7 +5,7 @@ const MembershipList = (props) => {
   return (
     <>
       {props.teams.map((team) => (
-        <div className="my-3" key={team._id}>
+        <div className="my-3" key={team.teamid}>
           <MembershipCard
             team={team}
             removeMembership={props.removeMembership}

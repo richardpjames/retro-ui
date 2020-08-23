@@ -8,7 +8,7 @@ const BoardCard = (props) => {
     props.updateModalVisible(true);
   };
 
-  const boardLink = `/board/${props.board._id}`;
+  const boardLink = `/board/${props.board.uuid}`;
 
   return (
     <div className="box">
@@ -25,7 +25,7 @@ const BoardCard = (props) => {
             <Link to={boardLink} className="button is-primary">
               <i className="fas fa-eye mr-3"></i> View
             </Link>
-            {props.board.userId === props.profile._id ? (
+            {props.board.userid === props.profile.userid ? (
               <button className="button is-danger" onClick={toggleModal}>
                 <i className="fas fa-trash-alt mr-3"></i> Delete
               </button>

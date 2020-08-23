@@ -25,7 +25,7 @@ const DeleteBoardModal = (props) => {
       event.charCode === 13 &&
       event.target.value.toLowerCase() === 'delete'
     ) {
-      props.removeBoard(props.board._id);
+      props.removeBoard(props.board.boardid);
       props.updateModalVisible(false);
       updateButtonDisabled(true);
       updateConfirm('');
@@ -87,7 +87,7 @@ const DeleteBoardModal = (props) => {
             disabled={buttonDisabled}
             className="button is-danger"
             onClick={() => {
-              props.removeBoard(props.board._id);
+              props.removeBoard(props.board.boardid);
               props.updateModalVisible(false);
               updateButtonDisabled(true);
               updateConfirm('');

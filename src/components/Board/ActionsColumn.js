@@ -8,7 +8,7 @@ const ActionsColumn = (props) => {
       <>
         <div className="column box mx-1 my-1">
           <h4 className="subtitle is-4 ml-0 mr-3 mb-3 mt-0">Actions</h4>
-          {props.profile._id === props.board.userId && (
+          {props.profile.userid === props.board.userid && (
             <>
               {!props.board.locked && (
                 <CreateActionForm

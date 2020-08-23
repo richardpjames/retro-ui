@@ -134,7 +134,7 @@ const Dashboard = (props) => {
       // Get the access token and call the delete endpoint
       boardsService.remove(boardId);
       // Remove the board from the state
-      let updatedBoards = boards.filter((board) => board._id !== boardId);
+      let updatedBoards = boards.filter((board) => board.boardid !== boardId);
       setBoards(updatedBoards);
       // Set the total number of boards for the user
       setTotalBoards(totalBoards - 1);
@@ -185,7 +185,7 @@ const Dashboard = (props) => {
   const addTeamMember = async (teamId, emailAddress) => {
     // Find the team to update
     const _teams = [...teams];
-    const _team = _teams.find((team) => team._id === teamId);
+    const _team = _teams.find((team) => team.teamid === teamId);
     if (!_team.members) {
       _team.members = [];
     }
@@ -211,7 +211,7 @@ const Dashboard = (props) => {
   const removeTeamMember = async (teamId, emailAddress) => {
     //Find the team to update
     const _teams = [...teams];
-    const _team = _teams.find((team) => team._id === teamId);
+    const _team = _teams.find((team) => team.teamid === teamId);
     _team.members = _team.members.filter(
       (member) => member.email !== emailAddress,
     );
@@ -232,7 +232,7 @@ const Dashboard = (props) => {
       await teamsService.removeMembership(teamId);
       // Now remove the team from local list
       let _teams = [...teams];
-      _teams = _teams.filter((team) => team._id !== teamId);
+      _teams = _teams.filter((team) => team.teamid !== teamId);
       // Update the state
       setTeams(_teams);
       calculatePendingTeams(_teams, profile);
@@ -248,7 +248,7 @@ const Dashboard = (props) => {
       await teamsService.acceptMembership(teamId);
       // Now update the team
       let _teams = [...teams];
-      const _team = _teams.find((team) => team._id === teamId);
+      const _team = _teams.find((team) => team.teamid === teamId);
       const _membership = _team.members.find(
         (member) => member.email === profile.email,
       );
@@ -269,7 +269,7 @@ const Dashboard = (props) => {
       await teamsService.remove(teamId);
       // Remove the board from the state
       let updatedTeams = teams.filter((team) => {
-        return team._id !== teamId;
+        return team.teamid !== teamId;
       });
       setTeams(updatedTeams);
       setLoading(false);
@@ -318,7 +318,7 @@ const Dashboard = (props) => {
                     title="Your Boards"
                     {...props}
                     boards={boards.filter(
-                      (board) => board.userId === profile._id,
+                      (board) => board.userid === profile.userid,
                     )}
                     totalBoards={totalBoards}
                     teams={teams}
@@ -354,18 +354,19 @@ const Dashboard = (props) => {
                   <Boards
                     title={
                       teams.find(
-                        (team) => team._id === props.match.params.teamId,
+                        (team) => team.teamid === props.match.params.teamId,
                       )
                         ? `${
                             teams.find(
-                              (team) => team._id === props.match.params.teamId,
+                              (team) =>
+                                team.teamid === props.match.params.teamId,
                             ).name
                           } Boards`
                         : null
                     }
                     {...props}
                     boards={boards.filter(
-                      (board) => board.teamId === props.match.params.teamId,
+                      (board) => board.teamid === props.match.params.teamId,
                     )}
                     totalBoards={totalBoards}
                     teams={teams}
@@ -417,7 +418,9 @@ const Dashboard = (props) => {
               />
               <Boards
                 title="Your Boards"
-                boards={boards.filter((board) => board.userId === profile._id)}
+                boards={boards.filter(
+                  (board) => board.userid === profile.userid,
+                )}
                 totalBoards={totalBoards}
                 profile={profile}
                 teams={teams}

@@ -166,7 +166,7 @@ const useListenersController = (
     io.on('board updated', (updatedBoard) => {
       // If teams have changed and this is now a private board then reload the page
       if (
-        (board.teamId !== updatedBoard.teamId ||
+        (board.teamid !== updatedBoard.teamid ||
           board.private !== updatedBoard.private) &&
         updatedBoard.private
       ) {
@@ -177,7 +177,7 @@ const useListenersController = (
     });
 
     // Recalculate the votes the user has remaining
-    let votesUsed = votes.filter((v) => v.userId === profile._id).length;
+    let votesUsed = votes.filter((v) => v.userId === profile.userid).length;
     setVotesRemaining(board.maxVotes - votesUsed);
   };
 

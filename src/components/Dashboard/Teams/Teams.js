@@ -49,7 +49,9 @@ const Teams = (props) => {
         alphabetically.
       </p>
       <NewTeamModal
-        teams={props.teams.filter((team) => team.userId === props.profile._id)}
+        teams={props.teams.filter(
+          (team) => team.userid === props.profile.userid,
+        )}
         profile={props.profile}
         addTeam={props.addTeam}
         visible={props.createTeamModalVisible}
@@ -58,7 +60,7 @@ const Teams = (props) => {
       <div className="content">
         <TeamList
           teams={props.teams.filter(
-            (team) => team.userId === props.profile._id,
+            (team) => team.userid === props.profile.userid,
           )}
           profile={props.profile}
           removeTeam={props.removeTeam}
@@ -78,7 +80,7 @@ const Teams = (props) => {
         </div>
         <MembershipList
           teams={props.teams.filter(
-            (team) => team.userId !== props.profile._id,
+            (team) => team.userid !== props.profile.userid,
           )}
           removeMembership={props.removeMembership}
           acceptMembership={props.acceptMembership}

@@ -26,8 +26,8 @@ const NewBoardModal = (props) => {
       showInstructions: displayInstructions,
     };
     // If the team Id is blank then remove
-    if (newBoard.teamId === '') {
-      delete newBoard.teamId;
+    if (newBoard.teamid === '') {
+      delete newBoard.teamid;
     }
     props.addBoard(newBoard);
     setBoardName('');
@@ -138,7 +138,10 @@ const NewBoardModal = (props) => {
                   >
                     <option></option>
                     {templates.map((template) => (
-                      <option key={template._id} value={template._id}>
+                      <option
+                        key={template.templateid}
+                        value={template.templateid}
+                      >
                         {template.name} ({template.description})
                       </option>
                     ))}
@@ -165,7 +168,7 @@ const NewBoardModal = (props) => {
                   >
                     <option></option>
                     {props.teams.map((team) => (
-                      <option key={team._id} value={team._id}>
+                      <option key={team.teamid} value={team.teamid}>
                         {team.name}
                       </option>
                     ))}

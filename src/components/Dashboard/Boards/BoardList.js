@@ -18,7 +18,7 @@ const BoardList = (props) => {
         updateModalVisible={updateModalVisible}
       />
       {props.boards.map((board) => (
-        <div className="my-3" key={board._id}>
+        <div className="my-3" key={board.boardid}>
           <BoardCard
             board={board}
             profile={props.profile}

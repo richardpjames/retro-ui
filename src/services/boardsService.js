@@ -43,13 +43,13 @@ const boardsService = () => {
 
   const update = async (board) => {
     const updatedBoard = {
-      _id: board._id,
+      boardid: board.boardid,
       name: board.name,
       description: board.description,
       maxVotes: board.maxVotes,
       created: board.created,
-      userId: board.userId,
-      teamId: board.teamId,
+      userId: board.userid,
+      teamId: board.teamid,
       private: board.private,
       showActions: board.showActions,
       allowVotes: board.allowVotes,
@@ -59,7 +59,7 @@ const boardsService = () => {
     };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${board._id}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${board.boardid}`,
         updatedBoard,
         { withCredentials: true },
       );

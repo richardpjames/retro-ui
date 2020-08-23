@@ -11,7 +11,7 @@ const ColumnCard = (props) => {
   const [updatedCard, setUpdatedCard] = useState(props.card);
   const [showColourPicker, setShowColourPicker] = useState(false);
   const [showEditControls, setShowEditControls] = useState(false);
-  const userVote = props.votes.find((v) => v.userId === props.profile._id);
+  const userVote = props.votes.find((v) => v.userId === props.profile.userid);
 
   // The list of colours for the colour picker
   const colours = [
@@ -75,7 +75,7 @@ const ColumnCard = (props) => {
     const _vote = {
       cardId: props.card._id,
       boardId: props.card.boardId,
-      userId: props.profile._id,
+      userId: props.profile.userid,
     };
     return props.addVote(_vote);
   };
@@ -198,7 +198,7 @@ const ColumnCard = (props) => {
             )}
             {showEditControls && !props.board.locked && (
               <div className="buttons">
-                {props.card.userId === props.profile._id && (
+                {props.card.userId === props.profile.userid && (
                   <a
                     className="button is-small is-primary"
                     onClick={() => {

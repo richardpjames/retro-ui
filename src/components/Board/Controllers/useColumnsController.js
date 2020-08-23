@@ -12,7 +12,7 @@ const useColumnsController = (board, cards, setCards, columns, setColumns) => {
       column.rank = LexoRank.middle().toString();
     }
     // Get the new column from the service
-    const newColumn = await columnsService.create(column, board._id);
+    const newColumn = await columnsService.create(column, board.boardid);
     // Now add to the existing columns
     const _columns = [...columns];
     _columns.push(newColumn);
@@ -21,7 +21,7 @@ const useColumnsController = (board, cards, setCards, columns, setColumns) => {
 
   const renameColumn = async (column) => {
     // Rename the column in the service
-    columnsService.update(board._id, column);
+    columnsService.update(board.boardid, column);
     // Rename the column in the list
     const _columns = [...columns];
     const updatedColumn = _columns.find((c) => c._id === column._id);
@@ -31,7 +31,7 @@ const useColumnsController = (board, cards, setCards, columns, setColumns) => {
 
   const deleteColumn = async (column) => {
     // Remove the column from the service
-    columnsService.remove(board._id, column._id);
+    columnsService.remove(board.boardid, column._id);
     // Remove the column from the list
     const _columns = columns.filter((c) => c._id !== column._id);
     setColumns(_columns);

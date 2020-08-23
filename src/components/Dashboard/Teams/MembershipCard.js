@@ -33,7 +33,7 @@ const MembershipCard = (props) => {
             {getStatus() !== 'accepted' ? (
               <button
                 className="button is-primary"
-                onClick={() => props.acceptMembership(props.team._id)}
+                onClick={() => props.acceptMembership(props.team.teamid)}
               >
                 <Icon class="fas fa-user-plus" padding /> Accept Invitation
               </button>

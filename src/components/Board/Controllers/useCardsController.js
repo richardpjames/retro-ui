@@ -15,14 +15,18 @@ const useCardsController = (board, cards, setCards) => {
       card.rank = LexoRank.middle().toString();
     }
     // Call the API
-    const _newCard = await cardsService.create(board._id, card.columnId, card);
+    const _newCard = await cardsService.create(
+      board.boardid,
+      card.columnId,
+      card,
+    );
     // Add the new card to the list
     setCards([...cards, _newCard]);
   };
 
   const deleteCard = async (card) => {
     // Call the API
-    cardsService.remove(board._id, card.columnId, card._id);
+    cardsService.remove(board.boardid, card.columnId, card._id);
     // Remove the card from the list
     const _cards = cards.filter((c) => c._id !== card._id);
     // Save changes to state
@@ -31,7 +35,7 @@ const useCardsController = (board, cards, setCards) => {
 
   const updateCard = async (card) => {
     // Call the api
-    cardsService.update(board._id, card.columnId, card);
+    cardsService.update(board.boardid, card.columnId, card);
     // Take a copy of the cards state
     let _cards = [...cards];
     // Update the card that was updated

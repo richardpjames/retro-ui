@@ -51,7 +51,7 @@ const BoardTitleBar = (props) => {
         </div>
         <div className="column is-narrow">
           <div className="buttons are-small">
-            {props.board.userId === props.profile._id && (
+            {props.board.userid === props.profile.userid && (
               <>
                 <button
                   className={`button ${props.board.allowVotes && 'is-primary'}`}

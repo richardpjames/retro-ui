@@ -62,7 +62,7 @@ const useDragDropController = (
         .filter((c) => c._id === result.draggableId)
         .map(async (column) => {
           column.rank = newRank;
-          columnsService.update(board._id, column);
+          columnsService.update(board.boardid, column);
         });
 
       // Sort the cards into order
@@ -112,7 +112,7 @@ const useDragDropController = (
       .map(async (card) => {
         card.rank = newRank;
         card.columnId = destination.droppableId;
-        cardsService.update(board._id, source.droppableId, card);
+        cardsService.update(board.boardid, source.droppableId, card);
       });
 
     // Sort the cards into order

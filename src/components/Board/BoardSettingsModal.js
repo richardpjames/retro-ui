@@ -8,7 +8,7 @@ const BoardSettingsModal = (props) => {
   );
   const [maxVotes, setMaxVotes] = useState(props.board.maxVotes);
   const [boardPrivate, setBoardPrivate] = useState(props.board.private);
-  const [boardTeam, setBoardTeam] = useState(props.board.teamId);
+  const [boardTeam, setBoardTeam] = useState(props.board.teamid);
   const [showActions, setShowActions] = useState(props.board.showActions);
   const [instructions, setInstructions] = useState(props.board.instructions);
   const [displayInstructions, setDisplayInstructions] = useState(
@@ -20,7 +20,7 @@ const BoardSettingsModal = (props) => {
     setBoardName(props.board.name);
     setBoardDescription(props.board.description);
     setBoardPrivate(props.board.private);
-    setBoardTeam(props.board.teamId);
+    setBoardTeam(props.board.teamid);
     setShowActions(props.board.showActions);
     setInstructions(props.board.instructions);
     setMaxVotes(props.board.maxVotes);
@@ -120,7 +120,7 @@ const BoardSettingsModal = (props) => {
                   >
                     <option></option>
                     {props.teams.map((team) => (
-                      <option key={team._id} value={team._id}>
+                      <option key={team.teamid} value={team.teamid}>
                         {team.name}
                       </option>
                     ))}

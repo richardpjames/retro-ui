@@ -29,7 +29,7 @@ const ActionsCard = (props) => {
     event.preventDefault();
     props.action.updates.push({
       created: Date.now(),
-      userId: props.profile._id,
+      userId: props.profile.userid,
       update: update,
       nickName: props.profile.nickname,
     });
@@ -86,7 +86,7 @@ const ActionsCard = (props) => {
             {props.action.updates.map((update, index) => (
               <li key={update.created}>
                 {props.action.status !== 'closed' &&
-                  update.userId === props.profile._id && (
+                  update.userId === props.profile.userid && (
                     <a
                       onClick={() => {
                         setUpdateToDelete(index);

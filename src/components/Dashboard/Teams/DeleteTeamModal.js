@@ -25,7 +25,7 @@ const DeleteTeamModal = (props) => {
       event.charCode === 13 &&
       event.target.value.toLowerCase() === 'delete'
     ) {
-      props.removeTeam(props.team._id);
+      props.removeTeam(props.team.teamid);
       props.setModalVisible(false);
       setButtonDisabled(true);
       setConfirm('');
@@ -83,7 +83,7 @@ const DeleteTeamModal = (props) => {
             disabled={buttonDisabled}
             className="button is-danger"
             onClick={() => {
-              props.removeTeam(props.team._id);
+              props.removeTeam(props.team.teamid);
               props.setModalVisible(false);
               setButtonDisabled(true);
               setConfirm('');

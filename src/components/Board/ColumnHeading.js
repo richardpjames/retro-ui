@@ -69,7 +69,7 @@ const ColumnHeading = (props) => {
           <h4 className="subtitle is-4 mb-0">{props.column.title}</h4>
         </div>
         <div className="column is-narrow">
-          {props.board.userId === props.profile._id && (
+          {props.board.userid === props.profile.userid && (
             <>
               {!props.board.locked && (
                 <span className="tag is-rounded">

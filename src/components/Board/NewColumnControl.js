@@ -3,7 +3,7 @@ import React from 'react';
 const NewColumnControl = (props) => {
   return (
     <>
-      {props.board.userId === props.profile._id && (
+      {props.board.userid === props.profile.userid && (
         <div className="column is-vcentered is-narrow">
           <button
             className="button"

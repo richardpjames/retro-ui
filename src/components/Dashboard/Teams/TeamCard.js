@@ -13,7 +13,7 @@ const TeamCard = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.addTeamMember(props.team._id, email);
+    props.addTeamMember(props.team.teamid, email);
     setEmail('');
   };
 
@@ -81,7 +81,7 @@ const TeamCard = (props) => {
                         className="delete"
                         onClick={() => {
                           props.setTeamMemberToRemove({
-                            teamId: props.team._id,
+                            teamId: props.team.teamid,
                             email: member.email,
                           });
                           props.setRemoveTeamMemberModalVisible(true);

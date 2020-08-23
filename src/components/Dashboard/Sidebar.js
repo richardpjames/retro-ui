@@ -20,7 +20,7 @@ const Sidebar = (props) => {
       <p className="menu-label">Team Boards</p>
       <ul className="menu-list">
         {props.teams.map((team) => {
-          const link = `/dashboard/boards/${team._id}`;
+          const link = `/dashboard/boards/${team.teamid}`;
           let membership;
           if (team.members) {
             membership = team.members.find(
@@ -29,9 +29,9 @@ const Sidebar = (props) => {
                 member.status === 'accepted',
             );
           }
-          if (team.userId === props.profile._id || membership) {
+          if (team.userid === props.profile.userid || membership) {
             return (
-              <li key={team._id}>
+              <li key={team.teamid}>
                 <NavLink activeClassName="is-active" to={link} exact>
                   <i className="fas fa-chalkboard-teacher mr-3"></i>
                   {team.name}
