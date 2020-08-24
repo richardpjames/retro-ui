@@ -16,6 +16,19 @@ const MembershipCard = (props) => {
     return '';
   };
 
+  const getMemberId = () => {
+    let _membership;
+    if (props.team.members) {
+      _membership = props.team.members.find(
+        (member) => member.email === props.profile.email,
+      );
+    }
+    if (_membership && _membership.memberid) {
+      return _membership.memberid;
+    }
+    return '';
+  };
+
   return (
     <div className="box has-background-white-ter">
       <div className="columns is-vcentered">
@@ -33,7 +46,9 @@ const MembershipCard = (props) => {
             {getStatus() !== 'accepted' ? (
               <button
                 className="button is-primary"
-                onClick={() => props.acceptMembership(props.team.teamid)}
+                onClick={() =>
+                  props.acceptMembership(props.team.teamid, getMemberId())
+                }
               >
                 <Icon class="fas fa-user-plus" padding /> Accept Invitation
               </button>
@@ -41,7 +56,10 @@ const MembershipCard = (props) => {
             <button
               className="button is-danger"
               onClick={() => {
-                props.setTeamToLeave(props.team);
+                props.setTeamToLeave({
+                  teamid: props.team.teamid,
+                  memberid: getMemberId(),
+                });
                 props.setLeaveTeamModalVisible(true);
               }}
             >

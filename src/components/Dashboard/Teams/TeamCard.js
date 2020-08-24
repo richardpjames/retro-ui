@@ -82,7 +82,7 @@ const TeamCard = (props) => {
                         onClick={() => {
                           props.setTeamMemberToRemove({
                             teamid: props.team.teamid,
-                            email: member.email,
+                            memberid: member.memberid,
                           });
                           props.setRemoveTeamMemberModalVisible(true);
                         }}

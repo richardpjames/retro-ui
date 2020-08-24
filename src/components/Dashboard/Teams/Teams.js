@@ -21,6 +21,7 @@ const Teams = (props) => {
         setModalVisible={props.setLeaveTeamModalVisible}
         team={props.teamToLeave}
         removeMembership={props.removeMembership}
+        teamToLeave={props.teamToLeave}
       />
       {props.pendingTeams > 0 ? (
         <div className="notification is-primary">

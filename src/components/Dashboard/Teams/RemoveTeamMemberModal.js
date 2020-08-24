@@ -39,7 +39,7 @@ const RemoveTeamMemberModal = (props) => {
             onClick={() => {
               props.removeTeamMember(
                 props.teamMemberToRemove.teamid,
-                props.teamMemberToRemove.email,
+                props.teamMemberToRemove.memberid,
               );
               props.setModalVisible(false);
             }}

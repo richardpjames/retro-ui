@@ -53,10 +53,11 @@ const teamsService = () => {
     }
   };
 
-  const removeMembership = async (teamid) => {
+  const addMembership = async (teamid, member) => {
     try {
-      await axios.delete(
+      await axios.post(
         `${process.env.REACT_APP_API_URL}/api/teams/${teamid}/memberships`,
+        member,
         { withCredentials: true },
       );
     } catch (error) {
@@ -65,10 +66,22 @@ const teamsService = () => {
     }
   };
 
-  const acceptMembership = async (teamid) => {
+  const removeMembership = async (teamid, memberid) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/teams/${teamid}/memberships/${memberid}`,
+        { withCredentials: true },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const acceptMembership = async (teamid, memberid) => {
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/teams/${teamid}/memberships`,
+        `${process.env.REACT_APP_API_URL}/api/teams/${teamid}/memberships/${memberid}`,
         { status: 'accepted' },
         { withCredentials: true },
       );
@@ -96,6 +109,7 @@ const teamsService = () => {
     getById,
     create,
     remove,
+    addMembership,
     removeMembership,
     acceptMembership,
     update,

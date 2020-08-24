@@ -34,7 +34,10 @@ const LeaveTeamModal = (props) => {
           <button
             className="button is-danger"
             onClick={() => {
-              props.removeMembership(props.team.teamid);
+              props.removeMembership(
+                props.teamToLeave.teamid,
+                props.teamToLeave.memberid,
+              );
               props.setModalVisible(false);
             }}
           >

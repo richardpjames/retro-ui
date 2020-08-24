@@ -83,7 +83,6 @@ const Dashboard = (props) => {
         setProfile(profile);
         // Get the user actions
         const actions = await actionsService.getForUser();
-        debugger;
         // Sort them into order
         let _actions = actions.sort((a, b) => {
           if (a.due > b.due) {
@@ -199,7 +198,10 @@ const Dashboard = (props) => {
       _team.members.push({ email: emailAddress, status: 'invited' });
       try {
         // Update the team
-        await teamsService.update(teamid, _team);
+        await teamsService.addMembership(teamid, {
+          email: emailAddress,
+          status: 'invited',
+        });
         // Post a sucucess message
         toast.success('Your new team member has been added');
         setTeams(_teams);
@@ -209,16 +211,16 @@ const Dashboard = (props) => {
     }
   };
 
-  const removeTeamMember = async (teamid, emailAddress) => {
+  const removeTeamMember = async (teamid, memberid) => {
     //Find the team to update
     const _teams = [...teams];
     const _team = _teams.find((team) => team.teamid === teamid);
     _team.members = _team.members.filter(
-      (member) => member.email !== emailAddress,
+      (member) => member.memberid !== memberid,
     );
     try {
       // Update the team
-      await teamsService.update(teamid, _team);
+      await teamsService.removeMembership(teamid, memberid);
       // Post a sucucess message
       toast.success('Your team member has been removed');
       setTeams(_teams);
@@ -227,10 +229,10 @@ const Dashboard = (props) => {
     }
   };
 
-  const removeMembership = async (teamid) => {
+  const removeMembership = async (teamid, memberid) => {
     try {
       // Remove using the API
-      await teamsService.removeMembership(teamid);
+      await teamsService.removeMembership(teamid, memberid);
       // Now remove the team from local list
       let _teams = [...teams];
       _teams = _teams.filter((team) => team.teamid !== teamid);
@@ -243,10 +245,10 @@ const Dashboard = (props) => {
     }
   };
 
-  const acceptMembership = async (teamid) => {
+  const acceptMembership = async (teamid, memberid) => {
     try {
       // Accept membership
-      await teamsService.acceptMembership(teamid);
+      await teamsService.acceptMembership(teamid, memberid);
       // Now update the team
       let _teams = [...teams];
       const _team = _teams.find((team) => team.teamid === teamid);
