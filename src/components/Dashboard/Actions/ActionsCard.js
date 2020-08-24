@@ -80,7 +80,7 @@ const ActionsCard = (props) => {
         </div>
       </div>
 
-      {props.action.updates.length > 0 && (
+      {props.action.updates && props.action.updates.length > 0 && (
         <div className="mt-0 mb-3">
           <ul className="mt-0">
             {props.action.updates.map((update, index) => (
