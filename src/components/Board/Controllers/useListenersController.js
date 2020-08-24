@@ -49,7 +49,7 @@ const useListenersController = (
           card.rank = updatedCard.rank;
           card.columnid = updatedCard.columnid;
           card.colour = updatedCard.colour;
-          card.combinedCards = updatedCard.combinedCards;
+          card.combinedcards = updatedCard.combinedcards;
         });
 
       // Sort the cards into order

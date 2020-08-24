@@ -50,7 +50,7 @@ const cardsService = () => {
       columnid: card.columnid,
       boardid: card.boardid,
       colour: card.colour,
-      combinedCards: card.combinedCards,
+      combinedcards: card.combinedcards,
     };
     try {
       await axios.put(
@@ -64,7 +64,60 @@ const cardsService = () => {
     }
   };
 
-  return { getAll, create, remove, update };
+  const addCombined = async (boardid, columnid, cardid, childCard) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}/cards/${cardid}/combined`,
+        childCard,
+        { withCredentials: true },
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const updateCombined = async (
+    boardid,
+    columnid,
+    cardid,
+    combinedid,
+    card,
+  ) => {
+    try {
+      await axios.put(
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}/cards/${cardid}/combined/${combinedid}`,
+        card,
+        { withCredentials: true },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const removeCombined = async (boardid, columnid, cardid, combinedid) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}/cards/${cardid}/combined/${combinedid}`,
+        { withCredentials: true },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  return {
+    getAll,
+    create,
+    remove,
+    update,
+    addCombined,
+    updateCombined,
+    removeCombined,
+  };
 };
 
 export default cardsService();

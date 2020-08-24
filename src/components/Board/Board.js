@@ -18,7 +18,7 @@ const Board = (props) => {
             >
               {props.columns.map((column, index) => (
                 <Draggable
-                  draggableId={column.columnid.toString()}
+                  draggableId={`col-${column.columnid.toString()}`}
                   index={index}
                   key={column.columnid}
                   isDragDisabled={

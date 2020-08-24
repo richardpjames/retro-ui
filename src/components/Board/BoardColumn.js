@@ -8,7 +8,7 @@ const BoardColumn = (props) => {
       {props.cards.map((card, index) => (
         <Draggable
           key={card.cardid}
-          draggableId={card.cardid.toString()}
+          draggableId={`car-${card.cardid.toString()}`}
           index={index}
           isDragDisabled={props.board.locked}
         >

@@ -5,7 +5,7 @@ const NewCardForm = (props) => {
     text: '',
     columnid: props.column.columnid,
     colour: '#ffffff',
-    combinedCards: [],
+    combinedcards: [],
   });
   const [lines, setLines] = useState(1);
 
@@ -17,7 +17,7 @@ const NewCardForm = (props) => {
       text: '',
       columnid: props.column.columnid,
       colour: '#ffffff',
-      combinedCards: [],
+      combinedcards: [],
     });
   };
 

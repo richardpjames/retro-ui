@@ -116,8 +116,8 @@ const ColumnCard = (props) => {
               </strong>{' '}
               - {props.card.text}
             </p>
-            {props.card.combinedCards &&
-              props.card.combinedCards.map((card, index) => {
+            {props.card.combinedcards &&
+              props.card.combinedcards.map((card, index) => {
                 return (
                   <div key={index} className="mb-3">
                     <hr className="mb-2 mt-1" />
