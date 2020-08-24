@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const actionsService = () => {
-  const getAll = async (boardId) => {
+  const getAll = async (boardid) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/actions`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/actions`,
         { withCredentials: true },
       );
       return response.data;
@@ -27,10 +27,10 @@ const actionsService = () => {
     }
   };
 
-  const create = async (action, boardId) => {
+  const create = async (action, boardid) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/actions`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/actions`,
         action,
         { withCredentials: true },
       );
@@ -43,7 +43,7 @@ const actionsService = () => {
 
   const update = async (action) => {
     const updatedAction = {
-      _id: action._id,
+      actionid: action.actionid,
       text: action.text,
       owner: action.owner,
       status: action.status,
@@ -51,12 +51,12 @@ const actionsService = () => {
       updates: action.updates,
       created: action.created,
       closed: action.closed,
-      userId: action.userId,
-      boardId: action.boardId,
+      userid: action.userid,
+      boardid: action.boardid,
     };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${action.boardId}/actions/${action._id}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${action.boardid}/actions/${action.actionid}`,
         updatedAction,
         { withCredentials: true },
       );
@@ -66,10 +66,10 @@ const actionsService = () => {
     }
   };
 
-  const remove = async (boardId, actionId) => {
+  const remove = async (boardid, actionid) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/actions/${actionId}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/actions/${actionid}`,
         { withCredentials: true },
       );
     } catch (error) {

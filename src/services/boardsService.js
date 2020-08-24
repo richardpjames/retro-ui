@@ -14,10 +14,10 @@ const boardsService = () => {
     }
   };
 
-  const getById = async (boardId) => {
+  const getById = async (boardid) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}`,
         { withCredentials: true },
       );
       return response.data;
@@ -48,8 +48,8 @@ const boardsService = () => {
       description: board.description,
       maxvotes: board.maxvotes,
       created: board.created,
-      userId: board.userid,
-      teamId: board.teamid,
+      userid: board.userid,
+      teamid: board.teamid,
       private: board.private,
       showactions: board.showactions,
       allowvotes: board.allowvotes,
@@ -69,10 +69,10 @@ const boardsService = () => {
     }
   };
 
-  const remove = async (boardId) => {
+  const remove = async (boardid) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}`,
         { withCredentials: true },
       );
     } catch (error) {

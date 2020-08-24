@@ -5,18 +5,18 @@ const useVotesController = (board, votes, setVotes) => {
     // Call the API
     const _newVote = await votesService.create(
       board.boardid,
-      vote.cardId,
+      vote.cardid,
       vote,
     );
     // Add the new card to the list
     setVotes([...votes, _newVote]);
   };
 
-  const deleteVote = async (voteId, cardId) => {
+  const deleteVote = async (voteid, cardid) => {
     // Call the API
-    votesService.remove(board.boardid, cardId, voteId);
+    votesService.remove(board.boardid, cardid, voteid);
     // Remove the card from the list
-    const _votes = votes.filter((v) => v._id !== voteId);
+    const _votes = votes.filter((v) => v.voteid !== voteid);
     // Save changes to state
     setVotes(_votes);
   };

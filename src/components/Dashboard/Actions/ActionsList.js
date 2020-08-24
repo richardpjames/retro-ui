@@ -10,7 +10,7 @@ const ActionsList = (props) => {
       {props.actions.map((action) => (
         <ActionsCard
           action={action}
-          key={action._id}
+          key={action.actionid}
           updateAction={props.updateAction}
           profile={props.profile}
         />

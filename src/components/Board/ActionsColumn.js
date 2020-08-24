@@ -21,7 +21,7 @@ const ActionsColumn = (props) => {
           )}
           {props.actions.map((action) => (
             <ActionCard
-              key={action._id}
+              key={action.actionid}
               action={action}
               board={props.board}
               profile={props.profile}

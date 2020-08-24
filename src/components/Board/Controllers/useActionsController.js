@@ -11,7 +11,7 @@ const useActionsController = (board, actions, setActions) => {
       if (a.due > b.due) {
         return 1;
       } else if (a.due === b.due) {
-        if (a._id > b._id) {
+        if (a.actionid > b.actionid) {
           return 1;
         }
         return -1;
@@ -23,9 +23,9 @@ const useActionsController = (board, actions, setActions) => {
 
   const deleteAction = async (action) => {
     // Remove the column from the service
-    actionsService.remove(board.boardid, action._id);
+    actionsService.remove(board.boardid, action.actionid);
     // Remove the column from the list
-    const _actions = actions.filter((a) => a._id !== action._id);
+    const _actions = actions.filter((a) => a.actionid !== action.actionid);
     setActions(_actions);
   };
 

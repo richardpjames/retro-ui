@@ -4,9 +4,9 @@ import { LexoRank } from 'lexorank';
 const useCardsController = (board, cards, setCards) => {
   const addCard = async (card) => {
     // Get the column from the card and then remove
-    const columnId = card.columnId;
+    const columnid = card.columnid;
     // Set the rank based on the highest in the column
-    const columnCards = cards.filter((c) => c.columnId === columnId);
+    const columnCards = cards.filter((c) => c.columnid === columnid);
     if (columnCards.length > 0) {
       const highestRank = columnCards[columnCards.length - 1].rank;
       const highestLexoRank = LexoRank.parse(highestRank);
@@ -17,7 +17,7 @@ const useCardsController = (board, cards, setCards) => {
     // Call the API
     const _newCard = await cardsService.create(
       board.boardid,
-      card.columnId,
+      card.columnid,
       card,
     );
     // Add the new card to the list
@@ -35,7 +35,7 @@ const useCardsController = (board, cards, setCards) => {
 
   const updateCard = async (card) => {
     // Call the api
-    cardsService.update(board.boardid, card.columnId, card);
+    cardsService.update(board.boardid, card.columnid, card);
     // Take a copy of the cards state
     let _cards = [...cards];
     // Update the card that was updated
@@ -63,7 +63,7 @@ const useCardsController = (board, cards, setCards) => {
     }
     // Add the child card to the parent
     parentCard.combinedCards.push({
-      userId: childCard.userId,
+      userid: childCard.userid,
       text: childCard.text,
       colour: childCard.colour,
     });
@@ -72,7 +72,7 @@ const useCardsController = (board, cards, setCards) => {
       await Promise.all(
         childCard.combinedCards.map((_card) =>
           parentCard.combinedCards.push({
-            userId: _card.userId,
+            userid: _card.userid,
             text: _card.text,
             colour: _card.colour,
           }),
@@ -102,14 +102,14 @@ const useCardsController = (board, cards, setCards) => {
     _updatedCard.combinedCards.splice(index, 1);
     // Update at the service
     await cardsService.update(
-      _updatedCard.boardId,
-      _updatedCard.columnId,
+      _updatedCard.boardid,
+      _updatedCard.columnid,
       _updatedCard,
     );
     // Create a new card from the merged card
     await addCard({
       ..._newCard,
-      columnId: card.columnId,
+      columnid: card.columnid,
       combinedCards: [],
     });
   };

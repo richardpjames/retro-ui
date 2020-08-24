@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const votesService = () => {
-  const getAll = async (boardId) => {
+  const getAll = async (boardid) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/votes`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/votes`,
         { withCredentials: true },
       );
       return response.data;
@@ -14,10 +14,10 @@ const votesService = () => {
     }
   };
 
-  const create = async (boardId, cardId, vote) => {
+  const create = async (boardid, cardid, vote) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${cardId}/votes`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/cards/${cardid}/votes`,
         vote,
         { withCredentials: true },
       );
@@ -28,10 +28,10 @@ const votesService = () => {
     }
   };
 
-  const remove = async (boardId, cardId, voteId) => {
+  const remove = async (boardid, cardid, voteid) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards/${cardId}/votes/${voteId}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/cards/${cardid}/votes/${voteid}`,
         { withCredentials: true },
       );
     } catch (error) {

@@ -35,7 +35,7 @@ const BoardSettingsModal = (props) => {
       name: boardName,
       description: boardDescription,
       private: boardPrivate,
-      teamId: boardTeam,
+      teamid: boardTeam,
       showactions: showactions,
       showinstructions: displayInstructions,
       instructions: instructions,

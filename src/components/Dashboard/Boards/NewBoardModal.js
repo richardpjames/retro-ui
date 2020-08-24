@@ -19,8 +19,8 @@ const NewBoardModal = (props) => {
     let newBoard = {
       name: boardName,
       description: boardDescription,
-      templateId: boardTemplate,
-      teamId: boardTeam,
+      templateid: boardTemplate,
+      teamid: boardTeam,
       private: boardPrivate,
       showactions: showactions,
       showinstructions: displayInstructions,

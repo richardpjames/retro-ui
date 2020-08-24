@@ -28,7 +28,6 @@ const UpdatePassword = (props) => {
       await axios.put(
         `/api/users/${props.profile.userid}`,
         {
-          _id: props.profile.userid,
           email: props.profile.email,
           nickname: props.profile.nickname,
           password: input.password,

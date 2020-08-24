@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const columnsService = () => {
-  const getAll = async (boardId) => {
+  const getAll = async (boardid) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns`,
         { withCredentials: true },
       );
       return response.data;
@@ -14,10 +14,10 @@ const columnsService = () => {
     }
   };
 
-  const create = async (column, boardId) => {
+  const create = async (column, boardid) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns`,
         column,
         { withCredentials: true },
       );
@@ -28,15 +28,15 @@ const columnsService = () => {
     }
   };
 
-  const update = async (boardId, column) => {
+  const update = async (boardid, column) => {
     const updatedColumn = {
-      _id: column._id,
+      columnid: column.columnid,
       title: column.title,
       rank: column.rank,
     };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${column.columnid}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${column.columnid}`,
         updatedColumn,
         { withCredentials: true },
       );
@@ -46,10 +46,10 @@ const columnsService = () => {
     }
   };
 
-  const remove = async (boardId, columnId) => {
+  const remove = async (boardid, columnid) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}`,
         { withCredentials: true },
       );
     } catch (error) {

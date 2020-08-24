@@ -81,7 +81,7 @@ const TeamCard = (props) => {
                         className="delete"
                         onClick={() => {
                           props.setTeamMemberToRemove({
-                            teamId: props.team.teamid,
+                            teamid: props.team.teamid,
                             email: member.email,
                           });
                           props.setRemoveTeamMemberModalVisible(true);

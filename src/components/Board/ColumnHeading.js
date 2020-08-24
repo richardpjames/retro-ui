@@ -104,7 +104,7 @@ const ColumnHeading = (props) => {
               onClick={() => {
                 if (
                   !props.cards.filter(
-                    (c) => c.columnId === props.column.columnid,
+                    (c) => c.columnid === props.column.columnid,
                   ).length > 0
                 ) {
                   setShowEditControls(false);
@@ -112,7 +112,7 @@ const ColumnHeading = (props) => {
                 }
               }}
               disabled={
-                props.cards.filter((c) => c.columnId === props.column.columnid)
+                props.cards.filter((c) => c.columnid === props.column.columnid)
                   .length > 0
               }
             >

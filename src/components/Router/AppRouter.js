@@ -78,7 +78,7 @@ const AppRouter = () => {
             )}
           />
           <Route
-            path="/board/:boardId"
+            path="/board/:boardid"
             render={(props) => (
               <BoardPage
                 {...props}
@@ -122,7 +122,7 @@ const AppRouter = () => {
             render={(props) => <Forgotten {...props} />}
           />
           <Route
-            path="/auth/reset/:resetToken/:userId"
+            path="/auth/reset/:resetToken/:userid"
             render={(props) => <Reset {...props} />}
           />
           <Route

@@ -88,7 +88,7 @@ const Dashboard = (props) => {
           if (a.due > b.due) {
             return 1;
           } else if (a.due === b.due) {
-            if (a._id > b._id) {
+            if (a.actionid > b.actionid) {
               return 1;
             }
             return -1;
@@ -129,12 +129,12 @@ const Dashboard = (props) => {
     }
   };
 
-  const removeBoard = async (boardId) => {
+  const removeBoard = async (boardid) => {
     try {
       // Get the access token and call the delete endpoint
-      boardsService.remove(boardId);
+      boardsService.remove(boardid);
       // Remove the board from the state
-      let updatedBoards = boards.filter((board) => board.boardid !== boardId);
+      let updatedBoards = boards.filter((board) => board.boardid !== boardid);
       setBoards(updatedBoards);
       // Set the total number of boards for the user
       setTotalBoards(totalBoards - 1);
@@ -182,10 +182,10 @@ const Dashboard = (props) => {
     }
   };
 
-  const addTeamMember = async (teamId, emailAddress) => {
+  const addTeamMember = async (teamid, emailAddress) => {
     // Find the team to update
     const _teams = [...teams];
-    const _team = _teams.find((team) => team.teamid === teamId);
+    const _team = _teams.find((team) => team.teamid === teamid);
     if (!_team.members) {
       _team.members = [];
     }
@@ -198,7 +198,7 @@ const Dashboard = (props) => {
       _team.members.push({ email: emailAddress, status: 'invited' });
       try {
         // Update the team
-        await teamsService.update(teamId, _team);
+        await teamsService.update(teamid, _team);
         // Post a sucucess message
         toast.success('Your new team member has been added');
         setTeams(_teams);
@@ -208,16 +208,16 @@ const Dashboard = (props) => {
     }
   };
 
-  const removeTeamMember = async (teamId, emailAddress) => {
+  const removeTeamMember = async (teamid, emailAddress) => {
     //Find the team to update
     const _teams = [...teams];
-    const _team = _teams.find((team) => team.teamid === teamId);
+    const _team = _teams.find((team) => team.teamid === teamid);
     _team.members = _team.members.filter(
       (member) => member.email !== emailAddress,
     );
     try {
       // Update the team
-      await teamsService.update(teamId, _team);
+      await teamsService.update(teamid, _team);
       // Post a sucucess message
       toast.success('Your team member has been removed');
       setTeams(_teams);
@@ -226,13 +226,13 @@ const Dashboard = (props) => {
     }
   };
 
-  const removeMembership = async (teamId) => {
+  const removeMembership = async (teamid) => {
     try {
       // Remove using the API
-      await teamsService.removeMembership(teamId);
+      await teamsService.removeMembership(teamid);
       // Now remove the team from local list
       let _teams = [...teams];
-      _teams = _teams.filter((team) => team.teamid !== teamId);
+      _teams = _teams.filter((team) => team.teamid !== teamid);
       // Update the state
       setTeams(_teams);
       calculatePendingTeams(_teams, profile);
@@ -242,13 +242,13 @@ const Dashboard = (props) => {
     }
   };
 
-  const acceptMembership = async (teamId) => {
+  const acceptMembership = async (teamid) => {
     try {
       // Accept membership
-      await teamsService.acceptMembership(teamId);
+      await teamsService.acceptMembership(teamid);
       // Now update the team
       let _teams = [...teams];
-      const _team = _teams.find((team) => team.teamid === teamId);
+      const _team = _teams.find((team) => team.teamid === teamid);
       const _membership = _team.members.find(
         (member) => member.email === profile.email,
       );
@@ -262,14 +262,14 @@ const Dashboard = (props) => {
     }
   };
 
-  const removeTeam = async (teamId) => {
+  const removeTeam = async (teamid) => {
     try {
       setLoading(true);
       // Get the access token and call the delete endpoint
-      await teamsService.remove(teamId);
+      await teamsService.remove(teamid);
       // Remove the board from the state
       let updatedTeams = teams.filter((team) => {
-        return team.teamid !== teamId;
+        return team.teamid !== teamid;
       });
       setTeams(updatedTeams);
       setLoading(false);
@@ -285,7 +285,7 @@ const Dashboard = (props) => {
     // Update the action within the UI
     let _actions = [...actions];
     _actions
-      .filter((a) => a._id === action._id)
+      .filter((a) => a.actionid === action.actionid)
       .map(async (a) => (a.status = action.status));
     setActions(_actions);
     // Perform the udpate on the server
@@ -349,19 +349,19 @@ const Dashboard = (props) => {
                 )}
               />
               <Route
-                path="/dashboard/boards/:teamId"
+                path="/dashboard/boards/:teamid"
                 render={(props) => (
                   <Boards
                     title={
                       teams.find(
                         (team) =>
-                          team.teamid === parseInt(props.match.params.teamId),
+                          team.teamid === parseInt(props.match.params.teamid),
                       )
                         ? `${
                             teams.find(
                               (team) =>
                                 team.teamid ===
-                                parseInt(props.match.params.teamId),
+                                parseInt(props.match.params.teamid),
                             ).name
                           } Boards`
                         : null
@@ -369,7 +369,7 @@ const Dashboard = (props) => {
                     {...props}
                     boards={boards.filter(
                       (board) =>
-                        board.teamid === parseInt(props.match.params.teamId),
+                        board.teamid === parseInt(props.match.params.teamid),
                     )}
                     totalBoards={totalBoards}
                     teams={teams}

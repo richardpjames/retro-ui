@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 const cardsService = () => {
-  const getAll = async (boardId) => {
+  const getAll = async (boardid) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/cards`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/cards`,
         { withCredentials: true },
       );
       return response.data;
@@ -14,10 +14,10 @@ const cardsService = () => {
     }
   };
 
-  const create = async (boardId, columnId, card) => {
+  const create = async (boardid, columnid, card) => {
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}/cards`,
         card,
         { withCredentials: true },
       );
@@ -28,10 +28,10 @@ const cardsService = () => {
     }
   };
 
-  const remove = async (boardId, columnId, cardId) => {
+  const remove = async (boardid, columnid, cardid) => {
     try {
       await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${cardId}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}/cards/${cardid}`,
         { withCredentials: true },
       );
     } catch (error) {
@@ -40,21 +40,21 @@ const cardsService = () => {
     }
   };
 
-  const update = async (boardId, columnId, card) => {
+  const update = async (boardid, columnid, card) => {
     const updatedCard = {
       cardid: card.cardid,
       text: card.text,
       rank: card.rank,
       created: card.created,
-      userId: card.userId,
-      columnId: card.columnId,
-      boardId: card.boardId,
+      userid: card.userid,
+      columnid: card.columnid,
+      boardid: card.boardid,
       colour: card.colour,
       combinedCards: card.combinedCards,
     };
     try {
       await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardId}/columns/${columnId}/cards/${card.cardid}`,
+        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}/cards/${card.cardid}`,
         updatedCard,
         { withCredentials: true },
       );

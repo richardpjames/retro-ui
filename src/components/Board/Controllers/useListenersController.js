@@ -15,12 +15,12 @@ const useListenersController = (
 ) => {
   const joinBoard = (props) => {
     // Set up socket connections - first join the room (and reconnect if needed)
-    io.emit('join', props.match.params.boardId);
+    io.emit('join', props.match.params.boardid);
     io.on('connect', () => {
-      io.emit('join', props.match.params.boardId);
+      io.emit('join', props.match.params.boardid);
     });
     return function cleanup() {
-      io.emit('leave', props.match.params.boardId);
+      io.emit('leave', props.match.params.boardid);
     };
   };
 
@@ -43,7 +43,7 @@ const useListenersController = (
       let _cards = [...cards];
       // Update the card that was dragged
       _cards
-        .filter((c) => c._id === updatedCard.cardid)
+        .filter((c) => c.cardid === updatedCard.cardid)
         .map(async (card) => {
           card.text = updatedCard.text;
           card.rank = updatedCard.rank;
@@ -63,11 +63,11 @@ const useListenersController = (
 
     io.removeAllListeners('card deleted');
     // For any deleted cards
-    io.on('card deleted', (cardId) => {
+    io.on('card deleted', (cardid) => {
       // Filter out the cards not deleted and update
-      const _cards = cards.filter((c) => c._id !== cardId);
+      const _cards = cards.filter((c) => c.cardid !== cardid);
       setCards(_cards);
-      const _votes = votes.filter((v) => v.cardId !== cardId);
+      const _votes = votes.filter((v) => v.cardid !== cardid);
       setVotes(_votes);
     });
 
@@ -83,16 +83,16 @@ const useListenersController = (
 
     io.removeAllListeners('vote deleted');
     // For any deleted votes
-    io.on('vote deleted', (voteId) => {
+    io.on('vote deleted', (voteid) => {
       // Filter out the cards not deleted and update
-      const _votes = votes.filter((v) => v._id !== voteId);
+      const _votes = votes.filter((v) => v.voteid !== voteid);
       setVotes(_votes);
     });
 
     io.removeAllListeners('action created');
     // For new columns
     io.on('action created', (action) => {
-      const check = actions.find((a) => a._id === action._id);
+      const check = actions.find((a) => a.actionid === action.actionid);
       // If not then add it to the list
       if (!check) {
         let _actions = [...actions];
@@ -102,7 +102,7 @@ const useListenersController = (
           if (a.due > b.due) {
             return 1;
           } else if (a.due === b.due) {
-            if (a._id > b._id) {
+            if (a.actionid > b.actionid) {
               return 1;
             }
             return -1;
@@ -115,9 +115,9 @@ const useListenersController = (
 
     io.removeAllListeners('action deleted');
     // For any deleted votes
-    io.on('action deleted', (actionId) => {
+    io.on('action deleted', (actionid) => {
       // Filter out the cards not deleted and update
-      const _actions = actions.filter((a) => a._id !== actionId);
+      const _actions = actions.filter((a) => a.actionid !== actionid);
       setActions(_actions);
     });
 
@@ -138,7 +138,7 @@ const useListenersController = (
       let _columns = [...columns];
       // Update the card that was dragged
       _columns
-        .filter((c) => c._id === updatedColumn.columnid)
+        .filter((c) => c.columnid === updatedColumn.columnid)
         .map(async (column) => {
           column.title = updatedColumn.title;
           column.rank = updatedColumn.rank;
@@ -155,9 +155,9 @@ const useListenersController = (
 
     io.removeAllListeners('column deleted');
     // For any deleted cards
-    io.on('column deleted', (columnId) => {
+    io.on('column deleted', (columnid) => {
       // Filter out the cards not deleted and update
-      const _columns = columns.filter((c) => c._id !== columnId);
+      const _columns = columns.filter((c) => c.columnid !== columnid);
       setColumns(_columns);
     });
 
@@ -177,7 +177,7 @@ const useListenersController = (
     });
 
     // Recalculate the votes the user has remaining
-    let votesUsed = votes.filter((v) => v.userId === profile.userid).length;
+    let votesUsed = votes.filter((v) => v.userid === profile.userid).length;
     setVotesRemaining(board.maxvotes - votesUsed);
   };
 

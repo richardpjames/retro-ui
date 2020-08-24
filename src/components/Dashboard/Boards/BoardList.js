@@ -4,7 +4,7 @@ import BoardCard from './BoardCard';
 
 const BoardList = (props) => {
   const [boardToDelete, updateBoardToDelete] = useState({
-    _id: '',
+    boardid: '',
     name: '',
   });
   const [modalVisible, updateModalVisible] = useState(false);

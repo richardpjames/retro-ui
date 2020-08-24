@@ -38,7 +38,7 @@ const RemoveTeamMemberModal = (props) => {
             className="button is-danger"
             onClick={() => {
               props.removeTeamMember(
-                props.teamMemberToRemove.teamId,
+                props.teamMemberToRemove.teamid,
                 props.teamMemberToRemove.email,
               );
               props.setModalVisible(false);

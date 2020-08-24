@@ -4,7 +4,7 @@ import DeleteTeamModal from './DeleteTeamModal.js';
 
 const TeamList = (props) => {
   const [teamToDelete, setTeamToDelete] = useState({
-    _id: '',
+    teamid: '',
     name: '',
   });
   const [modalVisible, setModalVisible] = useState(false);

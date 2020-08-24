@@ -27,30 +27,30 @@ const useFetchData = (
       setLoading(showLoadingBar);
       // Get the access token required to call the API
       // Call the API
-      let _board = await boardsService.getById(props.match.params.boardId);
-      let _columns = await columnsService.getAll(props.match.params.boardId);
+      let _board = await boardsService.getById(props.match.params.boardid);
+      let _columns = await columnsService.getAll(props.match.params.boardid);
       // Sort the columns
       _columns = _columns.sort((a, b) => {
         if (a.rank > b.rank) return 1;
         return -1;
       });
       // Get the required cards
-      let _cards = await cardsService.getAll(props.match.params.boardId);
+      let _cards = await cardsService.getAll(props.match.params.boardid);
       // Sort them into order
       _cards = _cards.sort((a, b) => {
         if (a.rank > b.rank) return 1;
         return -1;
       });
       // Get the required votes (no need to sort etc. for these)
-      let _votes = await votesService.getAll(props.match.params.boardId);
+      let _votes = await votesService.getAll(props.match.params.boardid);
       // Get the required actions
-      let _actions = await actionsService.getAll(props.match.params.boardId);
+      let _actions = await actionsService.getAll(props.match.params.boardid);
       // Sort them into order
       _actions = _actions.sort((a, b) => {
         if (a.due > b.due) {
           return 1;
         } else if (a.due === b.due) {
-          if (a._id > b._id) {
+          if (a.actionid > b.actionid) {
             return 1;
           }
           return -1;

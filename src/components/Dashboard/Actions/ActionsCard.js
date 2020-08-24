@@ -10,7 +10,7 @@ const ActionsCard = (props) => {
   );
   const [updateToDelete, setUpdateToDelete] = useState(0);
 
-  const boardLink = `/board/${props.action.boardId}`;
+  const boardLink = `/board/${props.action.boardid}`;
 
   const handleOpenReOpen = () => {
     if (props.action.status !== 'closed') {
@@ -29,7 +29,7 @@ const ActionsCard = (props) => {
     event.preventDefault();
     props.action.updates.push({
       created: Date.now(),
-      userId: props.profile.userid,
+      userid: props.profile.userid,
       update: update,
       nickname: props.profile.nickname,
     });
@@ -86,7 +86,7 @@ const ActionsCard = (props) => {
             {props.action.updates.map((update, index) => (
               <li key={update.created}>
                 {props.action.status !== 'closed' &&
-                  update.userId === props.profile.userid && (
+                  update.userid === props.profile.userid && (
                     <a
                       onClick={() => {
                         setUpdateToDelete(index);

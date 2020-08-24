@@ -14,7 +14,7 @@ const usersService = () => {
     }
   };
 
-  const getProfile = async (userId) => {
+  const getProfile = async (userid) => {
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/auth/profile`,
@@ -26,10 +26,10 @@ const usersService = () => {
       throw error;
     }
   };
-  const getById = async (userId) => {
+  const getById = async (userid) => {
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/users/${userId}`,
+        `${process.env.REACT_APP_API_URL}/api/users/${userid}`,
         { withCredentials: true },
       );
       return response.data;
