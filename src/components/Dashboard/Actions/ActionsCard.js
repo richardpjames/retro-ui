@@ -21,19 +21,17 @@ const ActionsCard = (props) => {
   };
 
   const removeUpdate = (index) => {
-    props.action.updates.splice(index, 1);
-    props.updateAction(props.action);
+    props.removeActionUpdate(
+      props.action.actionid,
+      props.action.updates[index].updateid,
+    );
   };
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    props.action.updates.push({
-      created: Date.now(),
-      userid: props.profile.userid,
-      update: update,
-      nickname: props.profile.nickname,
+    props.addActionUpdate(props.action.actionid, {
+      update,
     });
-    props.updateAction(props.action);
     setUpdate('');
   };
 
@@ -84,7 +82,7 @@ const ActionsCard = (props) => {
         <div className="mt-0 mb-3">
           <ul className="mt-0">
             {props.action.updates.map((update, index) => (
-              <li key={update.created}>
+              <li key={update.updateid}>
                 {props.action.status !== 'closed' &&
                   update.userid === props.profile.userid && (
                     <a

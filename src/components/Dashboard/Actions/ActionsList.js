@@ -12,6 +12,8 @@ const ActionsList = (props) => {
           action={action}
           key={action.actionid}
           updateAction={props.updateAction}
+          addActionUpdate={props.addActionUpdate}
+          removeActionUpdate={props.removeActionUpdate}
           profile={props.profile}
         />
       ))}

@@ -291,8 +291,35 @@ const Dashboard = (props) => {
       .filter((a) => a.actionid === action.actionid)
       .map(async (a) => (a.status = action.status));
     setActions(_actions);
-    // Perform the udpate on the server
     actionsService.update(action);
+  };
+
+  const addActionUpdate = async (actionid, update) => {
+    // Make the update to the server
+    const newUpdate = await actionsService.addUpdate(actionid, update);
+    let _actions = [...actions];
+    _actions
+      .filter((a) => a.actionid === newUpdate.actionid)
+      .map((a) => {
+        a.updates.push({ ...newUpdate, nickname: profile.nickname });
+        return a;
+      });
+    setActions(_actions);
+  };
+
+  const removeActionUpdate = async (actionid, updateid) => {
+    // Remove the update from the action
+    let _actions = [...actions];
+    _actions
+      .filter((a) => a.actionid === actionid)
+      .map((a) => {
+        let _updates = [...a.updates];
+        _updates = _updates.filter((u) => u.updateid !== updateid);
+        a.updates = _updates;
+        return a;
+      });
+    // Make the update to the server
+    actionsService.removeUpdate(actionid, updateid);
   };
 
   return (
@@ -418,6 +445,8 @@ const Dashboard = (props) => {
                   <Actions
                     actions={actions}
                     updateAction={updateAction}
+                    addActionUpdate={addActionUpdate}
+                    removeActionUpdate={removeActionUpdate}
                     profile={profile}
                   />
                 )}

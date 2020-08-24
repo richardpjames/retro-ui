@@ -78,7 +78,41 @@ const actionsService = () => {
     }
   };
 
-  return { getAll, getForUser, create, remove, update };
+  const addUpdate = async (actionid, update) => {
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/actions/${actionid}/updates`,
+        update,
+        { withCredentials: true },
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const removeUpdate = async (actionid, updateid) => {
+    try {
+      await axios.delete(
+        `${process.env.REACT_APP_API_URL}/api/actions/${actionid}/updates/${updateid}`,
+        { withCredentials: true },
+      );
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  return {
+    getAll,
+    getForUser,
+    create,
+    remove,
+    update,
+    addUpdate,
+    removeUpdate,
+  };
 };
 
 export default actionsService();

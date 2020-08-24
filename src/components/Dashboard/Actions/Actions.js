@@ -13,12 +13,16 @@ const Actions = (props) => {
         <ActionsList
           actions={props.actions.filter((action) => action.status !== 'closed')}
           updateAction={props.updateAction}
+          addActionUpdate={props.addActionUpdate}
+          removeActionUpdate={props.removeActionUpdate}
           profile={props.profile}
         />
         <h1 className="title is-2 mt-5">Closed</h1>
         <ActionsList
           actions={props.actions.filter((action) => action.status === 'closed')}
           updateAction={props.updateAction}
+          addActionUpdate={props.addActionUpdate}
+          removeActionUpdate={props.removeActionUpdate}
           profile={props.profile}
         />
       </div>
