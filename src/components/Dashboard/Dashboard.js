@@ -83,6 +83,7 @@ const Dashboard = (props) => {
         setProfile(profile);
         // Get the user actions
         const actions = await actionsService.getForUser();
+        debugger;
         // Sort them into order
         let _actions = actions.sort((a, b) => {
           if (a.due > b.due) {

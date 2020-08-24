@@ -54,13 +54,13 @@ const ActionsCard = (props) => {
           </h5>
           <p className="is-size-7 mb-0">
             Created {moment(props.action.created).format('DD/MM/YYYY HH:mm')}
-            {props.action.boardName && (
+            {props.action.boardname && (
               <>
                 {' '}
-                as part of <a href={boardLink}>{props.action.boardName}</a>
+                as part of <a href={boardLink}>{props.action.boardname}</a>
               </>
             )}
-            {props.action.teamName && <> (Team: {props.action.teamName})</>}
+            {props.action.teamname && <> (Team: {props.action.teamname})</>}
           </p>
           <p className="is-size-7">Owner: {props.action.owner}</p>
         </div>
