@@ -42,7 +42,7 @@ const Forgotten = (props) => {
           <div className="container">
             <div className="content mx-5 my-5">
               <h1 className="title is-1">
-                <Icon class="fas fa-question" padding />
+                <Icon class="fas fa-unlock-alt" padding />
                 Reset Password
               </h1>
 

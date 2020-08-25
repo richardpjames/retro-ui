@@ -150,7 +150,7 @@ const Register = (props) => {
                   disabled={disabled}
                 >
                   <Icon class="fas fa-user-plus" padding />
-                  Sign Up
+                  Register
                 </button>
               </form>
             </div>

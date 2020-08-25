@@ -59,7 +59,10 @@ const Reset = (props) => {
             <div className="box">
               <div className="container">
                 <div className="content mx-5 my-5">
-                  <h1 className="title is-1">Forgotten Password</h1>
+                  <h1 className="title is-1">
+                    <Icon class="fas fa-unlock-alt" padding />
+                    Forgotten Password
+                  </h1>
 
                   <p>
                     Please choose a new password, once you've set this password
