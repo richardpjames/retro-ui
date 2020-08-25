@@ -51,7 +51,7 @@ const Login = (props) => {
         <div className="content mx-5 my-5">
           <h1 className="title is-1">
             <Icon class="fas fa-sign-in-alt" padding />
-            Login
+            Log In
           </h1>
           <p>
             Welcome back! If you are already a member of the site then you can
