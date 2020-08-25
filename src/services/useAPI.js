@@ -21,7 +21,7 @@ const useApi = () => {
   };
 
   const get = async (url) => {
-    const response = await fetch(url, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}${url}`, {
       credentials: 'include',
       headers: {
         Accept: 'application/json',
@@ -32,7 +32,7 @@ const useApi = () => {
   };
 
   const create = async (url, data) => {
-    const response = await fetch(url, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}${url}`, {
       method: 'POST',
       body: JSON.stringify(data),
       credentials: 'include',
@@ -45,7 +45,7 @@ const useApi = () => {
   };
 
   const update = async (url, data) => {
-    const response = await fetch(url, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}${url}`, {
       method: 'PUT',
       body: JSON.stringify(data),
       credentials: 'include',
@@ -58,7 +58,7 @@ const useApi = () => {
   };
 
   const remove = async (url) => {
-    const response = await fetch(url, {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}${url}`, {
       method: 'DELETE',
       credentials: 'include',
       headers: {
