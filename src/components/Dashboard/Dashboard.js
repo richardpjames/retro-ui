@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Sidebar from './Sidebar';
 import Boards from './Boards/Boards';
 import ProfilePage from './Profile/ProfilePage';
 import Teams from './Teams/Teams';
-import boardsService from '../../services/boardsService';
-import teamsService from '../../services/teamsService';
-import usersService from '../../services/usersService';
-import actionsService from '../../services/actionsService';
 import LoadingSpinner from '../Common/LoadingSpinner';
 import Actions from './Actions/Actions';
+import useBoardsService from '../../services/useBoardsService';
+import useTeamsService from '../../services/useTeamsService';
+import useUsersService from '../../services/useUsersService';
+import useActionsService from '../../services/useActionsService';
 
 const Dashboard = (props) => {
   // Dashboard state variables
@@ -30,7 +30,12 @@ const Dashboard = (props) => {
   ] = useState(false);
   const [teamMemberToRemove, setTeamMemberToRemove] = useState({});
   const [pendingTeams, setPendingTeams] = useState(0);
-  const history = useHistory();
+
+  // Services for reading data
+  const boardsService = useBoardsService();
+  const teamsService = useTeamsService();
+  const usersService = useUsersService();
+  const actionsService = useActionsService();
 
   document.title = 'RetroSpectacle - Dashboard';
   document
@@ -45,11 +50,7 @@ const Dashboard = (props) => {
     // Store the current location so that other pages can return here
     localStorage.setItem('dashboard_path', props.location.pathname);
     props.setDashboardPath(props.location.pathname);
-    if (props.isAuthenticated === false) {
-      localStorage.setItem('returnUrl', props.location.pathname);
-      history.push('/auth/login');
-    }
-  }, [props, history]);
+  }, [props]);
 
   // Loading of all initial data
   useEffect(() => {
@@ -103,14 +104,11 @@ const Dashboard = (props) => {
 
         // Stop loading bar
         setLoading(false);
-      } catch (error) {
-        history.push(`/error/${error}`);
-      }
+      } catch (error) {}
     };
-    if (props.isAuthenticated) {
-      fetchData();
-    }
-  }, [history, props]);
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Data functions for boards
   const addBoard = async (board) => {
@@ -269,7 +267,7 @@ const Dashboard = (props) => {
     try {
       setLoading(true);
       // Get the access token and call the delete endpoint
-      await teamsService.remove(teamid);
+      teamsService.remove(teamid);
       // Remove the board from the state
       let updatedTeams = teams.filter((team) => {
         return team.teamid !== teamid;

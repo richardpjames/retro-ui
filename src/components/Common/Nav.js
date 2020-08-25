@@ -83,30 +83,19 @@ const Nav = (props) => {
             >
               <i className="fas fa-mouse mr-3"></i> Features
             </NavLink>
-
             {/* 
-            This section is only shown if the user is logged in
-            */}
-            {(() => {
-              if (props.isAuthenticated) {
-                return (
-                  <>
-                    {/* 
                       Boards
                     */}
-                    <NavLink
-                      className="navbar-item"
-                      activeClassName="is-active"
-                      to={props.dashboardPath}
-                      onClick={closeNavLinks}
-                    >
-                      <i className="fas fa-chalkboard-teacher mr-3"></i>
-                      Dashboard
-                    </NavLink>
-                  </>
-                );
-              }
-            })()}
+            <NavLink
+              className="navbar-item"
+              activeClassName="is-active"
+              to={props.dashboardPath}
+              onClick={closeNavLinks}
+            >
+              <i className="fas fa-chalkboard-teacher mr-3"></i>
+              Dashboard
+            </NavLink>
+
             <NavLink
               className="navbar-item"
               activeClassName="is-active"

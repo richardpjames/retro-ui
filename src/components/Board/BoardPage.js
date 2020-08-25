@@ -17,7 +17,6 @@ import useFetchData from './Controllers/useFetchData';
 import useDragDropController from './Controllers/useDragDropController';
 
 import io from '../../services/socket';
-import { useHistory } from 'react-router-dom';
 
 const BoardPage = (props) => {
   // For storing the board, and the controller
@@ -124,23 +123,10 @@ const BoardPage = (props) => {
     setVotesRemaining,
   );
 
-  const history = useHistory();
-
-  // For protecting the route
-  useEffect(() => {
-    // Store the current location so that other pages can return here
-    if (props.isAuthenticated === false) {
-      localStorage.setItem('returnUrl', props.location.pathname);
-      history.push('/auth/login');
-    }
-  }, [props, history]);
-
   // This is the initial load of existing boards for the user
   useEffect(() => {
-    if (props.isAuthenticated) {
-      // Fetch initial data
-      fetchData(true);
-    }
+    // Fetch initial data
+    fetchData(true);
     // Join the board socket io
     joinBoard(props);
     // eslint-disable-next-line react-hooks/exhaustive-deps

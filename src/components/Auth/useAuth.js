@@ -1,17 +1,16 @@
 // Cookies
-import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
 
 const useAuth = () => {
-  const [, , removeAuthCookie] = useCookies(['isAuthenticated']);
   const history = useHistory();
 
   const logout = (setIsAuthenticated) => {
-    setIsAuthenticated(false);
-    removeAuthCookie('isAuthenticated', {
-      domain: process.env.REACT_APP_COOKIE_DOMAIN,
-      path: '/',
+    // Log out the session
+    axios.get(`${process.env.REACT_APP_API_URL}/api/auth/logout`, {
+      withCredentials: true,
     });
+    setIsAuthenticated(false);
     history.push('/');
   };
   return { logout };

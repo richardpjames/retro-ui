@@ -1,7 +1,9 @@
-import cardsService from '../../../services/cardsService';
 import { LexoRank } from 'lexorank';
+import useCardsService from '../../../services/useCardsService';
 
 const useCardsController = (board, cards, setCards) => {
+  const cardsService = useCardsService();
+
   const addCard = async (card) => {
     // Get the column from the card and then remove
     const columnid = card.columnid;

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Slide, ToastContainer } from 'react-toastify';
-import { useCookies } from 'react-cookie';
 import GhostContentAPI from '@tryghost/content-api';
 import Nav from '../Common/Nav';
 import Dashboard from '../Dashboard/Dashboard';
@@ -16,17 +15,11 @@ import Forgotten from '../Auth/Forgotten';
 import Reset from '../Auth/Reset';
 
 const AppRouter = () => {
-  // Only display the page if Auth0 has completed loading as this is required
   // to determine some UI elements to draw.
   const [dashboardPath, setDashboardPath] = useState(
     localStorage.getItem('dashboard_path') || '/dashboard',
   );
-  // Authentication cookie
-  // For displaying authentication links
-  const [authCookie] = useCookies(['isAuthenticated']);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    authCookie.isAuthenticated === 'true',
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // This is for fetching page and blog information
   const api = new GhostContentAPI({
@@ -35,7 +28,20 @@ const AppRouter = () => {
     version: 'v3',
   });
 
-  // Helpers for authentication
+  // Set authentication
+  useEffect(() => {
+    const checkAuth = async () => {
+      // Make a call to get the logged in status of the user
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/api/auth/check`,
+        { credentials: 'include' },
+      );
+      if (response.status === 200) {
+        setIsAuthenticated(true);
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
     <Router>

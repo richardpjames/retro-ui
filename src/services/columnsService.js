@@ -1,64 +1,27 @@
-import axios from 'axios';
+import useAPI from './useAPI';
 
-const columnsService = () => {
+const useColumnsService = () => {
+  const api = useAPI();
   const getAll = async (boardid) => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns`,
-        { withCredentials: true },
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    return api.get(`/api/boards/${boardid}/columns`);
   };
 
   const create = async (column, boardid) => {
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns`,
-        column,
-        { withCredentials: true },
-      );
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    return api.create(`/api/boards/${boardid}/columns`, column);
   };
 
   const update = async (boardid, column) => {
-    const updatedColumn = {
-      columnid: column.columnid,
-      title: column.title,
-      rank: column.rank,
-    };
-    try {
-      await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${column.columnid}`,
-        updatedColumn,
-        { withCredentials: true },
-      );
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    return api.update(
+      `/api/boards/${boardid}/columns/${column.columnid}`,
+      column,
+    );
   };
 
   const remove = async (boardid, columnid) => {
-    try {
-      await axios.delete(
-        `${process.env.REACT_APP_API_URL}/api/boards/${boardid}/columns/${columnid}`,
-        { withCredentials: true },
-      );
-    } catch (error) {
-      console.log(error);
-      throw error;
-    }
+    return api.remove(`/api/boards/${boardid}/columns/${columnid}`);
   };
 
   return { getAll, create, remove, update };
 };
 
-export default columnsService();
+export default useColumnsService;

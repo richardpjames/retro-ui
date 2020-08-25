@@ -19,7 +19,7 @@ const ErrorPage = (props) => {
               <div className="column">
                 <h1 className="title is-1">Something Has Gone Wrong!</h1>
                 <h2 className="subtitle">{error}</h2>
-                {error.includes('401') && (
+                {error.includes('403') && (
                   <div>
                     <p className="mb-3">
                       This error usually occurs when you try to access something

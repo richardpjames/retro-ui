@@ -1,6 +1,8 @@
-import actionsService from '../../../services/actionsService';
+import useActionsService from '../../../services/useActionsService';
 
 const useActionsController = (board, actions, setActions) => {
+  const actionsService = useActionsService();
+
   const addAction = async (action) => {
     // Get the required access token
     const _newAction = await actionsService.create(action, board.boardid);

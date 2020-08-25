@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CookiesProvider } from 'react-cookie';
 import AppRouter from './components/Router/AppRouter';
 import 'react-toastify/dist/ReactToastify.css';
 import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css';
@@ -10,9 +9,7 @@ import './sass/app.sass';
 const Index = (props) => {
   return (
     <React.StrictMode>
-      <CookiesProvider>
-        <AppRouter />
-      </CookiesProvider>
+      <AppRouter />
     </React.StrictMode>
   );
 };

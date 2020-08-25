@@ -1,7 +1,9 @@
-import columnsService from '../../../services/columnsService';
 import { LexoRank } from 'lexorank';
+import useColumnsService from '../../../services/columnsService';
 
 const useColumnsController = (board, cards, setCards, columns, setColumns) => {
+  const columnsService = useColumnsService();
+
   const addColumn = async (column) => {
     // Generate the rank based on the number of columns
     if (columns.length > 0) {

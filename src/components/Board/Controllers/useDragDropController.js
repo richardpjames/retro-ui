@@ -1,7 +1,6 @@
-import cardsService from '../../../services/cardsService';
-import columnsService from '../../../services/columnsService';
-
 import { LexoRank } from 'lexorank';
+import useCardsService from '../../../services/useCardsService';
+import useColumnsService from '../../../services/columnsService';
 
 const useDragDropController = (
   board,
@@ -13,6 +12,9 @@ const useDragDropController = (
   setChildCard,
   setMergeCardModalVisible,
 ) => {
+  const cardsService = useCardsService();
+  const columnsService = useColumnsService();
+
   const handleDragEnd = (result) => {
     // Take the source and destination details from the result
     const { source, destination } = result;

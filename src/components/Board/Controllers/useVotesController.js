@@ -1,6 +1,8 @@
-import votesService from '../../../services/votesService';
+import useVotesService from '../../../services/useVotesService';
 
 const useVotesController = (board, votes, setVotes) => {
+  const votesService = useVotesService();
+
   const addVote = async (vote) => {
     // Call the API
     const _newVote = await votesService.create(

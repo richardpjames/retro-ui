@@ -1,12 +1,10 @@
-import actionsService from '../../../services/actionsService';
-import boardsService from '../../../services/boardsService';
-import cardsService from '../../../services/cardsService';
-import columnsService from '../../../services/columnsService';
-import usersService from '../../../services/usersService';
-import votesService from '../../../services/votesService';
-import teamsService from '../../../services/teamsService';
-
-import { useHistory } from 'react-router-dom';
+import useBoardsService from '../../../services/useBoardsService';
+import useTeamsService from '../../../services/useTeamsService';
+import useCardsService from '../../../services/useCardsService';
+import useUsersService from '../../../services/useUsersService';
+import useColumnsService from '../../../services/columnsService';
+import useVotesService from '../../../services/useVotesService';
+import useActionsService from '../../../services/useActionsService';
 
 const useFetchData = (
   props,
@@ -20,7 +18,13 @@ const useFetchData = (
   setTeams,
   showinstructions,
 ) => {
-  const history = useHistory();
+  const boardsService = useBoardsService();
+  const teamsService = useTeamsService();
+  const cardsService = useCardsService();
+  const usersService = useUsersService();
+  const columnsService = useColumnsService();
+  const votesService = useVotesService();
+  const actionsService = useActionsService();
 
   const fetchData = async (showLoadingBar = false) => {
     try {
@@ -87,7 +91,6 @@ const useFetchData = (
     } catch (error) {
       // For now just log any errors - TODO: Improve error handling
       setLoading(false);
-      history.push(`/error/${error}`);
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import templateService from '../../../services/templatesService';
 import { toast } from 'react-toastify';
+import useTemplatesService from '../../../services/useTemplatesService';
 
 const NewBoardModal = (props) => {
   // Create three new state objects to hold the name, description and starter template for the board
@@ -12,6 +12,8 @@ const NewBoardModal = (props) => {
   const [boardTeam, setBoardTeam] = useState('');
   const [templates, setTemplates] = useState([]);
   const [displayInstructions, setDisplayInstructions] = useState(true);
+
+  const templatesService = useTemplatesService();
 
   // When the form is submitted
   const handleSubmit = (event) => {
@@ -62,7 +64,7 @@ const NewBoardModal = (props) => {
   // This is the initial load of templates for the user
   useEffect(() => {
     const fetchData = async () => {
-      let templateData = await templateService.getAll();
+      let templateData = await templatesService.getAll();
 
       // If there are templates returned then sort and set
       if (templateData) {
