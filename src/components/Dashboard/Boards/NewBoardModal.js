@@ -80,6 +80,7 @@ const NewBoardModal = (props) => {
     } catch (error) {
       toast.error(error);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // This returns the markup
