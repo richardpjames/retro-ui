@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import Icon from '../Common/Icon';
+import PasswordMeter from './PasswordMeter';
 
 const Reset = (props) => {
   document.title = 'RetroSpectacle - Password Reset';
@@ -56,46 +57,59 @@ const Reset = (props) => {
         <div className="content mx-5 my-5">
           <h1 className="title is-1">Forgotten Password</h1>
 
-          {error && <div className="notification is-danger">{error}</div>}
-          {message && <div className="notification is-success">{message}</div>}
+          <div className="columns">
+            <div className="column">
+              {error && <div className="notification is-danger">{error}</div>}
+              {message && (
+                <div className="notification is-success">{message}</div>
+              )}
 
-          <form onSubmit={handleSubmit}>
-            <div className="field">
-              <label htmlFor="password">Password</label>
-              <input
-                type="password"
-                className="input is-fullwidth mb-1"
-                name="password"
-                id="password"
-                placeholder="Password..."
-                value={input.password}
-                onChange={handleChange}
-                required
+              <form onSubmit={handleSubmit}>
+                <div className="field">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    className="input is-fullwidth mb-1"
+                    name="password"
+                    id="password"
+                    placeholder="Password..."
+                    value={input.password}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <div className="field">
+                  <label htmlFor="password">Confirm Password</label>
+                  <input
+                    type="password"
+                    className="input is-fullwidth mb-1"
+                    name="confirmPassword"
+                    id="confirmPassword"
+                    placeholder="Confirm Password..."
+                    value={input.confirmPassword}
+                    onChange={handleChange}
+                    required
+                  />
+                </div>
+
+                <button
+                  className="button is-primary is-fullwidth"
+                  disabled={disabled}
+                >
+                  <Icon class="fas fa-unlock-alt" padding />
+                  Reset Password
+                </button>
+              </form>
+            </div>
+            <div className="column">
+              <PasswordMeter
+                password={input.password}
+                confirmPassword={input.confirmPassword}
+                setDisabled={setDisabled}
               />
             </div>
-
-            <div className="field">
-              <label htmlFor="password">Confirm Password</label>
-              <input
-                type="password"
-                className="input is-fullwidth mb-1"
-                name="confirmPassword"
-                id="confirmPassword"
-                placeholder="Confirm Password..."
-                value={input.confirmPassword}
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <button
-              className="button is-primary is-fullwidth"
-              disabled={disabled}
-            >
-              <Icon class="fas fa-unlock-alt" padding />
-              Reset Password
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </>

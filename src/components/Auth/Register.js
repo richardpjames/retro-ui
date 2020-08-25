@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Icon from '../Common/Icon';
+import PasswordMeter from './PasswordMeter';
 
 const Register = (props) => {
   const history = useHistory();
@@ -12,6 +13,7 @@ const Register = (props) => {
     nickname: '',
   });
   const [message, setMessage] = useState();
+  const [disabled, setDisabled] = useState(true);
 
   document.title = 'RetroSpectacle - Login';
   document
@@ -72,68 +74,82 @@ const Register = (props) => {
 
       {message && <div className="notification is-danger">{message}</div>}
 
-      <form onSubmit={handleRegistration}>
-        <div className="field">
-          <label htmlFor="username">Email Address</label>
-          <input
-            type="email"
-            className="input is-fullwidth mb-1"
-            name="email"
-            id="email"
-            placeholder="Email Address..."
-            value={registrationRequest.email}
-            onChange={handleChange}
-            required
+      <div className="columns">
+        <div className="column">
+          <form onSubmit={handleRegistration}>
+            <div className="field">
+              <label htmlFor="username">Email Address</label>
+              <input
+                type="email"
+                className="input is-fullwidth mb-1"
+                name="email"
+                id="email"
+                placeholder="Email Address..."
+                value={registrationRequest.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="username">Nickname</label>
+              <input
+                type="text"
+                className="input is-fullwidth mb-1"
+                name="nickname"
+                id="nickname"
+                placeholder="Nickname..."
+                value={registrationRequest.nickname}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                className="input is-fullwidth mb-1"
+                name="password"
+                id="password"
+                placeholder="Password..."
+                value={registrationRequest.password}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="confirmPassword">Confirm Password</label>
+              <input
+                type="password"
+                className="input is-fullwidth mb-1"
+                name="confirmPassword"
+                id="confirmPassword"
+                placeholder="Confirm..."
+                value={registrationRequest.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <button
+              className="button is-primary is-fullwidth"
+              disabled={disabled}
+            >
+              <Icon class="fas fa-user-plus" padding />
+              Sign Up
+            </button>
+          </form>
+        </div>
+        <div className="column">
+          <PasswordMeter
+            password={registrationRequest.password}
+            confirmPassword={registrationRequest.confirmPassword}
+            setDisabled={setDisabled}
           />
         </div>
-
-        <div className="field">
-          <label htmlFor="username">Nickname</label>
-          <input
-            type="text"
-            className="input is-fullwidth mb-1"
-            name="nickname"
-            id="nickname"
-            placeholder="Nickname..."
-            value={registrationRequest.nickname}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="field">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="input is-fullwidth mb-1"
-            name="password"
-            id="password"
-            placeholder="Password..."
-            value={registrationRequest.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className="field">
-          <label htmlFor="confirmPassword">Confirm Password</label>
-          <input
-            type="password"
-            className="input is-fullwidth mb-1"
-            name="confirmPassword"
-            id="confirmPassword"
-            placeholder="Confirm..."
-            value={registrationRequest.confirmPassword}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button className="button is-primary is-fullwidth">
-          <Icon class="fas fa-user-plus" padding />
-          Sign Up
-        </button>
-      </form>
+      </div>
     </>
   );
 };
