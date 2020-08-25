@@ -115,7 +115,7 @@ const useCardsController = (board, cards, setCards) => {
 
   const separateCards = async (card, index) => {
     // Update at the service
-    await cardsService.removeCombined(
+    cardsService.removeCombined(
       card.boardid,
       card.columnid,
       card.cardid,
@@ -129,7 +129,7 @@ const useCardsController = (board, cards, setCards) => {
 
     _updatedCard.combinedcards.splice(index, 1);
 
-    await cardsService.update(
+    cardsService.update(
       _updatedCard.boardid,
       _updatedCard.columnid,
       _updatedCard,
