@@ -53,61 +53,76 @@ const Reset = (props) => {
 
   return (
     <>
-      <div className="container">
-        <div className="content mx-5 my-5">
-          <h1 className="title is-1">Forgotten Password</h1>
+      <div className="hero-gradient mx-0 my-0">
+        <div className="container py-5 px-5">
+          <div className="content py-5 px-5">
+            <div className="box">
+              <div className="container">
+                <div className="content mx-5 my-5">
+                  <h1 className="title is-1">Forgotten Password</h1>
 
-          <div className="columns">
-            <div className="column">
-              {error && <div className="notification is-danger">{error}</div>}
-              {message && (
-                <div className="notification is-success">{message}</div>
-              )}
+                  <p>
+                    Please choose a new password, once you've set this password
+                    you will be able to log in again.
+                  </p>
 
-              <form onSubmit={handleSubmit}>
-                <div className="field">
-                  <label htmlFor="password">Password</label>
-                  <input
-                    type="password"
-                    className="input is-fullwidth mb-1"
-                    name="password"
-                    id="password"
-                    placeholder="Password..."
-                    value={input.password}
-                    onChange={handleChange}
-                    required
-                  />
+                  <div className="columns">
+                    <div className="column">
+                      {error && (
+                        <div className="notification is-danger">{error}</div>
+                      )}
+                      {message && (
+                        <div className="notification is-success">{message}</div>
+                      )}
+
+                      <form onSubmit={handleSubmit}>
+                        <div className="field">
+                          <label htmlFor="password">Password</label>
+                          <input
+                            type="password"
+                            className="input is-fullwidth mb-1"
+                            name="password"
+                            id="password"
+                            placeholder="Password..."
+                            value={input.password}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+
+                        <div className="field">
+                          <label htmlFor="password">Confirm Password</label>
+                          <input
+                            type="password"
+                            className="input is-fullwidth mb-1"
+                            name="confirmPassword"
+                            id="confirmPassword"
+                            placeholder="Confirm Password..."
+                            value={input.confirmPassword}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+
+                        <button
+                          className="button is-primary is-fullwidth"
+                          disabled={disabled}
+                        >
+                          <Icon class="fas fa-unlock-alt" padding />
+                          Reset Password
+                        </button>
+                      </form>
+                    </div>
+                    <div className="column">
+                      <PasswordMeter
+                        password={input.password}
+                        confirmPassword={input.confirmPassword}
+                        setDisabled={setDisabled}
+                      />
+                    </div>
+                  </div>
                 </div>
-
-                <div className="field">
-                  <label htmlFor="password">Confirm Password</label>
-                  <input
-                    type="password"
-                    className="input is-fullwidth mb-1"
-                    name="confirmPassword"
-                    id="confirmPassword"
-                    placeholder="Confirm Password..."
-                    value={input.confirmPassword}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
-
-                <button
-                  className="button is-primary is-fullwidth"
-                  disabled={disabled}
-                >
-                  <Icon class="fas fa-unlock-alt" padding />
-                  Reset Password
-                </button>
-              </form>
-            </div>
-            <div className="column">
-              <PasswordMeter
-                password={input.password}
-                confirmPassword={input.confirmPassword}
-                setDisabled={setDisabled}
-              />
+              </div>
             </div>
           </div>
         </div>

@@ -96,7 +96,7 @@ const BoardTitleBar = (props) => {
                 Instructions
               </button>
             )}
-            <Link to={props.dashboardPath}>
+            <Link to="/dashboard">
               <button className="button">
                 <Icon class="fas fa-home" padding /> Dashboard
               </button>

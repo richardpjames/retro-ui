@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Icon from '../Common/Icon';
 
@@ -9,6 +9,7 @@ const Login = (props) => {
     email: '',
     password: '',
   });
+  const [disabled, setDisabled] = useState(false);
   const [message, setMessage] = useState();
 
   const handleChange = (event) => {
@@ -19,6 +20,7 @@ const Login = (props) => {
   };
 
   const handleLogin = async (event) => {
+    setDisabled(true);
     // Prevent default behaviour
     event.preventDefault();
     // Make the login request
@@ -34,59 +36,72 @@ const Login = (props) => {
       localStorage.removeItem('returnUrl');
       //history.push(url);
     } catch (error) {
+      console.log(error);
       setMessage(
         'Incorrect username or password, please check your input and try again.',
       );
       setLoginRequest({ ...loginRequest, password: '' });
+      setDisabled(false);
     }
   };
 
   return (
     <>
-      <h1 className="title is-1">Login</h1>
+      <div className="container">
+        <div className="content mx-5 my-5">
+          <h1 className="title is-1">
+            <Icon class="fas fa-sign-in-alt" padding />
+            Login
+          </h1>
+          <p>
+            Welcome back! If you are already a member of the site then you can
+            log in using your email address and password. Alternatively, you can
+            choose the register option above to create a new account.
+          </p>
 
-      {message && <div className="notification is-danger">{message}</div>}
+          {message && <div className="notification is-danger">{message}</div>}
 
-      <form onSubmit={handleLogin}>
-        <div className="field">
-          <label htmlFor="username">Email Address</label>
-          <input
-            type="email"
-            className="input is-fullwidth mb-1"
-            name="email"
-            id="email"
-            placeholder="Email Address..."
-            value={loginRequest.email}
-            onChange={handleChange}
-            required
-          />
+          <form onSubmit={handleLogin}>
+            <div className="field">
+              <label htmlFor="username">Email Address</label>
+              <input
+                type="email"
+                className="input is-fullwidth mb-1"
+                name="email"
+                id="email"
+                placeholder="Email Address..."
+                value={loginRequest.email}
+                onChange={handleChange}
+                required
+                disabled={disabled}
+              />
+            </div>
+
+            <div className="field">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                className="input is-fullwidth mb-1"
+                name="password"
+                id="password"
+                placeholder="Password..."
+                value={loginRequest.password}
+                onChange={handleChange}
+                required
+                disabled={disabled}
+              />
+            </div>
+
+            <button
+              className="button is-primary is-fullwidth"
+              disabled={disabled}
+            >
+              <Icon class="fas fa-sign-in-alt" padding />
+              Log In
+            </button>
+          </form>
         </div>
-
-        <div className="field">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            className="input is-fullwidth mb-1"
-            name="password"
-            id="password"
-            placeholder="Password..."
-            value={loginRequest.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <button className="button is-primary is-fullwidth">
-          <Icon class="fas fa-sign-in-alt" padding />
-          Log In
-        </button>
-      </form>
-      <Link to="/auth/forgotten">
-        <button className="button is-fullwidth is-size-7 mt-1">
-          <Icon class="fas fa-unlock-alt" padding />
-          Forgotten your Password?
-        </button>
-      </Link>
+      </div>
     </>
   );
 };

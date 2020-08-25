@@ -3,11 +3,6 @@ import axios from 'axios';
 import Icon from '../Common/Icon';
 
 const Forgotten = (props) => {
-  document.title = 'RetroSpectacle - Forgotten Password';
-  document
-    .querySelector('meta[name="description"]')
-    .setAttribute('content', 'The RetroSpectacle forgotten password page');
-
   const [email, setEmail] = useState('');
   const [disabled, setDisabled] = useState(false);
   const [message, setMessage] = useState('');
@@ -44,34 +39,49 @@ const Forgotten = (props) => {
     <>
       <div className="container">
         <div className="content mx-5 my-5">
-          <h1 className="title is-1">Forgotten Password</h1>
+          <div className="container">
+            <div className="content mx-5 my-5">
+              <h1 className="title is-1">
+                <Icon class="fas fa-question" padding />
+                Reset Password
+              </h1>
 
-          {error && <div className="notification is-danger">{error}</div>}
-          {message && <div className="notification is-success">{message}</div>}
+              <p>
+                If you've forgotten your password then simply type your email
+                address below. We will then email you a link so that you can
+                reset your password to something new.
+              </p>
 
-          <form onSubmit={handleSubmit}>
-            <div className="field">
-              <label htmlFor="email">Email Address</label>
-              <input
-                type="email"
-                className="input is-fullwidth mb-1"
-                name="email"
-                id="email"
-                placeholder="Email Address..."
-                value={email}
-                onChange={handleChange}
-                required
-              />
+              {error && <div className="notification is-danger">{error}</div>}
+              {message && (
+                <div className="notification is-success">{message}</div>
+              )}
+              <form onSubmit={handleSubmit}>
+                <div className="field">
+                  <label htmlFor="email">Email Address</label>
+                  <input
+                    type="email"
+                    className="input is-fullwidth mb-1"
+                    name="email"
+                    id="email"
+                    placeholder="Email Address..."
+                    value={email}
+                    onChange={handleChange}
+                    required
+                    disabled={disabled}
+                  />
+                </div>
+
+                <button
+                  className="button is-primary is-fullwidth"
+                  disabled={disabled}
+                >
+                  <Icon class="fas fa-unlock-alt" padding />
+                  Request Reset Link
+                </button>
+              </form>
             </div>
-
-            <button
-              className="button is-primary is-fullwidth"
-              disabled={disabled}
-            >
-              <Icon class="fas fa-unlock-alt" padding />
-              Request Reset Link
-            </button>
-          </form>
+          </div>
         </div>
       </div>
     </>

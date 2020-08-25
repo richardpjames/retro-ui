@@ -89,7 +89,7 @@ const Nav = (props) => {
             <NavLink
               className="navbar-item"
               activeClassName="is-active"
-              to={props.dashboardPath}
+              to="/dashboard"
               onClick={closeNavLinks}
             >
               <i className="fas fa-chalkboard-teacher mr-3"></i>
@@ -134,7 +134,14 @@ const Nav = (props) => {
                   className="navbar-item"
                   onClick={closeNavLinks}
                 >
-                  <i className="fas fa-sign-in-alt mr-3"></i> Log In / Sign Up
+                  <i className="fas fa-sign-in-alt mr-3"></i> Log In
+                </NavLink>
+                <NavLink
+                  to="/auth/register"
+                  className="navbar-item"
+                  onClick={closeNavLinks}
+                >
+                  <i className="fas fa-user-plus mr-3"></i> Sign Up
                 </NavLink>
               </>
             );

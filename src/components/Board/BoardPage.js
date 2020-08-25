@@ -203,7 +203,6 @@ const BoardPage = (props) => {
             updateBoard={updateBoard}
             profile={profile}
             votesRemaining={votesRemaining}
-            dashboardPath={props.dashboardPath}
             setCreateColumnModalVisible={setCreateColumnModalVisible}
             setShowinstructions={setShowinstructions}
           />

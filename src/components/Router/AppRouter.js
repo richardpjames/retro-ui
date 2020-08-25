@@ -11,14 +11,9 @@ import Blog from '../Blog/Blog';
 import ErrorPage from '../Pages/ErrorPage';
 import CookieBanner from '../Common/CookieBanner';
 import LoginPage from '../Auth/LoginPage';
-import Forgotten from '../Auth/Forgotten';
 import Reset from '../Auth/Reset';
 
 const AppRouter = () => {
-  // to determine some UI elements to draw.
-  const [dashboardPath, setDashboardPath] = useState(
-    localStorage.getItem('dashboard_path') || '/dashboard',
-  );
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   // This is for fetching page and blog information
@@ -47,7 +42,6 @@ const AppRouter = () => {
     <Router>
       <div className="above-footer">
         <Nav
-          dashboardPath={dashboardPath}
           isAuthenticated={isAuthenticated}
           setIsAuthenticated={setIsAuthenticated}
         />
@@ -75,22 +69,13 @@ const AppRouter = () => {
           <Route
             path="/dashboard"
             render={(props) => (
-              <Dashboard
-                {...props}
-                dashboardPath={dashboardPath}
-                setDashboardPath={setDashboardPath}
-                isAuthenticated={isAuthenticated}
-              />
+              <Dashboard {...props} isAuthenticated={isAuthenticated} />
             )}
           />
           <Route
             path="/board/:boardid"
             render={(props) => (
-              <BoardPage
-                {...props}
-                dashboardPath={dashboardPath}
-                isAuthenticated={isAuthenticated}
-              />
+              <BoardPage {...props} isAuthenticated={isAuthenticated} />
             )}
           />
           <Route
@@ -114,7 +99,7 @@ const AppRouter = () => {
             render={(props) => <ErrorPage {...props} />}
           />
           <Route
-            path="/auth/login"
+            path={['/auth/login', '/auth/register']}
             render={(props) => (
               <LoginPage
                 {...props}
@@ -122,10 +107,6 @@ const AppRouter = () => {
                 setIsAuthenticated={setIsAuthenticated}
               />
             )}
-          />
-          <Route
-            path="/auth/forgotten"
-            render={(props) => <Forgotten {...props} />}
           />
           <Route
             path="/auth/reset/:resetToken/:userid"

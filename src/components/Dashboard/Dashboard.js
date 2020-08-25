@@ -45,13 +45,6 @@ const Dashboard = (props) => {
       'The RetroSpectacle user dashboard. Control boards, actions and teams.',
     );
 
-  // Set the location of the dashboard for navigation
-  useEffect(() => {
-    // Store the current location so that other pages can return here
-    localStorage.setItem('dashboard_path', props.location.pathname);
-    props.setDashboardPath(props.location.pathname);
-  }, [props]);
-
   // Loading of all initial data
   useEffect(() => {
     const fetchData = async () => {

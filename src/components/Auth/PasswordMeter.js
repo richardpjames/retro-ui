@@ -52,6 +52,7 @@ const PasswordMeter = (props) => {
     <>
       <div className="box">
         <h5 className="is-title is5">Password Strength</h5>
+        <p>Your Password Must</p>
         <ul style={{ listStyle: 'none' }}>
           <li>
             <Icon
@@ -61,7 +62,7 @@ const PasswordMeter = (props) => {
                   : 'fas fa-times-circle padding'
               }`}
             />{' '}
-            Password Must Be 8 Characters or Longer
+            Be 8 Characters or Longer
           </li>
           <li>
             <Icon
@@ -71,7 +72,7 @@ const PasswordMeter = (props) => {
                   : 'fas fa-times-circle padding'
               }`}
             />{' '}
-            Password Must Contain 1 Upper Case Character
+            Contain 1 Upper Case Character
           </li>
           <li>
             <Icon
@@ -81,7 +82,7 @@ const PasswordMeter = (props) => {
                   : 'fas fa-times-circle padding'
               }`}
             />{' '}
-            Password Must Contain 1 Lower Case Character
+            Contain 1 Lower Case Character
           </li>
           <li>
             <Icon
@@ -91,7 +92,7 @@ const PasswordMeter = (props) => {
                   : 'fas fa-times-circle padding'
               }`}
             />{' '}
-            Password Must Contain 1 Number
+            Contain 1 Number
           </li>
           <li>
             <Icon
@@ -101,7 +102,7 @@ const PasswordMeter = (props) => {
                   : 'fas fa-times-circle padding'
               }`}
             />{' '}
-            Password Must Contain 1 Special Character
+            Contain 1 Special Character
           </li>
           <li>
             <Icon
@@ -111,7 +112,7 @@ const PasswordMeter = (props) => {
                   : 'fas fa-times-circle padding'
               }`}
             />{' '}
-            Passwords Match
+            Match The Confirmation
           </li>
         </ul>
       </div>
