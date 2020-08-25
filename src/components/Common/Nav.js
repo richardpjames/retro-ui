@@ -141,7 +141,7 @@ const Nav = (props) => {
                   className="navbar-item"
                   onClick={closeNavLinks}
                 >
-                  <i className="fas fa-user-plus mr-3"></i> Sign Up
+                  <i className="fas fa-user-plus mr-3"></i> Register
                 </NavLink>
               </>
             );
