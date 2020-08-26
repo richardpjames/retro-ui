@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 
 const Sidebar = (props) => {
   return (
-    <aside className="menu mx-5 my-5">
+    <aside className="menu mt-2">
       <p className="menu-label">Boards</p>
       <ul className="menu-list">
         <li>

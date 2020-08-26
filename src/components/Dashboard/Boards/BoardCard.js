@@ -21,7 +21,7 @@ const BoardCard = (props) => {
           <p className="my-2">{props.board.description}</p>
         </div>
         <div className="column is-narrow">
-          <div className="buttons">
+          <div className="buttons has-addons">
             <Link to={boardLink} className="button is-primary">
               <i className="fas fa-eye mr-3"></i> View
             </Link>

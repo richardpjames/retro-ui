@@ -4,7 +4,7 @@ import Icon from '../Common/Icon';
 
 const BlogSideBar = (props) => {
   return (
-    <aside className="menu mx-5 my-5">
+    <aside className="menu mt-2">
       <p className="menu-label">Categories</p>
       <ul className="menu-list">
         <li>

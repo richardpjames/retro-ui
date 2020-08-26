@@ -316,7 +316,7 @@ const Dashboard = (props) => {
   return (
     <>
       {props.isAuthenticated && (
-        <div className="columns mb-0">
+        <div className="columns mx-0 my-0">
           {loading ? <LoadingSpinner /> : null}
           <div className="column is-one-fifth has-background-white-ter">
             <Sidebar
@@ -325,7 +325,7 @@ const Dashboard = (props) => {
               pendingTeams={pendingTeams}
             />
           </div>
-          <div className="column">
+          <div className="column mx-0 my-0">
             <Switch>
               <Route
                 path="/dashboard/profile"
