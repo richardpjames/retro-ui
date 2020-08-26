@@ -145,7 +145,7 @@ const BoardSettingsModal = (props) => {
 
             <div className="field">
               <div className="control">
-                <div className="b-checkbox is-primary">
+                <div className="b-checkbox is-default">
                   <input
                     id="privateCheckbox"
                     name="privateCheckbox"
@@ -163,7 +163,7 @@ const BoardSettingsModal = (props) => {
 
             <div className="field">
               <div className="control">
-                <div className="b-checkbox is-primary">
+                <div className="b-checkbox is-default">
                   <input
                     id="showactionsCheckbox"
                     name="showactionsCheckbox"
@@ -181,7 +181,7 @@ const BoardSettingsModal = (props) => {
 
             <div className="field">
               <div className="control">
-                <div className="b-checkbox is-primary">
+                <div className="b-checkbox is-default">
                   <input
                     id="displayInstructions"
                     name="displayInstructions"
