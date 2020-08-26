@@ -13,7 +13,7 @@ const CreateActionForm = (props) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.addAction({
+    props.controllers.actionsController.addAction({
       text: actionText,
       ownerid: actionOwner,
       due: actionDue,
@@ -74,7 +74,7 @@ const CreateActionForm = (props) => {
                 value={actionOwner}
               >
                 <option></option>
-                {props.boardUsers.map((user) => (
+                {props.data.boardUsers.map((user) => (
                   <option key={user.userid} value={user.userid}>
                     {user.nickname} ({user.email})
                   </option>

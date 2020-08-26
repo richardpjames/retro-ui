@@ -1,20 +1,4 @@
-const useListenersController = (
-  io,
-  cards,
-  votes,
-  board,
-  profile,
-  columns,
-  actions,
-  setActions,
-  setBoard,
-  setCards,
-  setColumns,
-  setVotes,
-  setVotesRemaining,
-  boardUsers,
-  setBoardUsers,
-) => {
+const useListenersController = (io, data) => {
   const joinBoard = (board) => {
     if (board?.boardid) {
       // Set up socket connections - first join the room (and reconnect if needed)
@@ -33,10 +17,10 @@ const useListenersController = (
     io.removeAllListeners('card created');
     // On any new cards then update
     io.on('card created', (card) => {
-      const check = cards.find((c) => c.cardid === card.cardid);
+      const check = data.cards.find((c) => c.cardid === card.cardid);
       // If not then add it to the list
       if (!check) {
-        setCards([...cards, card]);
+        data.setCards([...data.cards, card]);
       }
     });
 
@@ -44,7 +28,7 @@ const useListenersController = (
     // For any updated cards
     io.on('card updated', (updatedCard) => {
       // Take a copy of the cards state
-      let _cards = [...cards];
+      let _cards = [...data.cards];
       // Update the card that was dragged
       _cards
         .filter((c) => c.cardid === updatedCard.cardid)
@@ -63,26 +47,26 @@ const useListenersController = (
         return -1;
       });
       // Update state with the re-ordered cards
-      setCards(_cards);
+      data.setCards(_cards);
     });
 
     io.removeAllListeners('card deleted');
     // For any deleted cards
     io.on('card deleted', (cardid) => {
       // Filter out the cards not deleted and update
-      const _cards = cards.filter((c) => c.cardid !== parseInt(cardid));
-      setCards(_cards);
-      const _votes = votes.filter((v) => v.cardid !== parseInt(cardid));
-      setVotes(_votes);
+      const _cards = data.cards.filter((c) => c.cardid !== parseInt(cardid));
+      data.setCards(_cards);
+      const _votes = data.votes.filter((v) => v.cardid !== parseInt(cardid));
+      data.setVotes(_votes);
     });
 
     io.removeAllListeners('vote created');
     // On any new cards then update
     io.on('vote created', (vote) => {
-      const check = votes.find((v) => v.voteid === vote.voteid);
+      const check = data.votes.find((v) => v.voteid === vote.voteid);
       // If not then add it to the list
       if (!check) {
-        setVotes([...votes, vote]);
+        data.setVotes([...data.votes, vote]);
       }
     });
 
@@ -90,17 +74,17 @@ const useListenersController = (
     // For any deleted votes
     io.on('vote deleted', (voteid) => {
       // Filter out the cards not deleted and update
-      const _votes = votes.filter((v) => v.voteid !== parseInt(voteid));
-      setVotes(_votes);
+      const _votes = data.votes.filter((v) => v.voteid !== parseInt(voteid));
+      data.setVotes(_votes);
     });
 
     io.removeAllListeners('action created');
     // For new columns
     io.on('action created', (action) => {
-      const check = actions.find((a) => a.actionid === action.actionid);
+      const check = data.actions.find((a) => a.actionid === action.actionid);
       // If not then add it to the list
       if (!check) {
-        let _actions = [...actions];
+        let _actions = [...data.actions];
         _actions.push(action);
         // Sort them into order
         _actions = _actions.sort((a, b) => {
@@ -114,7 +98,7 @@ const useListenersController = (
           }
           return -1;
         });
-        setActions(_actions);
+        data.setActions(_actions);
       }
     });
 
@@ -122,17 +106,19 @@ const useListenersController = (
     // For any deleted votes
     io.on('action deleted', (actionid) => {
       // Filter out the cards not deleted and update
-      const _actions = actions.filter((a) => a.actionid !== parseInt(actionid));
-      setActions(_actions);
+      const _actions = data.actions.filter(
+        (a) => a.actionid !== parseInt(actionid),
+      );
+      data.setActions(_actions);
     });
 
     io.removeAllListeners('column created');
     // For new columns
     io.on('column created', (column) => {
-      const check = columns.find((c) => c.columnid === column.columnid);
+      const check = data.columns.find((c) => c.columnid === column.columnid);
       // If not then add it to the list
       if (!check) {
-        setColumns([...columns, column]);
+        data.setColumns([...data.columns, column]);
       }
     });
 
@@ -140,7 +126,7 @@ const useListenersController = (
     // For any updated columns
     io.on('column updated', (updatedColumn) => {
       // Take a copy of the columns state
-      let _columns = [...columns];
+      let _columns = [...data.columns];
       // Update the card that was dragged
       _columns
         .filter((c) => c.columnid === updatedColumn.columnid)
@@ -155,15 +141,17 @@ const useListenersController = (
         return -1;
       });
       // Update state with the re-ordered columns
-      setColumns(_columns);
+      data.setColumns(_columns);
     });
 
     io.removeAllListeners('column deleted');
     // For any deleted cards
     io.on('column deleted', (columnid) => {
       // Filter out the cards not deleted and update
-      const _columns = columns.filter((c) => c.columnid !== parseInt(columnid));
-      setColumns(_columns);
+      const _columns = data.columns.filter(
+        (c) => c.columnid !== parseInt(columnid),
+      );
+      data.setColumns(_columns);
     });
 
     io.removeAllListeners('board updated');
@@ -171,29 +159,30 @@ const useListenersController = (
     io.on('board updated', (updatedBoard) => {
       // If teams have changed and this is now a private board then reload the page
       if (
-        (board.teamid !== updatedBoard.teamid ||
-          board.private !== updatedBoard.private) &&
+        (data.board.teamid !== updatedBoard.teamid ||
+          data.board.private !== updatedBoard.private) &&
         updatedBoard.private
       ) {
         window.location.reload(false);
       }
       // Update the board
-      setBoard(updatedBoard);
+      data.setBoard(updatedBoard);
     });
 
     io.removeAllListeners('board user created');
     // On any new cards then update
     io.on('board user created', (boardUser) => {
-      const check = boardUsers.find((u) => u.userid === boardUser.userid);
+      const check = data.boardUsers.find((u) => u.userid === boardUser.userid);
       // If not then add it to the list
       if (!check) {
-        setBoardUsers([...boardUsers, boardUser]);
+        data.setBoardUsers([...data.boardUsers, boardUser]);
       }
     });
 
     // Recalculate the votes the user has remaining
-    let votesUsed = votes.filter((v) => v.userid === profile.userid).length;
-    setVotesRemaining(board.maxvotes - votesUsed);
+    let votesUsed = data.votes.filter((v) => v.userid === data.profile.userid)
+      .length;
+    data.setVotesRemaining(data.board.maxvotes - votesUsed);
   };
 
   return { joinBoard, setupListeners };

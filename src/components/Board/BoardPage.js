@@ -17,140 +17,130 @@ import useFetchData from './Controllers/useFetchData';
 import useDragDropController from './Controllers/useDragDropController';
 
 import io from '../../services/socket';
+import useModalsController from './Controllers/useModalsController';
 
 const BoardPage = (props) => {
-  // For storing the board, and the controller
+  // Main data and setters
+  const [actions, setActions] = useState([]);
   const [board, setBoard] = useState({});
-  const { updateBoard } = useBoardsController(board, setBoard);
-
-  // For storing the board users
   const [boardUsers, setBoardUsers] = useState([]);
-
-  // For storing cards, and the controller
   const [cards, setCards] = useState([]);
-  const {
-    addCard,
-    deleteCard,
-    combineCards,
-    separateCards,
-    updateCard,
-  } = useCardsController(board, cards, setCards);
-
-  // For storing columns and the controller
   const [columns, setColumns] = useState([]);
-  const { addColumn, renameColumn, deleteColumn } = useColumnsController(
+  const [loading, setLoading] = useState(false);
+  const [profile, setProfile] = useState({});
+  const [showinstructions, setShowinstructions] = useState(false);
+  const [teams, setTeams] = useState([]);
+  const [votes, setVotes] = useState([]);
+  const [votesRemaining, setVotesRemaining] = useState(0);
+
+  // Hold all data in a single object for easier passing
+  const data = {
+    actions,
+    setActions,
     board,
+    setBoard,
+    boardUsers,
+    setBoardUsers,
     cards,
     setCards,
     columns,
     setColumns,
-  );
-
-  // For storing teams
-  const [teams, setTeams] = useState([]);
-
-  // For storing votes and the controller
-  const [votes, setVotes] = useState([]);
-  const [votesRemaining, setVotesRemaining] = useState(0);
-  const { addVote, deleteVote } = useVotesController(board, votes, setVotes);
-
-  // For storing the users profile (no controller required)
-  const [profile, setProfile] = useState({});
-
-  // For storing actions and the controller
-  const [actions, setActions] = useState([]);
-  const { addAction, deleteAction } = useActionsController(
-    board,
-    actions,
-    setActions,
-  );
-
-  // After all data is set up, this is used to fetch data
-  const [loading, setLoading] = useState(false);
-  // Showing instructions on load of page
-  const [showinstructions, setShowinstructions] = useState(false);
-  const { fetchData } = useFetchData(
-    props,
+    loading,
     setLoading,
-    setActions,
-    setBoard,
-    setCards,
-    setColumns,
+    profile,
     setProfile,
-    setVotes,
-    setTeams,
+    showinstructions,
     setShowinstructions,
-    setBoardUsers,
-  );
+    teams,
+    setTeams,
+    votes,
+    setVotes,
+    votesRemaining,
+    setVotesRemaining,
+  };
 
-  // Creation of columns
-  const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
-    false,
-  );
-
-  // These items of state are required to drive the modal for merging and separating cards
+  // Needed primarily for modals to work correctly
   const [parentCard, setParentCard] = useState({});
   const [childCard, setChildCard] = useState({});
   const [mergeCardModalVisible, setMergeCardModalVisible] = useState(false);
+  const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
+    false,
+  );
   const [parentCardToSeparate, setParentCardToSeparate] = useState({});
   const [childCardToSeparate, setChildCardToSeparate] = useState(0);
   const [separateCardModalVisible, setSeparateCardModalVisible] = useState(
     false,
   );
 
-  // For handling behaviour of a drag end
-  const { handleDragEnd } = useDragDropController(
-    board,
-    cards,
-    columns,
-    setCards,
-    setColumns,
+  // Add to a single object for easy passing
+  const modals = {
+    parentCard,
+    setParentCard,
+    childCard,
+    setChildCard,
+    mergeCardModalVisible,
+    setMergeCardModalVisible,
+    createColumnModalVisible,
+    setCreateColumnModalVisible,
+    parentCardToSeparate,
+    setParentCardToSeparate,
+    childCardToSeparate,
+    setChildCardToSeparate,
+    separateCardModalVisible,
+    setSeparateCardModalVisible,
+  };
+
+  // Set up controllers
+  const dataController = useFetchData(props, data);
+  const boardsController = useBoardsController(data);
+  const cardsController = useCardsController(data);
+  const columnsController = useColumnsController(data);
+  const votesController = useVotesController(data);
+  const actionsController = useActionsController(data);
+  const listenerController = useListenersController(io, data);
+  const dragDropController = useDragDropController(
+    data,
     setParentCard,
     setChildCard,
     setMergeCardModalVisible,
   );
-
-  // For setting up listeners
-  const { joinBoard, setupListeners } = useListenersController(
-    io,
-    cards,
-    votes,
-    board,
-    profile,
-    columns,
-    actions,
-    setActions,
-    setBoard,
-    setCards,
-    setColumns,
-    setVotes,
-    setVotesRemaining,
-    boardUsers,
-    setBoardUsers,
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalSettings, setModalSettings] = useState({});
+  const modalsController = useModalsController(
+    setModalSettings,
+    setModalVisible,
   );
 
-  // This is the initial load of existing boards for the user
+  // Hold all of the controllers in a single object for easy passing
+  const controllers = {
+    dataController,
+    boardsController,
+    cardsController,
+    columnsController,
+    votesController,
+    actionsController,
+    listenerController,
+    dragDropController,
+    modalsController,
+  };
+
+  // This is the initial load
   useEffect(() => {
-    // Fetch initial data
-    fetchData(true);
+    dataController.fetchData(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
-  // Set the page title
+  // Set the page title and listeners once the board is set
   useEffect(() => {
     // Join the board socket io
-    joinBoard(board);
+    listenerController.joinBoard(board);
     document.title = `RetroSpectacle - ${board.name}`;
     document
       .querySelector('meta[name="description"]')
       .setAttribute('content', board.description);
+    listenerController.setupListeners();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [board]);
-
-  useEffect(() => {
-    // Set up socket io listeners
-    setupListeners();
-  }, [setupListeners]);
 
   return (
     <>
@@ -159,6 +149,20 @@ const BoardPage = (props) => {
           {(() => {
             if (loading) return <LoadingSpinner />;
           })()}
+
+          {modalVisible && (
+            <Modal
+              title={modalSettings.title}
+              action={modalSettings.action}
+              message={modalSettings.message}
+              markdown={modalSettings.markdown}
+              setVisible={setModalVisible}
+              function={modalSettings.function}
+              icon={modalSettings.icon}
+              hideCancel={modalSettings.hideCancel}
+              danger={modalSettings.danger}
+            />
+          )}
 
           {showinstructions && board.instructions && (
             <Modal
@@ -178,7 +182,7 @@ const BoardPage = (props) => {
               message="Are you sure that you want to merge these cards?"
               action="Merge"
               function={() => {
-                combineCards(parentCard, childCard);
+                cardsController.combineCards(parentCard, childCard);
               }}
               setVisible={setMergeCardModalVisible}
               icon="fas fa-link"
@@ -191,54 +195,26 @@ const BoardPage = (props) => {
               message="Are you sure that you want to separate these cards?"
               action="Separate"
               function={() => {
-                separateCards(parentCardToSeparate, childCardToSeparate);
+                cardsController.separateCards(
+                  parentCardToSeparate,
+                  childCardToSeparate,
+                );
               }}
               setVisible={setSeparateCardModalVisible}
               icon="fas fa-unlink"
             />
           )}
-
           <CreateColumnModal
             visible={createColumnModalVisible}
             setVisible={setCreateColumnModalVisible}
-            addColumn={addColumn}
+            controllers={controllers}
           />
-
           <BoardTitleBar
-            board={board}
-            boardUsers={boardUsers}
-            teams={teams}
-            updateBoard={updateBoard}
-            profile={profile}
-            votesRemaining={votesRemaining}
-            setCreateColumnModalVisible={setCreateColumnModalVisible}
-            setShowinstructions={setShowinstructions}
+            data={data}
+            controllers={controllers}
+            modals={modals}
           />
-
-          <Board
-            board={board}
-            boardUsers={boardUsers}
-            profile={profile}
-            columns={columns}
-            cards={cards}
-            votes={votes}
-            actions={actions}
-            addAction={addAction}
-            handleDragEnd={handleDragEnd}
-            deleteColumn={deleteColumn}
-            addCard={addCard}
-            updateCard={updateCard}
-            deleteCard={deleteCard}
-            addVote={addVote}
-            deleteVote={deleteVote}
-            votesRemaining={votesRemaining}
-            setCreateColumnModalVisible={setCreateColumnModalVisible}
-            renameColumn={renameColumn}
-            deleteAction={deleteAction}
-            setParentCardToSeparate={setParentCardToSeparate}
-            setChildCardToSeparate={setChildCardToSeparate}
-            setSeparateCardModalVisible={setSeparateCardModalVisible}
-          />
+          <Board data={data} controllers={controllers} modals={modals} />
         </div>
       )}
     </>

@@ -3,11 +3,7 @@ import useCardsService from '../../../services/useCardsService';
 import useColumnsService from '../../../services/columnsService';
 
 const useDragDropController = (
-  board,
-  cards,
-  columns,
-  setCards,
-  setColumns,
+  data,
   setParentCard,
   setChildCard,
   setMergeCardModalVisible,
@@ -22,12 +18,12 @@ const useDragDropController = (
     // If combined
     if (result.combine) {
       setParentCard(
-        cards.find(
+        data.cards.find(
           (c) => c.cardid === parseInt(result.combine.draggableId.substring(4)),
         ),
       );
       setChildCard(
-        cards.find(
+        data.cards.find(
           (c) => c.cardid === parseInt(result.draggableId.substring(4)),
         ),
       );
@@ -40,9 +36,9 @@ const useDragDropController = (
     }
 
     // Take a copy of the cards state
-    let _cards = [...cards];
+    let _cards = [...data.cards];
     // Take a copy of the columns state
-    let _columns = [...columns];
+    let _columns = [...data.columns];
     // A variable for the new rank
     let newRank = LexoRank.middle().toString();
 
@@ -72,7 +68,7 @@ const useDragDropController = (
         .filter((c) => c.columnid === parseInt(result.draggableId.substring(4)))
         .map(async (column) => {
           column.rank = newRank;
-          columnsService.update(board.boardid, column);
+          columnsService.update(data.board.boardid, column);
         });
 
       // Sort the cards into order
@@ -81,7 +77,7 @@ const useDragDropController = (
         return -1;
       });
       // Set the state
-      setColumns(_columns);
+      data.setColumns(_columns);
       return;
     }
 
@@ -122,7 +118,7 @@ const useDragDropController = (
       .map(async (card) => {
         card.rank = newRank;
         card.columnid = parseInt(destination.droppableId);
-        cardsService.update(board.boardid, source.droppableId, card);
+        cardsService.update(data.board.boardid, source.droppableId, card);
       });
 
     // Sort the cards into order
@@ -132,7 +128,7 @@ const useDragDropController = (
       return -1;
     });
     // Update state with the re-ordered cards
-    setCards(_cards);
+    data.setCards(_cards);
   };
 
   return { handleDragEnd };

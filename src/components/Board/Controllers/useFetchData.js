@@ -6,19 +6,7 @@ import useColumnsService from '../../../services/columnsService';
 import useVotesService from '../../../services/useVotesService';
 import useActionsService from '../../../services/useActionsService';
 
-const useFetchData = (
-  props,
-  setLoading,
-  setActions,
-  setBoard,
-  setCards,
-  setColumns,
-  setProfile,
-  setVotes,
-  setTeams,
-  setShowinstructions,
-  setBoardUsers,
-) => {
+const useFetchData = (props, data) => {
   const boardsService = useBoardsService();
   const teamsService = useTeamsService();
   const cardsService = useCardsService();
@@ -29,7 +17,7 @@ const useFetchData = (
 
   const fetchData = async (showLoadingBar = false) => {
     try {
-      setLoading(showLoadingBar);
+      data.setLoading(showLoadingBar);
       // Call the API
       let _board = await boardsService.getById(props.match.params.boardid);
       let _boardUsers = await boardsService.getUsers(
@@ -76,26 +64,28 @@ const useFetchData = (
           if (a.name > b.name) return 1;
           return -1;
         });
-        setTeams(_teams);
+        data.setTeams(_teams);
       } // Update the user profile
-      setProfile(_profile);
+      data.setProfile(_profile);
       // Update the boards
-      setBoard(_board);
-      setBoardUsers(_boardUsers);
-      setShowinstructions(_board.showinstructions);
+      data.setBoard(_board);
+      // Set the boards users (those who have viewed)
+      data.setBoardUsers(_boardUsers);
+      // Determine whether to show instructions
+      data.setShowinstructions(_board.showinstructions);
       // Update the columns
-      setColumns(_columns);
+      data.setColumns(_columns);
       // Update the cards
-      setCards(_cards);
+      data.setCards(_cards);
       // Update the votes
-      setVotes(_votes);
+      data.setVotes(_votes);
       // Update the actions
-      setActions(_actions);
+      data.setActions(_actions);
       // Stop loading bar
-      setLoading(false);
+      data.setLoading(false);
     } catch (error) {
       // For now just log any errors - TODO: Improve error handling
-      setLoading(false);
+      data.setLoading(false);
     }
   };
 

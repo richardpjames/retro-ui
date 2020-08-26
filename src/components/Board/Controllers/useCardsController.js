@@ -1,14 +1,14 @@
 import { LexoRank } from 'lexorank';
 import useCardsService from '../../../services/useCardsService';
 
-const useCardsController = (board, cards, setCards) => {
+const useCardsController = (data) => {
   const cardsService = useCardsService();
 
   const addCard = async (card) => {
     // Get the column from the card and then remove
     const columnid = card.columnid;
     // Set the rank based on the highest in the column
-    const columnCards = cards.filter((c) => c.columnid === columnid);
+    const columnCards = data.cards.filter((c) => c.columnid === columnid);
     if (columnCards.length > 0) {
       const highestRank = columnCards[columnCards.length - 1].rank;
       const highestLexoRank = LexoRank.parse(highestRank);
@@ -18,30 +18,30 @@ const useCardsController = (board, cards, setCards) => {
     }
     // Call the API
     const _newCard = await cardsService.create(
-      board.boardid,
+      data.board.boardid,
       card.columnid,
       card,
     );
     // Add the new card to the list
-    setCards([...cards, _newCard]);
+    data.setCards([...data.cards, _newCard]);
   };
 
   const deleteCard = async (card) => {
     // Call the API
-    cardsService.remove(board.boardid, card.columnid, card.cardid);
+    cardsService.remove(data.board.boardid, card.columnid, card.cardid);
     // Remove the card from the list (and any children)
-    const _cards = cards.filter(
+    const _cards = data.cards.filter(
       (c) => c.cardid !== card.cardid && c.parentid !== card.cardid,
     );
     // Save changes to state
-    setCards(_cards);
+    data.setCards(_cards);
   };
 
   const updateCard = async (card) => {
     // Call the api
-    cardsService.update(board.boardid, card.columnid, card);
+    cardsService.update(data.board.boardid, card.columnid, card);
     // Take a copy of the cards state
-    let _cards = [...cards];
+    let _cards = [...data.cards];
     // Update the card that was updated
     _cards
       .filter((c) => c.cardid === card.cardid)
@@ -59,42 +59,42 @@ const useCardsController = (board, cards, setCards) => {
       return -1;
     });
     // Update state with the re-ordered cards
-    setCards(_cards);
+    data.setCards(_cards);
   };
 
   const combineCards = async (parentCard, childCard) => {
     // Take a copy of the cards
-    const _cards = [...cards];
+    const _cards = [...data.cards];
     // Update the child card
     const _card = _cards.find((c) => c.cardid === childCard.cardid);
     _card.parentid = parentCard.cardid;
     // Then update on the service
-    await cardsService.update(board.boardid, childCard.columnid, _card);
+    await cardsService.update(data.board.boardid, childCard.columnid, _card);
     // Check for other cards to be updated any already merged cards
     _cards.map(async (c) => {
       // If any cards were children of the child card then update them to be
       // children of the new parent
       if (c.parentid === childCard.cardid) {
         c.parentid = parentCard.cardid;
-        await cardsService.update(board.boardid, childCard.columnid, c);
+        await cardsService.update(data.board.boardid, childCard.columnid, c);
       }
     });
     // Update the state
-    setCards(_cards);
+    data.setCards(_cards);
   };
 
   const separateCards = async (parentCard, childCard) => {
     // Copies of the data we need
     const _columnid = childCard.columnid;
-    const _cards = [...cards];
+    const _cards = [...data.cards];
     const _card = _cards.find((c) => c.cardid === childCard.cardid);
     // Remove the parentid and change the column
     _card.columnid = parentCard.columnid;
     _card.parentid = null;
     // Update at the service
-    await cardsService.update(board.boardid, _columnid, _card);
+    await cardsService.update(data.board.boardid, _columnid, _card);
     // Update the state
-    setCards(_cards);
+    data.setCards(_cards);
   };
 
   return { addCard, deleteCard, updateCard, combineCards, separateCards };

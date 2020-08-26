@@ -1,6 +1,6 @@
 import useBoardsService from '../../../services/useBoardsService';
 
-const useBoardsController = (board, setBoard) => {
+const useBoardsController = (data) => {
   const boardsService = useBoardsService();
 
   const updateBoard = async (board) => {
@@ -8,7 +8,7 @@ const useBoardsController = (board, setBoard) => {
     // Call the service
     boardsService.update(board);
     // Update local state
-    setBoard(board);
+    data.setBoard(board);
   };
 
   return { updateBoard };

@@ -11,7 +11,9 @@ const ColumnCard = (props) => {
   const [updatedCard, setUpdatedCard] = useState(props.card);
   const [showColourPicker, setShowColourPicker] = useState(false);
   const [showEditControls, setShowEditControls] = useState(false);
-  const userVote = props.votes.find((v) => v.userid === props.profile.userid);
+  const userVote = props.votes.find(
+    (v) => v.userid === props.data.profile.userid,
+  );
 
   // The list of colours for the colour picker
   const colours = [
@@ -61,7 +63,7 @@ const ColumnCard = (props) => {
   const handleColourChange = (colour) => {
     const _card = { ...props.card };
     _card.colour = colour.hex;
-    props.updateCard(_card);
+    props.controllers.cardsController.updateCard(_card);
     setShowColourPicker(false);
   };
 
@@ -75,20 +77,23 @@ const ColumnCard = (props) => {
     document.activeElement.blur();
     event.preventDefault();
     setEditable(false);
-    props.updateCard(updatedCard);
+    props.controllers.cardsController.updateCard(updatedCard);
   };
 
   const handleVote = (event) => {
     // Check if the board is locked
-    if (props.board.locked) {
+    if (props.data.board.locked) {
       return false;
     }
     // If the user has voted already then remove
     if (userVote) {
-      return props.deleteVote(userVote.voteid, props.card.cardid);
+      return props.controllers.votesController.deleteVote(
+        userVote.voteid,
+        props.card.cardid,
+      );
     }
     // If the user has no votes left then return
-    if (props.votesRemaining <= 0) {
+    if (props.data.votesRemaining <= 0) {
       return false;
     }
 
@@ -96,16 +101,16 @@ const ColumnCard = (props) => {
     const _vote = {
       cardid: props.card.cardid,
       boardid: props.card.boardid,
-      userid: props.profile.userid,
+      userid: props.data.profile.userid,
     };
-    return props.addVote(_vote);
+    return props.controllers.votesController.addVote(_vote);
   };
 
   const onChange = (event) => {
     setUpdatedCard({ ...updatedCard, [event.target.name]: event.target.value });
   };
 
-  if (!editable || props.board.locked) {
+  if (!editable || props.data.board.locked) {
     return (
       <>
         {deleteModalVisible && (
@@ -114,7 +119,7 @@ const ColumnCard = (props) => {
             message="Are you sure that you want to delete this card?"
             action="Delete"
             function={() => {
-              props.deleteCard(props.card);
+              props.controllers.cardsController.deleteCard(props.card);
             }}
             setVisible={setDeleteModalVisible}
             danger
@@ -137,21 +142,23 @@ const ColumnCard = (props) => {
               </strong>{' '}
               - {props.card.text}
             </p>
-            {props.cards
+            {props.data.cards
               .filter((c) => c.parentid === props.card.cardid)
               .map((card, index) => {
                 return (
                   <div key={index} className="mb-3">
                     <hr className="mb-2 mt-1" />
                     <p>
-                      {!props.board.locked && (
+                      {!props.data.board.locked && (
                         <>
                           <span className="tag is-rounded mr-1">
                             <a
                               onClick={() => {
-                                props.setParentCardToSeparate(props.card);
-                                props.setChildCardToSeparate(card);
-                                props.setSeparateCardModalVisible(true);
+                                props.modals.setParentCardToSeparate(
+                                  props.card,
+                                );
+                                props.modals.setChildCardToSeparate(card);
+                                props.modals.setSeparateCardModalVisible(true);
                               }}
                             >
                               <Icon class="fas fa-unlink" />
@@ -173,19 +180,19 @@ const ColumnCard = (props) => {
               })}
             <div className="columns is-vcentered is-mobile">
               <div className="column">
-                {!userVote && props.board.allowvotes && (
+                {!userVote && props.data.board.allowvotes && (
                   <a className="tag is-small" onClick={handleVote}>
                     <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>
                 )}
-                {userVote && props.board.allowvotes && (
+                {userVote && props.data.board.allowvotes && (
                   <a className="tag is-small is-primary" onClick={handleVote}>
                     <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>
                 )}
               </div>
               <div className="column is-narrow">
-                {!props.board.locked && (
+                {!props.data.board.locked && (
                   <>
                     <span className="tag is-rounded mr-1">
                       <a
@@ -214,7 +221,7 @@ const ColumnCard = (props) => {
                 )}
               </div>
             </div>
-            {showColourPicker && !props.board.locked && (
+            {showColourPicker && !props.data.board.locked && (
               <CirclePicker
                 onChangeComplete={handleColourChange}
                 width="100%"
@@ -225,9 +232,9 @@ const ColumnCard = (props) => {
                 )}
               />
             )}
-            {showEditControls && !props.board.locked && (
+            {showEditControls && !props.data.board.locked && (
               <div className="buttons">
-                {props.card.userid === props.profile.userid && (
+                {props.card.userid === props.data.profile.userid && (
                   <a
                     className="button is-small is-primary"
                     onClick={() => {

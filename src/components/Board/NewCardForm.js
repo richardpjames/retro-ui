@@ -12,11 +12,11 @@ const NewCardForm = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLines(1);
-    props.addCard(card);
+    props.controllers.cardsController.addCard(card);
     setCard({
       text: '',
       columnid: props.column.columnid,
-      colour: '#ffffff',
+      colour: props.column.defaultcolour || '#ffffff',
       combinedcards: [],
     });
   };

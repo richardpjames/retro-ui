@@ -1,12 +1,12 @@
 import useActionsService from '../../../services/useActionsService';
 
-const useActionsController = (board, actions, setActions) => {
+const useActionsController = (data) => {
   const actionsService = useActionsService();
 
   const addAction = async (action) => {
     // Get the required access token
-    const _newAction = await actionsService.create(action, board.boardid);
-    let _actions = [...actions];
+    const _newAction = await actionsService.create(action, data.board.boardid);
+    let _actions = [...data.actions];
     _actions.push(_newAction);
     // Sort them into order
     _actions = _actions.sort((a, b) => {
@@ -20,15 +20,15 @@ const useActionsController = (board, actions, setActions) => {
       }
       return -1;
     });
-    setActions(_actions);
+    data.setActions(_actions);
   };
 
   const deleteAction = async (action) => {
     // Remove the column from the service
-    actionsService.remove(board.boardid, action.actionid);
+    actionsService.remove(data.board.boardid, action.actionid);
     // Remove the column from the list
-    const _actions = actions.filter((a) => a.actionid !== action.actionid);
-    setActions(_actions);
+    const _actions = data.actions.filter((a) => a.actionid !== action.actionid);
+    data.setActions(_actions);
   };
 
   return { addAction, deleteAction };

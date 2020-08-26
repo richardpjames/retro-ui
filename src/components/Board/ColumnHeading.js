@@ -11,13 +11,16 @@ const ColumnHeading = (props) => {
 
   const handleSave = (event) => {
     event.preventDefault();
-    props.renameColumn({ ...props.column, title: columnTitle });
+    props.controllers.columnsController.renameColumn({
+      ...props.column,
+      title: columnTitle,
+    });
     setEditable(false);
   };
 
   const handleCancel = () => {
     setEditable(false);
-    setColumnTitle(props.column.title);
+    setColumnTitle(props.data.column.title);
   };
 
   if (editable) {
@@ -58,7 +61,7 @@ const ColumnHeading = (props) => {
           message="Are you sure that you want to delete this column?"
           action="Delete"
           function={() => {
-            props.deleteColumn(props.column);
+            props.controllers.columnsController.deleteColumn(props.column);
           }}
           setVisible={setDeleteModalVisible}
           danger
@@ -69,9 +72,9 @@ const ColumnHeading = (props) => {
           <h4 className="subtitle is-4 mb-0">{props.column.title}</h4>
         </div>
         <div className="column is-narrow">
-          {props.board.userid === props.profile.userid && (
+          {props.data.board.userid === props.data.profile.userid && (
             <>
-              {!props.board.locked && (
+              {!props.data.board.locked && (
                 <span className="tag is-rounded">
                   <a
                     className="is-small"
@@ -103,7 +106,7 @@ const ColumnHeading = (props) => {
               className="button is-small is-danger is-fullwidth"
               onClick={() => {
                 if (
-                  !props.cards.filter(
+                  !props.data.cards.filter(
                     (c) => c.columnid === props.column.columnid && !c.parentid,
                   ).length > 0
                 ) {
@@ -112,7 +115,7 @@ const ColumnHeading = (props) => {
                 }
               }}
               disabled={
-                props.cards.filter(
+                props.data.cards.filter(
                   (c) => c.columnid === props.column.columnid && !c.parentid,
                 ).length > 0
               }
