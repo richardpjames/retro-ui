@@ -12,6 +12,8 @@ const useListenersController = (
   setColumns,
   setVotes,
   setVotesRemaining,
+  boardUsers,
+  setBoardUsers,
 ) => {
   const joinBoard = (board) => {
     if (board?.boardid) {
@@ -177,6 +179,16 @@ const useListenersController = (
       }
       // Update the board
       setBoard(updatedBoard);
+    });
+
+    io.removeAllListeners('board user created');
+    // On any new cards then update
+    io.on('board user created', (boardUser) => {
+      const check = boardUsers.find((u) => u.userid === boardUser.userid);
+      // If not then add it to the list
+      if (!check) {
+        setBoardUsers([...boardUsers, boardUser]);
+      }
     });
 
     // Recalculate the votes the user has remaining

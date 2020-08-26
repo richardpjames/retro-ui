@@ -16,7 +16,8 @@ const useFetchData = (
   setProfile,
   setVotes,
   setTeams,
-  showinstructions,
+  setShowinstructions,
+  setBoardUsers,
 ) => {
   const boardsService = useBoardsService();
   const teamsService = useTeamsService();
@@ -29,9 +30,11 @@ const useFetchData = (
   const fetchData = async (showLoadingBar = false) => {
     try {
       setLoading(showLoadingBar);
-      // Get the access token required to call the API
       // Call the API
       let _board = await boardsService.getById(props.match.params.boardid);
+      let _boardUsers = await boardsService.getUsers(
+        props.match.params.boardid,
+      );
       let _columns = await columnsService.getAll(props.match.params.boardid);
       // Sort the columns
       _columns = _columns.sort((a, b) => {
@@ -78,7 +81,8 @@ const useFetchData = (
       setProfile(_profile);
       // Update the boards
       setBoard(_board);
-      showinstructions(_board.showinstructions);
+      setBoardUsers(_boardUsers);
+      setShowinstructions(_board.showinstructions);
       // Update the columns
       setColumns(_columns);
       // Update the cards

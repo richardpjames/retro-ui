@@ -5,7 +5,6 @@ const useCardsController = (board, cards, setCards) => {
   const cardsService = useCardsService();
 
   const addCard = async (card) => {
-    console.log(card);
     // Get the column from the card and then remove
     const columnid = card.columnid;
     // Set the rank based on the highest in the column

@@ -90,6 +90,7 @@ const Board = (props) => {
               {provided.placeholder}
               <ActionsColumn
                 board={props.board}
+                boardUsers={props.boardUsers}
                 profile={props.profile}
                 actions={props.actions}
                 addAction={props.addAction}

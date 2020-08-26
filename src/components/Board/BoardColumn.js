@@ -3,8 +3,6 @@ import ColumnCard from './ColumnCard';
 import { Draggable } from 'react-beautiful-dnd';
 
 const BoardColumn = (props) => {
-  console.log(props.cards);
-
   return (
     <>
       {props.cards

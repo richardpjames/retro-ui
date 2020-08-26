@@ -23,7 +23,11 @@ const useBoardsService = () => {
     return api.remove(`/api/boards/${boardid}`);
   };
 
-  return { getAll, getById, create, remove, update };
+  const getUsers = async (boardid) => {
+    return api.get(`/api/boards/${boardid}/users`);
+  };
+
+  return { getAll, getById, create, remove, update, getUsers };
 };
 
 export default useBoardsService;

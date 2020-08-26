@@ -23,6 +23,9 @@ const BoardPage = (props) => {
   const [board, setBoard] = useState({});
   const { updateBoard } = useBoardsController(board, setBoard);
 
+  // For storing the board users
+  const [boardUsers, setBoardUsers] = useState([]);
+
   // For storing cards, and the controller
   const [cards, setCards] = useState([]);
   const {
@@ -77,6 +80,7 @@ const BoardPage = (props) => {
     setVotes,
     setTeams,
     setShowinstructions,
+    setBoardUsers,
   );
 
   // Creation of columns
@@ -121,6 +125,8 @@ const BoardPage = (props) => {
     setColumns,
     setVotes,
     setVotesRemaining,
+    boardUsers,
+    setBoardUsers,
   );
 
   // This is the initial load of existing boards for the user
@@ -200,6 +206,7 @@ const BoardPage = (props) => {
 
           <BoardTitleBar
             board={board}
+            boardUsers={boardUsers}
             teams={teams}
             updateBoard={updateBoard}
             profile={profile}
@@ -210,6 +217,7 @@ const BoardPage = (props) => {
 
           <Board
             board={board}
+            boardUsers={boardUsers}
             profile={profile}
             columns={columns}
             cards={cards}

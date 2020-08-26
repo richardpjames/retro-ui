@@ -15,7 +15,7 @@ const CreateActionForm = (props) => {
     event.preventDefault();
     props.addAction({
       text: actionText,
-      owner: actionOwner,
+      ownerid: actionOwner,
       due: actionDue,
       status: 'todo',
       updates: [],
@@ -61,19 +61,27 @@ const CreateActionForm = (props) => {
         </div>
 
         <div className="field">
-          <label htmlFor="owner" className="is-size-6-7">
-            Action Owner
-          </label>
-          <input
-            type="text"
-            className="input is-fullwidth is-size-6-7 mb-1"
-            name="owner"
-            id="owner"
-            placeholder="Action owner..."
-            value={actionOwner}
-            onChange={(event) => setActionOwner(event.target.value)}
-            required
-          />
+          <label htmlFor="owner">Owner</label>
+          <div className="control">
+            <div className="select is-fullwidth">
+              <select
+                id="owner"
+                name="owner"
+                required
+                onChange={(event) => {
+                  setActionOwner(event.target.value);
+                }}
+                value={actionOwner}
+              >
+                <option></option>
+                {props.boardUsers.map((user) => (
+                  <option key={user.userid} value={user.userid}>
+                    {user.nickname} ({user.email})
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="field">

@@ -13,6 +13,7 @@ const ActionsColumn = (props) => {
               {!props.board.locked && (
                 <CreateActionForm
                   board={props.board}
+                  boardUsers={props.boardUsers}
                   profile={props.profile}
                   addAction={props.addAction}
                 />

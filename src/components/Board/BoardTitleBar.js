@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Modal from '../Common/Modal';
 import Icon from '../Common/Icon';
 import BoardSettingsModal from './BoardSettingsModal';
+import BoardUsers from './BoardUsers';
 
 const BoardTitleBar = (props) => {
   const [voteModalVisible, setVoteModalVisible] = useState(false);
@@ -46,8 +47,15 @@ const BoardTitleBar = (props) => {
           />
         )}
         <div className="column">
-          <h1 className="title is-4 mb-0">{props.board.name}</h1>
-          <p>{props.board.description}</p>
+          <div className="columns is-vcentered">
+            <div className="column is-narrow">
+              <h1 className="title is-4 mb-0">{props.board.name}</h1>
+              <p>{props.board.description}</p>
+            </div>
+            <div className="column">
+              <BoardUsers boardUsers={props.boardUsers} />
+            </div>
+          </div>
         </div>
         <div className="column is-narrow">
           <div className="buttons are-small">
@@ -104,6 +112,7 @@ const BoardTitleBar = (props) => {
           </div>
         </div>
       </div>
+
       {props.board.allowvotes && !props.board.locked ? (
         <div className="notification is-primary">
           <Icon class="fas fa-exclamation-triangle" padding />
