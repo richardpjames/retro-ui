@@ -318,14 +318,14 @@ const Dashboard = (props) => {
       {props.isAuthenticated && (
         <div className="columns mx-0 my-0">
           {loading ? <LoadingSpinner /> : null}
-          <div className="column is-one-fifth has-background-white-ter">
+          <div className="column is-narrow has-background-grey-dark ">
             <Sidebar
               teams={teams}
               profile={profile}
               pendingTeams={pendingTeams}
             />
           </div>
-          <div className="column mx-0 my-0">
+          <div className="column mx-0 my-0 has-background-white-ter">
             <Switch>
               <Route
                 path="/dashboard/profile"
