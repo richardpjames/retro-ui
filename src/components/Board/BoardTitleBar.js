@@ -73,7 +73,7 @@ const BoardTitleBar = (props) => {
           </div>
         </div>
         <div className="column is-narrow">
-          <div className="buttons are-small">
+          <div className="buttons has-addons are-small">
             {props.data.board.userid === props.data.profile.userid && (
               <>
                 <button
