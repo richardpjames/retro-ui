@@ -6,7 +6,7 @@ const CreateColumnModal = (props) => {
   // When the form is submitted
   const handleSubmit = (event) => {
     event.preventDefault();
-    props.contollers.columnsController.addColumn({
+    props.controllers.columnsController.addColumn({
       title: columnName,
     });
     setColumnName('');

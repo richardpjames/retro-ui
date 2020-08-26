@@ -22,24 +22,21 @@ const useColumnsController = (data) => {
   };
 
   const renameColumn = async (column) => {
-    // Rename the column in the service
-    columnsService.update(data.board.boardid, column);
     // Rename the column in the list
     const _columns = [...data.columns];
     const updatedColumn = _columns.find((c) => c.columnid === column.columnid);
     updatedColumn.title = column.title;
     data.setColumns(_columns);
+    // Rename the column in the service
+    columnsService.update(data.board.boardid, column);
   };
 
   const deleteColumn = async (column) => {
-    // Remove the column from the service
-    columnsService.remove(data.board.boardid, column.columnid);
     // Remove the column from the list
     const _columns = data.columns.filter((c) => c.columnid !== column.columnid);
     data.setColumns(_columns);
-    // Remove any cards
-    const _cards = data.cards.filter((c) => c.columnid !== column.columnid);
-    data.setCards(_cards);
+    // Remove the column from the service
+    columnsService.remove(data.board.boardid, column.columnid);
   };
 
   return { addColumn, renameColumn, deleteColumn };

@@ -59,17 +59,6 @@ const BoardPage = (props) => {
     setVotesRemaining,
   };
 
-  // Needed primarily for modals to work correctly
-  const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
-    false,
-  );
-
-  // Add to a single object for easy passing
-  const modals = {
-    createColumnModalVisible,
-    setCreateColumnModalVisible,
-  };
-
   // Mechanism for generic modals
   const [modalVisible, setModalVisible] = useState(false);
   const [modalSettings, setModalSettings] = useState({});
@@ -108,7 +97,7 @@ const BoardPage = (props) => {
   useEffect(() => {
     dataController.fetchData(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
+  }, []);
 
   // Set the page title and listeners once the board is set
   useEffect(() => {
@@ -119,8 +108,7 @@ const BoardPage = (props) => {
       .querySelector('meta[name="description"]')
       .setAttribute('content', board.description);
     listenerController.setupListeners();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [board]);
+  }, [board, listenerController]);
 
   return (
     <>
@@ -129,7 +117,6 @@ const BoardPage = (props) => {
           {(() => {
             if (loading) return <LoadingSpinner />;
           })()}
-
           {modalVisible && (
             <Modal
               title={modalSettings.title}
@@ -143,7 +130,6 @@ const BoardPage = (props) => {
               danger={modalSettings.danger}
             />
           )}
-
           {showinstructions && board.instructions && (
             <Modal
               title="Instructions"
@@ -155,18 +141,8 @@ const BoardPage = (props) => {
               hideCancel
             />
           )}
-
-          <CreateColumnModal
-            visible={createColumnModalVisible}
-            setVisible={setCreateColumnModalVisible}
-            controllers={controllers}
-          />
-          <BoardTitleBar
-            data={data}
-            controllers={controllers}
-            modals={modals}
-          />
-          <Board data={data} controllers={controllers} modals={modals} />
+          <BoardTitleBar data={data} controllers={controllers} />
+          <Board data={data} controllers={controllers} />
         </div>
       )}
     </>

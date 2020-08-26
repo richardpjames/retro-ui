@@ -70,6 +70,7 @@ const useCardsController = (data) => {
     // Update the child card
     const _card = _cards.find((c) => c.cardid === childCard.cardid);
     _card.parentid = parentCard.cardid;
+    _card.columnid = parentCard.columnid;
     // Then update on the service
     await cardsService.update(data.board.boardid, childCard.columnid, _card);
     // Remove any votes for the child card

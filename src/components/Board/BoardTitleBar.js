@@ -4,14 +4,23 @@ import Modal from '../Common/Modal';
 import Icon from '../Common/Icon';
 import BoardSettingsModal from './BoardSettingsModal';
 import BoardUsers from './BoardUsers';
+import CreateColumnModal from './CreateColumnModal';
 
 const BoardTitleBar = (props) => {
   const [voteModalVisible, setVoteModalVisible] = useState(false);
   const [lockModalVisible, setLockModalVisible] = useState(false);
+  const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
+    false,
+  );
   const [settingsModalVisible, setSettingsModalVisible] = useState(false);
 
   return (
     <>
+      <CreateColumnModal
+        visible={createColumnModalVisible}
+        setVisible={setCreateColumnModalVisible}
+        controllers={props.controllers}
+      />
       {settingsModalVisible && (
         <BoardSettingsModal
           setVisible={setSettingsModalVisible}
@@ -99,7 +108,7 @@ const BoardTitleBar = (props) => {
                 </button>
                 <button
                   className="button"
-                  onClick={() => props.modals.setCreateColumnModalVisible(true)}
+                  onClick={() => setCreateColumnModalVisible(true)}
                   disabled={props.data.board.locked}
                 >
                   <Icon class="fas fa-plus" padding />
