@@ -15,27 +15,48 @@ const ColumnCard = (props) => {
 
   // The list of colours for the colour picker
   const colours = [
-    '#FFFFFF',
-    '#FDFD96',
-    '#FF9AA2',
-    '#FFB7B2',
-    '#FFDAC1',
-    '#E2F0CB',
-    '#B5EAD7',
-    '#C7CEEA',
+    '#ffffff',
     '#444444',
+    '#f44336',
+    '#e91e63',
+    '#9c27b0',
+    '#673ab7',
+    '#3f51b5',
+    '#2196f3',
+    '#00bcd4',
+    '#009688',
+    '#4caf50',
+    '#8bc34a',
+    '#cddc39',
+    '#ffeb3b',
+    '#ffc107',
+    '#ff9800',
+    '#ff5722',
+    '#607d8b',
+    '#795548',
   ];
   // These are the foreground colours to use with the colours above
   const foreground = [];
   foreground['#FFFFFF'] = '#4a4a4a';
-  foreground['#FDFD96'] = '#4a4a4a';
-  foreground['#FF9AA2'] = '#4a4a4a';
-  foreground['#FFB7B2'] = '#4a4a4a';
-  foreground['#FFDAC1'] = '#4a4a4a';
-  foreground['#E2F0CB'] = '#4a4a4a';
-  foreground['#B5EAD7'] = '#4a4a4a';
-  foreground['#C7CEEA'] = '#4a4a4a';
-  foreground['#444444'] = '#b5b5b5';
+  foreground['#444444'] = '#f5f5f5';
+  foreground['#f44336'] = '#f5f5f5';
+  foreground['#e91e63'] = '#f5f5f5';
+  foreground['#9c27b0'] = '#f5f5f5';
+  foreground['#673ab7'] = '#f5f5f5';
+  foreground['#3f51b5'] = '#f5f5f5';
+  foreground['#2196f3'] = '#f5f5f5';
+  foreground['#00bcd4'] = '#4a4a4a';
+  foreground['#009688'] = '#f5f5f5';
+  foreground['#4caf50'] = '#f5f5f5';
+  foreground['#8bc34a'] = '#4a4a4a';
+  foreground['#cddc39'] = '#4a4a4a';
+  foreground['#ffeb3b'] = '#4a4a4a';
+  foreground['#ffc107'] = '#4a4a4a';
+  foreground['#ff9800'] = '#f5f5f5';
+  foreground['#ff5722'] = '#f5f5f5';
+  foreground['#795548'] = '#f5f5f5';
+  foreground['#607d8b'] = '#f5f5f5';
+  foreground['#795548'] = '#f5f5f5';
 
   const handleColourChange = (colour) => {
     const _card = { ...props.card };
