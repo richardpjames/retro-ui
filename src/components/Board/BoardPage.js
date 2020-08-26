@@ -60,36 +60,23 @@ const BoardPage = (props) => {
   };
 
   // Needed primarily for modals to work correctly
-  const [parentCard, setParentCard] = useState({});
-  const [childCard, setChildCard] = useState({});
-  const [mergeCardModalVisible, setMergeCardModalVisible] = useState(false);
   const [createColumnModalVisible, setCreateColumnModalVisible] = useState(
-    false,
-  );
-  const [parentCardToSeparate, setParentCardToSeparate] = useState({});
-  const [childCardToSeparate, setChildCardToSeparate] = useState(0);
-  const [separateCardModalVisible, setSeparateCardModalVisible] = useState(
     false,
   );
 
   // Add to a single object for easy passing
   const modals = {
-    parentCard,
-    setParentCard,
-    childCard,
-    setChildCard,
-    mergeCardModalVisible,
-    setMergeCardModalVisible,
     createColumnModalVisible,
     setCreateColumnModalVisible,
-    parentCardToSeparate,
-    setParentCardToSeparate,
-    childCardToSeparate,
-    setChildCardToSeparate,
-    separateCardModalVisible,
-    setSeparateCardModalVisible,
   };
 
+  // Mechanism for generic modals
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalSettings, setModalSettings] = useState({});
+  const modalsController = useModalsController(
+    setModalSettings,
+    setModalVisible,
+  );
   // Set up controllers
   const dataController = useFetchData(props, data);
   const boardsController = useBoardsController(data);
@@ -100,15 +87,8 @@ const BoardPage = (props) => {
   const listenerController = useListenersController(io, data);
   const dragDropController = useDragDropController(
     data,
-    setParentCard,
-    setChildCard,
-    setMergeCardModalVisible,
-  );
-  const [modalVisible, setModalVisible] = useState(false);
-  const [modalSettings, setModalSettings] = useState({});
-  const modalsController = useModalsController(
-    setModalSettings,
-    setModalVisible,
+    modalsController,
+    cardsController,
   );
 
   // Hold all of the controllers in a single object for easy passing
@@ -176,34 +156,6 @@ const BoardPage = (props) => {
             />
           )}
 
-          {mergeCardModalVisible && (
-            <Modal
-              title="Merge Cards"
-              message="Are you sure that you want to merge these cards?"
-              action="Merge"
-              function={() => {
-                cardsController.combineCards(parentCard, childCard);
-              }}
-              setVisible={setMergeCardModalVisible}
-              icon="fas fa-link"
-            />
-          )}
-
-          {separateCardModalVisible && (
-            <Modal
-              title="Separate Cards"
-              message="Are you sure that you want to separate these cards?"
-              action="Separate"
-              function={() => {
-                cardsController.separateCards(
-                  parentCardToSeparate,
-                  childCardToSeparate,
-                );
-              }}
-              setVisible={setSeparateCardModalVisible}
-              icon="fas fa-unlink"
-            />
-          )}
           <CreateColumnModal
             visible={createColumnModalVisible}
             setVisible={setCreateColumnModalVisible}

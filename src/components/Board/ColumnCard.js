@@ -154,11 +154,19 @@ const ColumnCard = (props) => {
                           <span className="tag is-rounded mr-1">
                             <a
                               onClick={() => {
-                                props.modals.setParentCardToSeparate(
-                                  props.card,
-                                );
-                                props.modals.setChildCardToSeparate(card);
-                                props.modals.setSeparateCardModalVisible(true);
+                                props.controllers.modalsController.showModal({
+                                  title: 'Separate Cards',
+                                  message:
+                                    'Are you sure that you want to separate these cards?',
+                                  action: 'Separate',
+                                  icon: 'fas fa-unlink',
+                                  function: () => {
+                                    props.controllers.cardsController.separateCards(
+                                      props.card,
+                                      card,
+                                    );
+                                  },
+                                });
                               }}
                             >
                               <Icon class="fas fa-unlink" />

@@ -2,12 +2,7 @@ import { LexoRank } from 'lexorank';
 import useCardsService from '../../../services/useCardsService';
 import useColumnsService from '../../../services/columnsService';
 
-const useDragDropController = (
-  data,
-  setParentCard,
-  setChildCard,
-  setMergeCardModalVisible,
-) => {
+const useDragDropController = (data, modalsController, cardsController) => {
   const cardsService = useCardsService();
   const columnsService = useColumnsService();
 
@@ -17,17 +12,23 @@ const useDragDropController = (
 
     // If combined
     if (result.combine) {
-      setParentCard(
-        data.cards.find(
-          (c) => c.cardid === parseInt(result.combine.draggableId.substring(4)),
-        ),
+      // Get the parent and child cards
+      const parent = data.cards.find(
+        (c) => c.cardid === parseInt(result.combine.draggableId.substring(4)),
       );
-      setChildCard(
-        data.cards.find(
-          (c) => c.cardid === parseInt(result.draggableId.substring(4)),
-        ),
+      const child = data.cards.find(
+        (c) => c.cardid === parseInt(result.draggableId.substring(4)),
       );
-      setMergeCardModalVisible(true);
+      modalsController.showModal({
+        title: 'Merge Cards',
+        message: 'Are you sure that you want to merge these cards?',
+        action: 'Merge',
+        icon: 'fas fa-link',
+        function: () => {
+          cardsController.combineCards(parent, child);
+        },
+      });
+      //setMergeCardModalVisible(true);
     }
 
     // If there is no destination then exit
