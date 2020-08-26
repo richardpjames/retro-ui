@@ -27,9 +27,6 @@ const Footer = (props) => {
                 <Link to="/privacy">Privacy Policy</Link>
               </li>
               <li>
-                <Link to="/blog/tags/faqs">Frequently Asked Questions</Link>
-              </li>
-              <li>
                 <Link to="/blog/tags/retrospective-ideas">
                   Retrospective Ideas
                 </Link>
