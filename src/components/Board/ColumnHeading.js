@@ -104,7 +104,7 @@ const ColumnHeading = (props) => {
               onClick={() => {
                 if (
                   !props.cards.filter(
-                    (c) => c.columnid === props.column.columnid,
+                    (c) => c.columnid === props.column.columnid && !c.parentid,
                   ).length > 0
                 ) {
                   setShowEditControls(false);
