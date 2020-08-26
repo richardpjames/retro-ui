@@ -325,7 +325,7 @@ const Dashboard = (props) => {
               pendingTeams={pendingTeams}
             />
           </div>
-          <div className="column mx-0 my-0 has-background-white-ter">
+          <div className="column mx-0 my-0">
             <Switch>
               <Route
                 path="/dashboard/profile"
