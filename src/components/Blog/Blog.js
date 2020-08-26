@@ -91,9 +91,9 @@ const Blog = (props) => {
 
   return (
     <>
-      <div className="columns" onClick={navigate}>
+      <div className="columns mb-0" onClick={navigate}>
         {loading && <LoadingSpinner />}
-        <div className="column is-one-fifth">
+        <div className="column is-one-fifth has-background-white-ter">
           <BlogSideBar
             tags={tags}
             currentTag={props.match.params.tagSlug || post?.primary_tag?.slug}

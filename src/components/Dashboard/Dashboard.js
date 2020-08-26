@@ -316,9 +316,9 @@ const Dashboard = (props) => {
   return (
     <>
       {props.isAuthenticated && (
-        <div className="columns">
+        <div className="columns mb-0">
           {loading ? <LoadingSpinner /> : null}
-          <div className="column is-one-fifth">
+          <div className="column is-one-fifth has-background-white-ter">
             <Sidebar
               teams={teams}
               profile={profile}
