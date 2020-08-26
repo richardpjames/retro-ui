@@ -73,9 +73,12 @@ const useListenersController = (io, data) => {
     io.removeAllListeners('vote deleted');
     // For any deleted votes
     io.on('vote deleted', (voteid) => {
-      // Filter out the cards not deleted and update
-      const _votes = data.votes.filter((v) => v.voteid !== parseInt(voteid));
-      data.setVotes(_votes);
+      const check = data.votes.find((v) => v.voteid === parseInt(voteid));
+      if (check) {
+        // Filter out the cards not deleted and update
+        const _votes = data.votes.filter((v) => v.voteid !== parseInt(voteid));
+        data.setVotes(_votes);
+      }
     });
 
     io.removeAllListeners('action created');

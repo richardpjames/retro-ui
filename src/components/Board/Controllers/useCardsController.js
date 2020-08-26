@@ -1,8 +1,10 @@
 import { LexoRank } from 'lexorank';
 import useCardsService from '../../../services/useCardsService';
+import useVotesService from '../../../services/useVotesService';
 
 const useCardsController = (data) => {
   const cardsService = useCardsService();
+  const votesService = useVotesService();
 
   const addCard = async (card) => {
     // Get the column from the card and then remove
@@ -70,6 +72,19 @@ const useCardsController = (data) => {
     _card.parentid = parentCard.cardid;
     // Then update on the service
     await cardsService.update(data.board.boardid, childCard.columnid, _card);
+    // Remove any votes for the child card
+    let _votes = [...data.votes];
+    _votes.map(async (v) => {
+      if (v.cardid === childCard.cardid) {
+        await votesService.remove(
+          data.board.boardid,
+          childCard.cardid,
+          v.voteid,
+        );
+      }
+    });
+    // Filter out the votes
+    _votes = _votes.filter((v) => v.cardid !== childCard.cardid);
     // Check for other cards to be updated any already merged cards
     _cards.map(async (c) => {
       // If any cards were children of the child card then update them to be
@@ -81,6 +96,7 @@ const useCardsController = (data) => {
     });
     // Update the state
     data.setCards(_cards);
+    data.setVotes(_votes);
   };
 
   const separateCards = async (parentCard, childCard) => {

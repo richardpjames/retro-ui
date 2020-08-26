@@ -10,17 +10,23 @@ const useVotesController = (data) => {
       vote.cardid,
       vote,
     );
+    // Update the remaining votes
+    data.setVotesRemaining(data.votesRemaining - 1);
     // Add the new card to the list
     data.setVotes([...data.votes, _newVote]);
   };
 
   const deleteVote = async (voteid, cardid) => {
-    // Call the API
-    votesService.remove(data.board.boardid, cardid, voteid);
+    console.log('filtering');
     // Remove the card from the list
-    const _votes = data.votes.filter((v) => v.voteid !== voteid);
+    let _votes = [...data.votes];
+    _votes = _votes.filter((v) => v.voteid !== voteid);
+    // Update the remaining votes
+    data.setVotesRemaining(data.votesRemaining + 1);
     // Save changes to state
     data.setVotes(_votes);
+    // Call the API
+    votesService.remove(data.board.boardid, cardid, voteid);
   };
 
   return { addVote, deleteVote };
