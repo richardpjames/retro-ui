@@ -39,7 +39,7 @@ const Nav = (props) => {
       */}
       <div className="navbar-brand">
         <Link className="navbar-item" to="/">
-          <img src="/logo.svg" width="175" height="28" alt="Site Logo" />
+          <img src="/logo.png" width="200" height="28" alt="Site Logo" />
         </Link>
         <a
           role="button"
