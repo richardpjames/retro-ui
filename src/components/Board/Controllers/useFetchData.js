@@ -43,6 +43,7 @@ const useFetchData = (
       // Sort them into order
       _cards = _cards.sort((a, b) => {
         if (a.rank > b.rank) return 1;
+        if (a.rank === b.rank && a.cardid > b.cardid) return 1;
         return -1;
       });
       // Get the required votes (no need to sort etc. for these)

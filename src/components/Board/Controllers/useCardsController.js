@@ -5,6 +5,7 @@ const useCardsController = (board, cards, setCards) => {
   const cardsService = useCardsService();
 
   const addCard = async (card) => {
+    console.log(card);
     // Get the column from the card and then remove
     const columnid = card.columnid;
     // Set the rank based on the highest in the column
@@ -29,8 +30,10 @@ const useCardsController = (board, cards, setCards) => {
   const deleteCard = async (card) => {
     // Call the API
     cardsService.remove(board.boardid, card.columnid, card.cardid);
-    // Remove the card from the list
-    const _cards = cards.filter((c) => c.cardid !== card.cardid);
+    // Remove the card from the list (and any children)
+    const _cards = cards.filter(
+      (c) => c.cardid !== card.cardid && c.parentid !== card.cardid,
+    );
     // Save changes to state
     setCards(_cards);
   };
@@ -48,10 +51,12 @@ const useCardsController = (board, cards, setCards) => {
         c2.rank = card.rank;
         c2.columnid = card.columnid;
         c2.colour = card.colour;
+        c2.parentid = card.parentid;
       });
     // Sort the cards into order
     _cards = _cards.sort((a, b) => {
       if (a.rank > b.rank) return 1;
+      if (a.rank === b.rank && a.cardid > b.cardid) return 1;
       return -1;
     });
     // Update state with the re-ordered cards
@@ -59,87 +64,38 @@ const useCardsController = (board, cards, setCards) => {
   };
 
   const combineCards = async (parentCard, childCard) => {
-    // Create the child card
-    const newCombined = await cardsService.addCombined(
-      parentCard.boardid,
-      parentCard.columnid,
-      parentCard.cardid,
-      childCard,
-    );
-
-    // Initialise the array on the object if not already
-    if (!parentCard.combinedcards) {
-      parentCard.combinedcards = [];
-    }
-    // Add the child card to the parent
-    parentCard.combinedcards.push({
-      combinedid: newCombined.combinedid,
-      userid: childCard.userid,
-      text: childCard.text,
-      colour: childCard.colour,
+    // Take a copy of the cards
+    const _cards = [...cards];
+    // Update the child card
+    const _card = _cards.find((c) => c.cardid === childCard.cardid);
+    _card.parentid = parentCard.cardid;
+    // Then update on the service
+    await cardsService.update(board.boardid, childCard.columnid, _card);
+    // Check for other cards to be updated any already merged cards
+    _cards.map(async (c) => {
+      // If any cards were children of the child card then update them to be
+      // children of the new parent
+      if (c.parentid === childCard.cardid) {
+        c.parentid = parentCard.cardid;
+        await cardsService.update(board.boardid, childCard.columnid, c);
+      }
     });
-    // Merge any already merged cards
-    if (childCard.combinedcards) {
-      await Promise.all(
-        childCard.combinedcards.map(async (_card) => {
-          parentCard.combinedcards.push({
-            combinedid: _card.combinedid,
-            userid: _card.userid,
-            text: _card.text,
-            colour: _card.colour,
-          });
-          await cardsService.updateCombined(
-            parentCard.boardid,
-            childCard.columnid,
-            childCard.cardid,
-            _card.combinedid,
-            { cardid: parentCard.cardid },
-          );
-          return null;
-        }),
-      );
-    }
-    // Remove the child card from the board
-    const _cards = cards.filter((c) => c.cardid !== childCard.cardid);
-    // Update the parent card
-
-    // Remove the child card
-    cardsService.remove(
-      childCard.boardid,
-      childCard.columnid,
-      childCard.cardid,
-    );
     // Update the state
     setCards(_cards);
   };
 
-  const separateCards = async (card, index) => {
+  const separateCards = async (parentCard, childCard) => {
+    // Copies of the data we need
+    const _columnid = childCard.columnid;
+    const _cards = [...cards];
+    const _card = _cards.find((c) => c.cardid === childCard.cardid);
+    // Remove the parentid and change the column
+    _card.columnid = parentCard.columnid;
+    _card.parentid = null;
     // Update at the service
-    cardsService.removeCombined(
-      card.boardid,
-      card.columnid,
-      card.cardid,
-      card.combinedcards[index].combinedid,
-    );
-
-    // Remove from the parent card
-
-    const _updatedCard = { ...card };
-    const _newCard = { ...card.combinedcards[index] };
-
-    _updatedCard.combinedcards.splice(index, 1);
-
-    cardsService.update(
-      _updatedCard.boardid,
-      _updatedCard.columnid,
-      _updatedCard,
-    );
-    // Create a new card from the merged card
-    await addCard({
-      ..._newCard,
-      columnid: card.columnid,
-      combinedcards: [],
-    });
+    await cardsService.update(board.boardid, _columnid, _card);
+    // Update the state
+    setCards(_cards);
   };
 
   return { addCard, deleteCard, updateCard, combineCards, separateCards };

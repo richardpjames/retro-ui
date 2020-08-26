@@ -88,8 +88,8 @@ const BoardPage = (props) => {
   const [parentCard, setParentCard] = useState({});
   const [childCard, setChildCard] = useState({});
   const [mergeCardModalVisible, setMergeCardModalVisible] = useState(false);
-  const [cardToSeparate, setCardToSeparate] = useState({});
-  const [indexToSeparate, setIndexToSeparate] = useState(0);
+  const [parentCardToSeparate, setParentCardToSeparate] = useState({});
+  const [childCardToSeparate, setChildCardToSeparate] = useState(0);
   const [separateCardModalVisible, setSeparateCardModalVisible] = useState(
     false,
   );
@@ -127,17 +127,18 @@ const BoardPage = (props) => {
   useEffect(() => {
     // Fetch initial data
     fetchData(true);
-    // Join the board socket io
-    joinBoard(props);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   // Set the page title
   useEffect(() => {
+    // Join the board socket io
+    joinBoard(board);
     document.title = `RetroSpectacle - ${board.name}`;
     document
       .querySelector('meta[name="description"]')
       .setAttribute('content', board.description);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [board]);
 
   useEffect(() => {
@@ -184,7 +185,7 @@ const BoardPage = (props) => {
               message="Are you sure that you want to separate these cards?"
               action="Separate"
               function={() => {
-                separateCards(cardToSeparate, indexToSeparate);
+                separateCards(parentCardToSeparate, childCardToSeparate);
               }}
               setVisible={setSeparateCardModalVisible}
               icon="fas fa-unlink"
@@ -226,8 +227,8 @@ const BoardPage = (props) => {
             setCreateColumnModalVisible={setCreateColumnModalVisible}
             renameColumn={renameColumn}
             deleteAction={deleteAction}
-            setCardToSeparate={setCardToSeparate}
-            setIndexToSeparate={setIndexToSeparate}
+            setParentCardToSeparate={setParentCardToSeparate}
+            setChildCardToSeparate={setChildCardToSeparate}
             setSeparateCardModalVisible={setSeparateCardModalVisible}
           />
         </div>

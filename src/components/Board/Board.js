@@ -63,15 +63,18 @@ const Board = (props) => {
                               updateCard={props.updateCard}
                               addVote={props.addVote}
                               deleteVote={props.deleteVote}
-                              cards={props.cards.filter(
-                                (c) => c.columnid === column.columnid,
-                              )}
+                              cards={props.cards}
+                              column={column}
                               deleteCard={props.deleteCard}
                               votes={props.votes}
                               votesRemaining={props.votesRemaining}
                               profile={props.profile}
-                              setCardToSeparate={props.setCardToSeparate}
-                              setIndexToSeparate={props.setIndexToSeparate}
+                              setParentCardToSeparate={
+                                props.setParentCardToSeparate
+                              }
+                              setChildCardToSeparate={
+                                props.setChildCardToSeparate
+                              }
                               setSeparateCardModalVisible={
                                 props.setSeparateCardModalVisible
                               }

@@ -128,6 +128,7 @@ const useDragDropController = (
     // Sort the cards into order
     _cards = _cards.sort((a, b) => {
       if (a.rank > b.rank) return 1;
+      if (a.rank === b.rank && a.cardid > b.cardid) return 1;
       return -1;
     });
     // Update state with the re-ordered cards

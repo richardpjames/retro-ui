@@ -36,7 +36,6 @@ const Login = (props) => {
       localStorage.removeItem('returnUrl');
       //history.push(url);
     } catch (error) {
-      console.log(error);
       setMessage(
         'Incorrect username or password, please check your input and try again.',
       );

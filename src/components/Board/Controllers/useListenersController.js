@@ -13,15 +13,17 @@ const useListenersController = (
   setVotes,
   setVotesRemaining,
 ) => {
-  const joinBoard = (props) => {
-    // Set up socket connections - first join the room (and reconnect if needed)
-    io.emit('join', props.match.params.boardid);
-    io.on('connect', () => {
-      io.emit('join', props.match.params.boardid);
-    });
-    return function cleanup() {
-      io.emit('leave', props.match.params.boardid);
-    };
+  const joinBoard = (board) => {
+    if (board?.boardid) {
+      // Set up socket connections - first join the room (and reconnect if needed)
+      io.emit('join', board.boardid);
+      io.on('connect', () => {
+        io.emit('join', board.boardid);
+      });
+      return function cleanup() {
+        io.emit('leave', board.boardid);
+      };
+    }
   };
 
   const setupListeners = () => {
@@ -49,12 +51,13 @@ const useListenersController = (
           card.rank = updatedCard.rank;
           card.columnid = updatedCard.columnid;
           card.colour = updatedCard.colour;
-          card.combinedcards = updatedCard.combinedcards;
+          card.parentid = updatedCard.parentid;
         });
 
       // Sort the cards into order
       _cards = _cards.sort((a, b) => {
         if (a.rank > b.rank) return 1;
+        if (a.rank === b.rank && a.cardid > b.cardid) return 1;
         return -1;
       });
       // Update state with the re-ordered cards
@@ -65,9 +68,9 @@ const useListenersController = (
     // For any deleted cards
     io.on('card deleted', (cardid) => {
       // Filter out the cards not deleted and update
-      const _cards = cards.filter((c) => c.cardid !== cardid);
+      const _cards = cards.filter((c) => c.cardid !== parseInt(cardid));
       setCards(_cards);
-      const _votes = votes.filter((v) => v.cardid !== cardid);
+      const _votes = votes.filter((v) => v.cardid !== parseInt(cardid));
       setVotes(_votes);
     });
 
@@ -85,7 +88,7 @@ const useListenersController = (
     // For any deleted votes
     io.on('vote deleted', (voteid) => {
       // Filter out the cards not deleted and update
-      const _votes = votes.filter((v) => v.voteid !== voteid);
+      const _votes = votes.filter((v) => v.voteid !== parseInt(voteid));
       setVotes(_votes);
     });
 
@@ -117,7 +120,7 @@ const useListenersController = (
     // For any deleted votes
     io.on('action deleted', (actionid) => {
       // Filter out the cards not deleted and update
-      const _actions = actions.filter((a) => a.actionid !== actionid);
+      const _actions = actions.filter((a) => a.actionid !== parseInt(actionid));
       setActions(_actions);
     });
 
@@ -157,7 +160,7 @@ const useListenersController = (
     // For any deleted cards
     io.on('column deleted', (columnid) => {
       // Filter out the cards not deleted and update
-      const _columns = columns.filter((c) => c.columnid !== columnid);
+      const _columns = columns.filter((c) => c.columnid !== parseInt(columnid));
       setColumns(_columns);
     });
 

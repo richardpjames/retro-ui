@@ -116,8 +116,9 @@ const ColumnCard = (props) => {
               </strong>{' '}
               - {props.card.text}
             </p>
-            {props.card.combinedcards &&
-              props.card.combinedcards.map((card, index) => {
+            {props.cards
+              .filter((c) => c.parentid === props.card.cardid)
+              .map((card, index) => {
                 return (
                   <div key={index} className="mb-3">
                     <hr className="mb-2 mt-1" />
@@ -127,8 +128,8 @@ const ColumnCard = (props) => {
                           <span className="tag is-rounded mr-1">
                             <a
                               onClick={() => {
-                                props.setCardToSeparate(props.card);
-                                props.setIndexToSeparate(index);
+                                props.setParentCardToSeparate(props.card);
+                                props.setChildCardToSeparate(card);
                                 props.setSeparateCardModalVisible(true);
                               }}
                             >
@@ -137,7 +138,14 @@ const ColumnCard = (props) => {
                           </span>{' '}
                         </>
                       )}
-                      {card.text}
+                      <strong
+                        style={{
+                          color: foreground[props.card.colour] || '#4a4a4a',
+                        }}
+                      >
+                        {card.nickname}{' '}
+                      </strong>{' '}
+                      - {card.text}
                     </p>
                   </div>
                 );

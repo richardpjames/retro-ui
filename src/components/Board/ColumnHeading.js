@@ -112,8 +112,9 @@ const ColumnHeading = (props) => {
                 }
               }}
               disabled={
-                props.cards.filter((c) => c.columnid === props.column.columnid)
-                  .length > 0
+                props.cards.filter(
+                  (c) => c.columnid === props.column.columnid && !c.parentid,
+                ).length > 0
               }
             >
               <i className="fas fa-trash-alt mr-3"></i> Delete
