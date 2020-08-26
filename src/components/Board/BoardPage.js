@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import Board from './Board';
 import Modal from '../Common/Modal';
 import LoadingSpinner from '../Common/LoadingSpinner';
-import CreateColumnModal from './CreateColumnModal';
 import BoardTitleBar from './BoardTitleBar';
 
 import useListenersController from './Controllers/useListenersController';
