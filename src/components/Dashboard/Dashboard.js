@@ -186,13 +186,14 @@ const Dashboard = (props) => {
       toast.error('This person is already a member of the team');
       // If not, then add them
     } else {
-      _team.members.push({ email: emailAddress, status: 'invited' });
       try {
         // Update the team
-        await teamsService.addMembership(teamid, {
+        const newMember = await teamsService.addMembership(teamid, {
           email: emailAddress,
           status: 'invited',
         });
+        _team.members.push(newMember);
+
         // Post a sucucess message
         toast.success('Your new team member has been added');
         setTeams(_teams);
