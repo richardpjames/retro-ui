@@ -160,6 +160,7 @@ const NewBoardModal = (props) => {
                   <select
                     id="boardTeam"
                     name="boardTeam"
+                    required
                     onChange={(event) => {
                       if (event.target.value !== '') {
                         setBoardTeam(event.target.value);
