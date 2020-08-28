@@ -17,7 +17,7 @@ const Sidebar = (props) => {
           </NavLink>
         </li>
       </ul>
-      <p className="menu-label">Team Boards</p>
+      <p className="menu-label">Your Teams</p>
       <ul className="menu-list">
         {props.teams.map((team) => {
           const link = `/dashboard/boards/${team.teamid}`;
