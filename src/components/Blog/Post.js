@@ -12,11 +12,6 @@ const Post = (props) => {
       <h1 className="title is-1">{props.post.title}</h1>
       {props.post.html && (
         <>
-          <img
-            className="image mb-5 is-half-vh"
-            src={props.post.feature_image}
-            alt={props.post.title}
-          />
           <div
             className="content"
             dangerouslySetInnerHTML={{
