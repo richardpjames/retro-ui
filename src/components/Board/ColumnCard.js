@@ -1,9 +1,10 @@
 /* eslint jsx-a11y/anchor-is-valid:0 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CirclePicker } from 'react-color';
 import Modal from '../Common/Modal';
 import Icon from '../Common/Icon';
+import { motion, useAnimation, usePresence } from 'framer-motion';
 
 const ColumnCard = (props) => {
   const [editable, setEditable] = useState(false);
@@ -14,6 +15,40 @@ const ColumnCard = (props) => {
   const userVote = props.votes.find(
     (v) => v.userid === props.data.profile.userid,
   );
+
+  // Use animation and prescence
+  const animationControl = useAnimation();
+  const [isPresent, safeToRemove] = usePresence();
+  // On render
+  useEffect(() => {
+    const lastDragged =
+      parseInt(sessionStorage.getItem('lastDragged')) === props.card.cardid;
+    if (lastDragged) {
+      sessionStorage.removeItem('lastDragged');
+    }
+    animationControl.start({
+      opacity: 1,
+      transition: { duration: lastDragged ? 0 : 1 },
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  // Check for isPresent and update whether dragging
+  useEffect(() => {
+    // Set the card currently being dragged if this is the card
+    if (props.snapshot.isDragging) {
+      sessionStorage.setItem('lastDragged', props.card.cardid);
+    }
+    const remove = async () => {
+      if (!isPresent) {
+        await animationControl.start({
+          opacity: 0,
+          transition: { duration: 0 },
+        });
+        safeToRemove();
+      }
+    };
+    remove();
+  });
 
   // The list of colours for the colour picker
   const colours = [
@@ -125,7 +160,9 @@ const ColumnCard = (props) => {
             danger
           />
         )}
-        <div
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={animationControl}
           className="box is-size-6-7 px-1 py-1"
           style={{
             backgroundColor: props.card.colour || '#FFFFFF',
@@ -265,7 +302,7 @@ const ColumnCard = (props) => {
               </div>
             )}
           </div>
-        </div>
+        </motion.div>
       </>
     );
   } else {
