@@ -17,6 +17,9 @@ const BoardList = (props) => {
         visible={modalVisible}
         updateModalVisible={updateModalVisible}
       />
+      {props.boards.length === 0 && (
+        <p>There are currently no boards to show.</p>
+      )}
       {props.boards.map((board) => (
         <div className="my-3" key={board.boardid}>
           <BoardCard
