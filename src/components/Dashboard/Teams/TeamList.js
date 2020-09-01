@@ -20,6 +20,7 @@ const TeamList = (props) => {
       {props.teams.map((team) => (
         <div className="my-3" key={team.teamid}>
           <TeamCard
+            teams={props.teams}
             team={team}
             profile={props.profile}
             setModalVisible={setModalVisible}

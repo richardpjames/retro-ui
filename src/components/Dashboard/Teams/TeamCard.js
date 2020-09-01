@@ -28,9 +28,11 @@ const TeamCard = (props) => {
         </div>
         <div className="column is-narrow">
           <div className="buttons">
-            <button className="button is-danger" onClick={toggleModal}>
-              <i className="fas fa-trash-alt mr-3"></i> Delete Team
-            </button>
+            {props.teams.length > 1 && (
+              <button className="button is-danger" onClick={toggleModal}>
+                <i className="fas fa-trash-alt mr-3"></i> Delete Team
+              </button>
+            )}
           </div>
         </div>
       </div>
