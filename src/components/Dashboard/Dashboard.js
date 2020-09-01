@@ -267,6 +267,11 @@ const Dashboard = (props) => {
         return team.teamid !== teamid;
       });
       setTeams(updatedTeams);
+      // Also remove boards belonging to the team
+      let _boards = [...boards];
+      _boards = _boards.filter((board) => board.teamid !== teamid);
+      setBoards(_boards);
+      // Stop loading
       setLoading(false);
       toast.success('Your team has been deleted.');
     } catch (error) {
