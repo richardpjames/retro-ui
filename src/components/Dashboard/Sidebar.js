@@ -1,5 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
+import { getSortedTeams } from '../../redux/selectors/teamSelectors';
+import { getInvitedMemberships } from '../../redux/selectors/memberSelectors';
 
 const Sidebar = (props) => {
   return (
@@ -21,25 +24,14 @@ const Sidebar = (props) => {
       <ul className="menu-list">
         {props.teams.map((team) => {
           const link = `/dashboard/boards/${team.teamid}`;
-          let membership;
-          if (team.members) {
-            membership = team.members.find(
-              (member) =>
-                member.email === props.profile.email &&
-                member.status === 'accepted',
-            );
-          }
-          if (team.userid === props.profile.userid || membership) {
-            return (
-              <li key={team.teamid}>
-                <NavLink activeClassName="is-active" to={link} exact>
-                  <i className="fas fa-chalkboard-teacher mr-3"></i>
-                  {team.name}
-                </NavLink>
-              </li>
-            );
-          }
-          return null;
+          return (
+            <li key={team.teamid}>
+              <NavLink activeClassName="is-active" to={link} exact>
+                <i className="fas fa-chalkboard-teacher mr-3"></i>
+                {team.name}
+              </NavLink>
+            </li>
+          );
         })}
       </ul>
 
@@ -47,7 +39,7 @@ const Sidebar = (props) => {
       <ul className="menu-list">
         <li>
           <NavLink activeClassName="is-active" to="/dashboard/actions" exact>
-            <i className="fas fa-exclamation mr-3"></i>All Actions
+            <i className="fas fa-exclamation mr-3"></i>Action Center
           </NavLink>
         </li>
       </ul>
@@ -95,4 +87,14 @@ const Sidebar = (props) => {
   );
 };
 
-export default Sidebar;
+// Only props to map in this component (no dispatch)
+const mapStateToProps = (state) => {
+  return {
+    teams: getSortedTeams()(state),
+    profile: state.profile,
+    pendingTeams: getInvitedMemberships()(state).length,
+    test: getInvitedMemberships()(state),
+  };
+};
+// Connect to the component
+export default connect(mapStateToProps)(Sidebar);

@@ -111,40 +111,42 @@ const Nav = (props) => {
         */}
         <div className="navbar-end">
           {(() => {
-            if (props.isAuthenticated) {
+            if (props.isAuthenticated !== undefined) {
+              if (props.isAuthenticated) {
+                return (
+                  <>
+                    <NavLink
+                      to=""
+                      className="navbar-item"
+                      onClick={() => {
+                        closeNavLinks();
+                        logout(props.setIsAuthenticated);
+                      }}
+                    >
+                      <i className="fas fa-sign-out-alt mr-3"></i> Log Out
+                    </NavLink>
+                  </>
+                );
+              }
               return (
                 <>
                   <NavLink
-                    to=""
+                    to="/auth/login"
                     className="navbar-item"
-                    onClick={() => {
-                      closeNavLinks();
-                      logout(props.setIsAuthenticated);
-                    }}
+                    onClick={closeNavLinks}
                   >
-                    <i className="fas fa-sign-out-alt mr-3"></i> Log Out
+                    <i className="fas fa-sign-in-alt mr-3"></i> Log In
+                  </NavLink>
+                  <NavLink
+                    to="/auth/register"
+                    className="navbar-item"
+                    onClick={closeNavLinks}
+                  >
+                    <i className="fas fa-user-plus mr-3"></i> Register
                   </NavLink>
                 </>
               );
             }
-            return (
-              <>
-                <NavLink
-                  to="/auth/login"
-                  className="navbar-item"
-                  onClick={closeNavLinks}
-                >
-                  <i className="fas fa-sign-in-alt mr-3"></i> Log In
-                </NavLink>
-                <NavLink
-                  to="/auth/register"
-                  className="navbar-item"
-                  onClick={closeNavLinks}
-                >
-                  <i className="fas fa-user-plus mr-3"></i> Register
-                </NavLink>
-              </>
-            );
           })()}
         </div>
       </div>

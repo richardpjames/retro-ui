@@ -49,7 +49,7 @@ const Login = (props) => {
       <div className="container">
         <div className="content mx-5 my-5">
           <h1 className="title is-1">
-            <Icon class="fas fa-sign-in-alt" padding />
+            <Icon className="fas fa-sign-in-alt" padding />
             Log In
           </h1>
           <p>
@@ -95,7 +95,7 @@ const Login = (props) => {
               className="button is-primary is-fullwidth"
               disabled={disabled}
             >
-              <Icon class="fas fa-sign-in-alt" padding />
+              <Icon className="fas fa-sign-in-alt" padding />
               Log In
             </button>
           </form>

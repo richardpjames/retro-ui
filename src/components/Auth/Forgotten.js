@@ -42,7 +42,7 @@ const Forgotten = (props) => {
           <div className="container">
             <div className="content mx-5 my-5">
               <h1 className="title is-1">
-                <Icon class="fas fa-unlock-alt" padding />
+                <Icon className="fas fa-unlock-alt" padding />
                 Reset Password
               </h1>
 
@@ -76,7 +76,7 @@ const Forgotten = (props) => {
                   className="button is-primary is-fullwidth"
                   disabled={disabled}
                 >
-                  <Icon class="fas fa-unlock-alt" padding />
+                  <Icon className="fas fa-unlock-alt" padding />
                   Request Reset Link
                 </button>
               </form>

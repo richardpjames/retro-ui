@@ -15,7 +15,7 @@ const useApi = () => {
     else if (response.status >= 300) {
       history.push(`/error/${response.status}`);
       throw new Error('Bad Request');
-    } else {
+    } else if (response.status === 200) {
       return response.json();
     }
   };

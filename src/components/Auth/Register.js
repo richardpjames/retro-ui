@@ -73,7 +73,7 @@ const Register = (props) => {
       <div className="container">
         <div className="content mx-5 my-5">
           <h1 className="title is-1">
-            <Icon class="fa fa-user-plus" padding />
+            <Icon className="fa fa-user-plus" padding />
             Register
           </h1>
 
@@ -149,7 +149,7 @@ const Register = (props) => {
                   className="button is-primary is-fullwidth"
                   disabled={disabled}
                 >
-                  <Icon class="fas fa-user-plus" padding />
+                  <Icon className="fas fa-user-plus" padding />
                   Register
                 </button>
               </form>

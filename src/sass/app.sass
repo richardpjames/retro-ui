@@ -46,6 +46,9 @@ $menu-label-color: $white;
 .is-50-td 
   width: 50%;
 
+.is-25-td 
+  width: 25%;
+
 .tag
   text-decoration: none !important;
 
@@ -106,3 +109,59 @@ footer ul
     text-decoration: none !important
     background-color: #FF8A5D !important
     color: #FFFFFF !important
+
+// For the loading spinner
+
+.spinner
+  margin: 10px auto
+  width: 50px
+  height: 40px
+  text-align: center
+  font-size: 10px
+
+  > div
+    background-color: #00d1b2
+    height: 100%
+    width: 6px
+    display: inline-block
+    -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out
+    animation: sk-stretchdelay 1.2s infinite ease-in-out
+
+  .rect2
+    -webkit-animation-delay: -1.1s
+    animation-delay: -1.1s
+    margin-left: 2px
+
+  .rect3
+    -webkit-animation-delay: -1.0s
+    animation-delay: -1.0s
+    margin-left: 2px
+
+
+  .rect4
+    -webkit-animation-delay: -0.9s
+    animation-delay: -0.9s
+    margin-left: 2px
+
+
+  .rect5
+    -webkit-animation-delay: -0.8s
+    animation-delay: -0.8s
+    margin-left: 2px
+
+
+@-webkit-keyframes sk-stretchdelay
+  0%, 40%, 100%
+    -webkit-transform: scaleY(0.4)
+
+  20%
+    -webkit-transform: scaleY(1)
+
+@keyframes sk-stretchdelay
+  0%, 40%, 100%
+    transform: scaleY(0.4)
+    -webkit-transform: scaleY(0.4)
+
+  20%
+    transform: scaleY(1)
+    -webkit-transform: scaleY(1)

@@ -83,7 +83,7 @@ const BoardTitleBar = (props) => {
                   disabled={props.data.board.allowvotes}
                   onClick={() => setVoteModalVisible(true)}
                 >
-                  <Icon class="fas fa-thumbs-up" padding />
+                  <Icon className="fas fa-thumbs-up" padding />
                   {props.data.board.allowvotes
                     ? 'Voting Started'
                     : 'Start Voting'}
@@ -95,7 +95,7 @@ const BoardTitleBar = (props) => {
                   onClick={() => setLockModalVisible(true)}
                   disabled={props.data.board.locked}
                 >
-                  <Icon class="fas fa-lock" padding />
+                  <Icon className="fas fa-lock" padding />
                   {props.data.board.locked ? 'Locked' : 'Lock'}
                 </button>
                 <button
@@ -103,7 +103,7 @@ const BoardTitleBar = (props) => {
                   onClick={() => setSettingsModalVisible(true)}
                   disabled={props.data.board.locked}
                 >
-                  <Icon class="fas fa-cog" padding />
+                  <Icon className="fas fa-cog" padding />
                   Settings
                 </button>
                 <button
@@ -111,7 +111,7 @@ const BoardTitleBar = (props) => {
                   onClick={() => setCreateColumnModalVisible(true)}
                   disabled={props.data.board.locked}
                 >
-                  <Icon class="fas fa-plus" padding />
+                  <Icon className="fas fa-plus" padding />
                   Add Column
                 </button>
               </>
@@ -121,13 +121,13 @@ const BoardTitleBar = (props) => {
                 className="button"
                 onClick={() => props.data.setShowinstructions(true)}
               >
-                <Icon class="fas fa-info-circle" padding />
+                <Icon className="fas fa-info-circle" padding />
                 Instructions
               </button>
             )}
             <Link to="/dashboard">
               <button className="button">
-                <Icon class="fas fa-home" padding /> Dashboard
+                <Icon className="fas fa-home" padding /> Dashboard
               </button>
             </Link>
           </div>
@@ -136,7 +136,7 @@ const BoardTitleBar = (props) => {
 
       {props.data.board.allowvotes && !props.data.board.locked ? (
         <div className="notification is-primary">
-          <Icon class="fas fa-exclamation-triangle" padding />
+          <Icon className="fas fa-exclamation-triangle" padding />
           Voting is now enabled on this board{' '}
           {props.data.votesRemaining > 0 ? 'and' : 'but'} you have{' '}
           {props.data.votesRemaining} votes left.
@@ -144,7 +144,7 @@ const BoardTitleBar = (props) => {
       ) : null}
       {props.data.board.locked ? (
         <div className="notification is-warning">
-          <Icon class="fas fa-exclamation-triangle" padding />
+          <Icon className="fas fa-exclamation-triangle" padding />
           This board is now locked and no further changes can be made.
         </div>
       ) : null}

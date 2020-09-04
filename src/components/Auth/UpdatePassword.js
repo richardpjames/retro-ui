@@ -103,7 +103,7 @@ const UpdatePassword = (props) => {
               className="button is-primary is-fullwidth"
               disabled={disabled}
             >
-              <Icon class="fas fa-unlock-alt" padding />
+              <Icon className="fas fa-unlock-alt" padding />
               Update Password
             </button>
           </form>

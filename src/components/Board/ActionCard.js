@@ -22,7 +22,7 @@ const ActionCard = (props) => {
                   className="is-small"
                   onClick={() => setShowEditControls(!showEditControls)}
                 >
-                  <Icon class="fas fa-ellipsis-h" />
+                  <Icon className="fas fa-ellipsis-h" />
                 </a>
               </span>
 
@@ -45,7 +45,7 @@ const ActionCard = (props) => {
                       });
                     }}
                   >
-                    <Icon class="fas fa-trash-alt" padding />
+                    <Icon className="fas fa-trash-alt" padding />
                     Delete
                   </a>
                 </div>

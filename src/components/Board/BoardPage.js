@@ -101,49 +101,48 @@ const BoardPage = (props) => {
   // Set the page title and listeners once the board is set
   useEffect(() => {
     // Join the board socket io
-    listenerController.joinBoard(board);
+    const cleanup = listenerController.joinBoard(board);
     document.title = `RetroSpectacle - ${board.name}`;
     document
       .querySelector('meta[name="description"]')
       .setAttribute('content', board.description);
     listenerController.setupListeners();
+    return cleanup;
   }, [board, listenerController]);
 
   return (
     <>
-      {props.isAuthenticated && (
-        <div className="content mx-5 my-5">
-          {(() => {
-            if (loading) return <LoadingSpinner />;
-          })()}
-          {modalVisible && (
-            <Modal
-              title={modalSettings.title}
-              action={modalSettings.action}
-              message={modalSettings.message}
-              markdown={modalSettings.markdown}
-              setVisible={setModalVisible}
-              function={modalSettings.function}
-              icon={modalSettings.icon}
-              hideCancel={modalSettings.hideCancel}
-              danger={modalSettings.danger}
-            />
-          )}
-          {showinstructions && board.instructions && (
-            <Modal
-              title="Instructions"
-              action="Okay"
-              setVisible={setShowinstructions}
-              markdown={board.instructions}
-              function={() => {}}
-              icon="fas fa-check"
-              hideCancel
-            />
-          )}
-          <BoardTitleBar data={data} controllers={controllers} />
-          <Board data={data} controllers={controllers} />
-        </div>
-      )}
+      <div className="content mx-5 my-5">
+        {(() => {
+          if (loading) return <LoadingSpinner />;
+        })()}
+        {modalVisible && (
+          <Modal
+            title={modalSettings.title}
+            action={modalSettings.action}
+            message={modalSettings.message}
+            markdown={modalSettings.markdown}
+            setVisible={setModalVisible}
+            function={modalSettings.function}
+            icon={modalSettings.icon}
+            hideCancel={modalSettings.hideCancel}
+            danger={modalSettings.danger}
+          />
+        )}
+        {showinstructions && board.instructions && (
+          <Modal
+            title="Instructions"
+            action="Okay"
+            setVisible={setShowinstructions}
+            markdown={board.instructions}
+            function={() => {}}
+            icon="fas fa-check"
+            hideCancel
+          />
+        )}
+        <BoardTitleBar data={data} controllers={controllers} />
+        <Board data={data} controllers={controllers} />
+      </div>
     </>
   );
 };

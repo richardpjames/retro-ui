@@ -17,7 +17,6 @@ const useVotesController = (data) => {
   };
 
   const deleteVote = async (voteid, cardid) => {
-    console.log('filtering');
     // Remove the card from the list
     let _votes = [...data.votes];
     _votes = _votes.filter((v) => v.voteid !== voteid);

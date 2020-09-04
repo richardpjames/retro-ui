@@ -9,7 +9,7 @@ const BlogSideBar = (props) => {
       <ul className="menu-list">
         <li>
           <NavLink className={`${!props.currentTag && 'is-active'}`} to="/blog">
-            <Icon class="fas fa-rss-square" padding />
+            <Icon className="fas fa-rss-square" padding />
             All Posts
           </NavLink>
         </li>
@@ -20,7 +20,7 @@ const BlogSideBar = (props) => {
                 className={`${props.currentTag === tag.slug && 'is-active'}`}
                 to={`/blog/tags/${tag.slug}`}
               >
-                <Icon class="fas fa-rss-square" padding />
+                <Icon className="fas fa-rss-square" padding />
                 {tag.name}
               </NavLink>
             </li>

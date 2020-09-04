@@ -56,7 +56,7 @@ const PasswordMeter = (props) => {
         <ul style={{ listStyle: 'none' }}>
           <li>
             <Icon
-              class={`${
+              className={`${
                 lengthCheck
                   ? 'fas fa-check-circle padding'
                   : 'fas fa-times-circle padding'
@@ -66,7 +66,7 @@ const PasswordMeter = (props) => {
           </li>
           <li>
             <Icon
-              class={`${
+              className={`${
                 uppercaseCheck
                   ? 'fas fa-check-circle padding'
                   : 'fas fa-times-circle padding'
@@ -76,7 +76,7 @@ const PasswordMeter = (props) => {
           </li>
           <li>
             <Icon
-              class={`${
+              className={`${
                 lowercaseCheck
                   ? 'fas fa-check-circle padding'
                   : 'fas fa-times-circle padding'
@@ -86,7 +86,7 @@ const PasswordMeter = (props) => {
           </li>
           <li>
             <Icon
-              class={`${
+              className={`${
                 numericCheck
                   ? 'fas fa-check-circle padding'
                   : 'fas fa-times-circle padding'
@@ -96,7 +96,7 @@ const PasswordMeter = (props) => {
           </li>
           <li>
             <Icon
-              class={`${
+              className={`${
                 specialCheck
                   ? 'fas fa-check-circle padding'
                   : 'fas fa-times-circle padding'
@@ -106,7 +106,7 @@ const PasswordMeter = (props) => {
           </li>
           <li>
             <Icon
-              class={`${
+              className={`${
                 passwordsMatch
                   ? 'fas fa-check-circle padding'
                   : 'fas fa-times-circle padding'

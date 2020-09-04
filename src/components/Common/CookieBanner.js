@@ -39,7 +39,7 @@ const CookieBanner = (props) => {
                       handleClick(true);
                     }}
                   >
-                    <Icon class="fas fa-check" padding />
+                    <Icon className="fas fa-check" padding />
                     Accept
                   </button>
                   <button
@@ -48,7 +48,7 @@ const CookieBanner = (props) => {
                       handleClick(false);
                     }}
                   >
-                    <Icon class="fas fa-times" padding />
+                    <Icon className="fas fa-times" padding />
                     Decline
                   </button>
                 </div>

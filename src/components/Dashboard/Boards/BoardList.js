@@ -8,7 +8,6 @@ const BoardList = (props) => {
     name: '',
   });
   const [modalVisible, updateModalVisible] = useState(false);
-
   return (
     <div>
       <DeleteBoardModal

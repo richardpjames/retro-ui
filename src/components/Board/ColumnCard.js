@@ -169,7 +169,7 @@ const ColumnCard = (props) => {
                                 });
                               }}
                             >
-                              <Icon class="fas fa-unlink" />
+                              <Icon className="fas fa-unlink" />
                             </a>
                           </span>{' '}
                         </>
@@ -190,12 +190,12 @@ const ColumnCard = (props) => {
               <div className="column">
                 {!userVote && props.data.board.allowvotes && (
                   <a className="tag is-small" onClick={handleVote}>
-                    <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
+                    <Icon className="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>
                 )}
                 {userVote && props.data.board.allowvotes && (
                   <a className="tag is-small is-primary" onClick={handleVote}>
-                    <Icon class="fas fa-thumbs-up" /> ({props.votes.length})
+                    <Icon className="fas fa-thumbs-up" /> ({props.votes.length})
                   </a>
                 )}
               </div>
@@ -210,7 +210,7 @@ const ColumnCard = (props) => {
                           setShowColourPicker(!showColourPicker);
                         }}
                       >
-                        <Icon class="fas fa-eye-dropper" />
+                        <Icon className="fas fa-eye-dropper" />
                       </a>
                     </span>
 
@@ -222,7 +222,7 @@ const ColumnCard = (props) => {
                           setShowEditControls(!showEditControls);
                         }}
                       >
-                        <Icon class="fas fa-ellipsis-h" />
+                        <Icon className="fas fa-ellipsis-h" />
                       </a>
                     </span>
                   </>
@@ -250,7 +250,7 @@ const ColumnCard = (props) => {
                       setShowEditControls(false);
                     }}
                   >
-                    <Icon class="fas fa-pencil-alt" padding /> Edit
+                    <Icon className="fas fa-pencil-alt" padding /> Edit
                   </a>
                 )}
                 <a
@@ -260,7 +260,7 @@ const ColumnCard = (props) => {
                     setDeleteModalVisible(true);
                   }}
                 >
-                  <Icon class="fas fa-trash-alt" padding /> Delete
+                  <Icon className="fas fa-trash-alt" padding /> Delete
                 </a>
               </div>
             )}
@@ -286,12 +286,12 @@ const ColumnCard = (props) => {
             ></textarea>
             <div className="buttons mt-1">
               <button className="button is-primary is-small">
-                <Icon class="fas fa-save" padding />
+                <Icon className="fas fa-save" padding />
                 Save
               </button>
 
               <button className="button is-small" onClick={handleCancel}>
-                <Icon class="fas fa-ban" padding />
+                <Icon className="fas fa-ban" padding />
                 Cancel
               </button>
             </div>

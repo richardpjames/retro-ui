@@ -201,7 +201,7 @@ const BoardSettingsModal = (props) => {
           </section>
           <footer className="modal-card-foot">
             <button className="button is-primary">
-              <Icon class="fas fa-save" padding /> Save
+              <Icon className="fas fa-save" padding /> Save
             </button>
             <button className="button" onClick={closeModal}>
               <i className="fas fa-ban mr-3"></i> Cancel

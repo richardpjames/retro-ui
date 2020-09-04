@@ -60,7 +60,7 @@ const Reset = (props) => {
               <div className="container">
                 <div className="content mx-5 my-5">
                   <h1 className="title is-1">
-                    <Icon class="fas fa-unlock-alt" padding />
+                    <Icon className="fas fa-unlock-alt" padding />
                     Forgotten Password
                   </h1>
 
@@ -111,7 +111,7 @@ const Reset = (props) => {
                           className="button is-primary is-fullwidth"
                           disabled={disabled}
                         >
-                          <Icon class="fas fa-unlock-alt" padding />
+                          <Icon className="fas fa-unlock-alt" padding />
                           Reset Password
                         </button>
                       </form>

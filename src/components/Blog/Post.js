@@ -16,7 +16,7 @@ const Post = (props) => {
             className="content"
             dangerouslySetInnerHTML={{
               __html: props.post.html
-                .replace(new RegExp('<img', 'g'), '<img class="image"')
+                .replace(new RegExp('<img', 'g'), '<img className="image"')
                 .replace(
                   new RegExp('<a href="https://cms.retrospectacle.io', 'g'),
                   '<a href="https://www.retrospectacle.io',
