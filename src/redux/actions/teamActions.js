@@ -41,7 +41,6 @@ export function updateTeam(team) {
   return async function (dispatch) {
     dispatch({ type: actionTypes.BEGIN_API_CALL });
     const updatedTeam = await api.update(team);
-    console.log(updatedTeam);
     dispatch({ type: actionTypes.END_API_CALL });
     return dispatch({ type: actionTypes.UPDATE_TEAM, team: updatedTeam });
   };
