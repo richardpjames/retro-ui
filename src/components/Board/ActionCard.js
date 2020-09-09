@@ -7,7 +7,7 @@ const ActionCard = (props) => {
   const [showEditControls, setShowEditControls] = useState(false);
 
   return (
-    <div className="box card-white-bg is-size-6-7 px-1 py-1 mb-2">
+    <div className="rounded bg-white shadow-md is-size-6-7 px-1 py-1 mb-2">
       <div className="card-content py-4 px-4">
         <p>
           <strong className="is-capitalized">{props.action.owner}</strong> -{' '}

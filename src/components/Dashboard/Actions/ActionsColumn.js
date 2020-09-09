@@ -13,7 +13,7 @@ const ActionsColumn = (props) => {
 
   return (
     <>
-      <h4 className="title is-4 mb-5">{props.title}</h4>
+      <h4 className="text-xl font-bold pl-3 py-3">{props.title}</h4>
       <LoadingSpinner />
       {actions.map((action, index) => (
         <Draggable

@@ -11,11 +11,13 @@
     "bulma": "^0.9.0",
     "bulma-calendar": "^6.0.9",
     "bulma-pricingtable": "^0.2.0",
+    "chokidar-cli": "^2.1.0",
     "cool-checkboxes-for-bulma.io": "^1.1.0",
     "framer-motion": "^2.6.5",
     "http-proxy-middleware": "^1.0.5",
     "lexorank": "^1.0.4",
     "moment": "^2.27.0",
+    "npm-run-all": "^4.1.5",
     "react": "^16.13.1",
     "react-beautiful-dnd": "^13.0.0",
     "react-color": "^2.18.1",
@@ -28,10 +30,15 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "socket.io-client": "^2.3.0"
+    "socket.io-client": "^2.3.0",
+    "tailwindcss": "^1.8.5"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "build:tailwind": "tailwind build src/styles/tailwind.css -o src/styles/style.css",
+    "watch:tailwind": "chokidar 'src/**/*.css' 'src/**/*.scss' --ignore src/styles/style.ss -c 'npm run build:tailwind'",
+    "start": "npm-run-all build:tailwind --parallel watch:tailwind start:react",
+    "start:react": "react-scripts start",
+    "prebuild": "run-s build:tailwind",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

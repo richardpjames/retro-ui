@@ -126,7 +126,7 @@ const ColumnCard = (props) => {
           />
         )}
         <div
-          className="box is-size-6-7 px-1 py-1"
+          className="rounded shadow-md"
           style={{
             backgroundColor: props.card.colour || '#FFFFFF',
             color: foreground[props.card.colour] || '#4a4a4a',
@@ -230,15 +230,18 @@ const ColumnCard = (props) => {
               </div>
             </div>
             {showColourPicker && !props.data.board.locked && (
-              <CirclePicker
-                onChangeComplete={handleColourChange}
-                width="100%"
-                circleSize={29}
-                circleSpacing={11}
-                colors={colours.filter(
-                  (c) => c.toLowerCase() !== props.card.colour,
-                )}
-              />
+              <div className="bg-gray-200 bg-opacity-50 rounded px-3 py-3 flex justify-center align-middle">
+                <CirclePicker
+                  className="justify-center"
+                  onChangeComplete={handleColourChange}
+                  width="100%"
+                  circleSize={29}
+                  circleSpacing={11}
+                  colors={colours.filter(
+                    (c) => c.toLowerCase() !== props.card.colour,
+                  )}
+                />
+              </div>
             )}
             {showEditControls && !props.data.board.locked && (
               <div className="buttons">

@@ -88,14 +88,16 @@ const CreateActionForm = (props) => {
           <label htmlFor="date" className="is-size-6-7">
             Due Date
           </label>
-          <input
-            type="date"
-            className="input is-fullwidth is-size-6-7"
-            name="due"
-            id="due"
-            onChange={() => {}}
-            required
-          />
+          <div className="bg-white rounded">
+            <input
+              type="date"
+              className="input is-fullwidth is-size-6-7"
+              name="due"
+              id="due"
+              onChange={() => {}}
+              required
+            />
+          </div>
         </div>
 
         <button className="button is-primary is-fullwidth my-1 is-size-6-7">

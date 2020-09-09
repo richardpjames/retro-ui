@@ -84,7 +84,7 @@ const Actions = (props) => {
     <>
       <div className="columns is-centered">
         <div className="column is-12 is-10-widescreen">
-          <div className="box">
+          <div className="shadow-md rounded p-5">
             <h3 className="title is-3 ">Action Center</h3>
             <h6 className="subtitle is-6 ml-1">
               These are the actions that have been raised from your
@@ -99,11 +99,11 @@ const Actions = (props) => {
             </h6>
             <DragDropContext onDragEnd={handleDragEnd}>
               <div className="columns mt-5">
-                <div className="column">
+                <div className="column px-1">
                   <Droppable droppableId="todo">
                     {(dropProvided) => (
                       <div
-                        className="box"
+                        className="p-2 shadow-sm rounded bg-gray-200 h-full shadow-inner"
                         ref={dropProvided.innerRef}
                         {...dropProvided.droppableProps}
                       >
@@ -118,11 +118,11 @@ const Actions = (props) => {
                     )}
                   </Droppable>
                 </div>
-                <div className="column">
+                <div className="column px-1">
                   <Droppable droppableId="progress">
                     {(dropProvided) => (
                       <div
-                        className="box"
+                        className="p-2 shadow-sm rounded bg-gray-200 h-full shadow-inner"
                         ref={dropProvided.innerRef}
                         {...dropProvided.droppableProps}
                       >
@@ -137,11 +137,11 @@ const Actions = (props) => {
                     )}
                   </Droppable>
                 </div>
-                <div className="column">
+                <div className="column px-1">
                   <Droppable droppableId="complete">
                     {(dropProvided) => (
                       <div
-                        className="box"
+                        className="p-2 shadow-sm rounded bg-gray-200 h-full shadow-inner"
                         ref={dropProvided.innerRef}
                         {...dropProvided.droppableProps}
                       >

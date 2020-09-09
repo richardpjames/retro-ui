@@ -18,13 +18,13 @@ const ActionsCard = (props) => {
           setDragDisabled={props.setDragDisabled}
         />
       )}
-      <div className="box mb-3">
+      <div className="shadow-md p-3 bg-white border-1 border-gray-200 rounded mb-2">
         <div>
           <strong>{action.owner}</strong> - {action.text}
         </div>
         <div className="buttons are-small mt-3">
           <a
-            className="button is-primary is-fullwidth"
+            className="bg-teal-500 rounded w-full text-white text-center py-1 border-b-2 border-teal-800 mb-2 hover:text-white hover:bg-teal-600"
             onClick={() => {
               setShowModal(true);
             }}

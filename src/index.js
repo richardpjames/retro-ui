@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import 'cool-checkboxes-for-bulma.io/dist/css/bulma-radio-checkbox.min.css';
 import 'bulma-calendar/dist/js/bulma-calendar.min.js';
 import './sass/app.sass';
+import './styles/style.css';
 import configureStore from './redux/configureStore';
 
 // Configure the redux store

@@ -1,0 +1,6 @@
+/* Import the inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+/* Import from tailwind */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
