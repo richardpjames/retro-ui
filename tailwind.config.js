@@ -1,5 +1,8 @@
 module.exports = {
-  purge: ['src/**/*.js', 'src/**/*.jsx', 'public/**/*.html'],
+  purge: {
+    enabled: true,
+    content: ['src/**/*.js', 'src/**/*.jsx', 'public/**/*.html'],
+  },
   theme: {
     fontFamily: {
       sans: ['inter'],
