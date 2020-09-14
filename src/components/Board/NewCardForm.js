@@ -29,7 +29,7 @@ const NewCardForm = (props) => {
   const [card, setCard] = useState({
     text: '',
     columnid: props.column.columnid,
-    colour: '#ffffff',
+    colour: props.column.defaultcolour || '#ffffff',
   });
   const [show, setShow] = useState(false);
 
@@ -54,7 +54,11 @@ const NewCardForm = (props) => {
 
   const handleShow = () => {
     setShow(!show);
-    setCard({ text: '', columnid: props.column.columnid, colour: '#ffffff' });
+    setCard({
+      text: '',
+      columnid: props.column.columnid,
+      colour: props.column.defaultcolour || '#ffffff',
+    });
   };
 
   return (
