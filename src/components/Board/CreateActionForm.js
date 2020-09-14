@@ -35,7 +35,6 @@ const CreateActionForm = (props) => {
       showClearButton: false,
     });
     _calendar[0].on('select', (date) => {
-      console.log(date);
       setActionDue(moment(date.data.date.start).format('YYYY-MM-DD'));
     });
   }, [setActionDue]);
